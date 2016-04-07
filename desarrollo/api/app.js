@@ -26,8 +26,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(multer());
 
 app.use(cors({ origin: 'http://localhost:3000/api' }));
-
-app.all('*', function(req, res, next) {
+/*
+app.use('/api', function(req, res, next) {
 
     var responseSettings = {
         "AccessControlAllowOrigin": req.headers.origin,
@@ -41,6 +41,52 @@ app.all('*', function(req, res, next) {
     res.header("Access-Control-Allow-Headers", (req.headers['access-control-request-headers']) ? req.headers['access-control-request-headers'] : "x-requested-with");
     res.header("Access-Control-Allow-Methods", (req.headers['access-control-request-method']) ? req.headers['access-control-request-method'] : responseSettings.AccessControlAllowMethods);
 
+});
+*/
+var Schema = mongoose.Schema;
+
+var Tipo = new Schema({
+    tipID: String,
+    nombre: String,
+    nivel: Number
+}, { collection: 'tipo' });
+
+var tipoModelo = mongoose.model('Tipo', Tipo);
+
+app.get('/api/tipo', function (req, res) {
+    tipoModelo.find(function (err, tipo) {
+        if (!err) {
+            res.send(tipo);
+        } else {
+            console.log(err);
+        }
+    });
+});
+
+app.post('/api/tipo', function (req, res) {
+    tipo = new tipoModelo({
+        tipID: req.body.tipID,
+        nombre: req.body.nombre,
+        nivel: req.body.nivel
+    });
+    tipo.save(function (err) {
+        if (!err) {
+            console.log("Tipo creado: " + tipo._id);
+        } else {
+            console.log(err);
+        }
+    });
+    res.json(tipo);
+});
+
+app.get('/api/tipo/:tipID', function (req, res) {
+    tipoModelo.find({ 'tipID': req.params.tipID }, function (err, tipo) {
+        if (!err) {
+            res.send(tipo);
+        } else {
+            console.log(err);
+        }
+    });
 });
 
 if ('development' == app.get('env')) {
