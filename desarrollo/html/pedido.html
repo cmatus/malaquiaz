@@ -1,0 +1,33 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <link href="./_css/estilo.css" rel="stylesheet" />
+        <script src="_js/jquery.min.js"></script>
+        <script src="_js/funciones.js"></script>
+        <script src="_js/servicios.js"></script>
+        <script src="_js/pedido.js"></script>
+    </head>
+    <body>
+        <div id="formulario">
+            <div class="pantalla" id="divProducto">
+                <div id="divMenu"></div>
+                <div id="divNombre">&nbsp;</div>
+                <div id="divDetalle">
+                    <div class="grupo" style="width:399px;border-right:1px solid red"><div class="titulo">Ingredientes</div><div class="detalle" id="divIngredientes"></div></div><div class="grupo"><div class="titulo">Agregados</div><div class="detalle" id="divAgregados"></div></div>
+                    <div class="titulo">Precios</div>
+                    <div class="detalle" id="divPrecios" style="height:165px"></div>
+                </div>
+            </div>
+            <div class="pantalla" id="divPedido"></div>
+            <div id="divMenuPrincipal">
+                <button class="menu" id="butNuevo"    onclick="nuevo()">Nuevo</button>
+                <button class="menu" id="butAgrega"   onclick="agregar()">Agregar</button>
+                <button class="menu" id="butPedido"   onclick="ver()">Ver pedido</button>
+                <button class="menu" id="butEnviar"   onclick="enviar()">Enviar pedido</button>
+                <button class="menu" id="butCancelar" onclick="cancelar()">Cancelar pedido</button>
+            </div>
+        </div>
+    </body>
+</html>

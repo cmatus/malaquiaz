@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+        <script src="https://code.jquery.com/jquery-1.12.2.min.js" integrity="sha256-lZFHibXzMHo3GGeehn1hudTAP3Sc0uKXBXAzHX1sjtk=" crossorigin="anonymous"></script>
+        <script>
+            /*
+            jQuery.ajax({
+                url: 'http://localhost:3000/api/producto/ingrediente',
+                type: 'POST',
+                data: { 
+                    '_id': '5701b882deb985d41221f9a4',
+                    'ingredientes': [
+                            { 'tipID': '570175387e0b3adc0a077365', 'nombre': 'Cebolla Blanca Caramelizada' },
+                            { 'tipID': '570175387e0b3adc0a07736a', 'nombre': 'Cilantro' },
+                            { 'tipID': '570175387e0b3adc0a077383', 'nombre': 'Tocino' }
+                        ],
+                    'precios': [
+                            { 'tipo': 'Mediana', 'valor': 4200 },
+                            { 'tipo': 'Familiar', 'valor': 6600 }
+                        ]
+                },
+                success: function(data, textStatus, jqXHR) {
+                    console.log("PUT response:");
+                    console.dir(data);
+                    console.log(textStatus);
+                    console.dir(jqXHR);
+                }
+            });
+            */
+            /*
+                    { 'tipID': '56fca0fa69d6095c2702f356', 'nombre': 'Fría', 'nivel': 1 },
+                    { 'tipID': '56fca0fa69d6095c2702f356', 'nombre': 'Caliente', 'nivel': 1 },
+                    { 'tipID': '56fca0fa69d6095c2702f357', 'nombre': 'Base', 'nivel': 1 },
+                    { 'tipID': '56fca0fa69d6095c2702f358', 'nombre': 'Aderezo', 'nivel': 1 },
+                    { 'tipID': '56fca0fa69d6095c2702f358', 'nombre': 'Carne', 'nivel': 1 },
+                    { 'tipID': '56fca0fa69d6095c2702f358', 'nombre': 'Embutido', 'nivel': 1 },
+                    { 'tipID': '56fca0fa69d6095c2702f358', 'nombre': 'Extra', 'nivel': 1 },
+                    { 'tipID': '56fca0fa69d6095c2702f358', 'nombre': 'Queso', 'nivel': 1 },
+                    { 'tipID': '56fca0fa69d6095c2702f358', 'nombre': 'Vegetal', 'nivel': 1 }
+            */
+
+            $.ajaxSetup({
+                cache: false,
+                async: false
+            }); 
+
+            function RetornaAJAX(iPagina, iFuncion, iDATA, iEjecucion) {
+                var options = {
+                    type: 'POST',
+                    url: iPagina + '/' + iFuncion,
+                    data: iDATA,
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json',
+                    success: function (msg) { eval(iEjecucion); },
+                    error: function (result) { alert(result.statusText + ' - ' + result.status); }
+                }
+                return options;
+            }
+
+            function ejeWSLlamarTicket(){
+                var retorno = false;
+                var parametro = RetornaAJAX("http://192.168.1.160/impresion/wsimprime.asmx", "imprimir", "{ 'texto': ['Claudio', 'Matus', 'Alegría'], 'corte': true, 'apertura': false }", null);
+                $.when($.ajax(parametro)).done(function (a) {
+                    if (a.d != null) {
+                        retorno = a.d;
+                    }
+                });
+                return retorno;
+            }
+
+            function registraTipo(){
+                jQuery.ajax({
+                    url: 'http://localhost:3000/api/tipo',
+                    type: 'POST',
+                    data: { 
+                        'tipID': $("#txtTipID_Tipo").val(),
+                        'nombre': $("#txtNombre_Tipo").val(),
+                        'nivel': $("#txtNivel_Tipo").val()
+                    },
+                    success: function(data) {
+                        $("#txtID_Tipo").val(data._id);
+                    }
+                });
+            }
+
+            function registraProducto(){
+                jQuery.ajax({
+                    url: 'http://localhost:3000/api/producto',
+                    type: 'POST',
+                    data: { 
+                        'tipID': $("#txtTipID_Producto").val(),
+                        'nombre': $("#txtNombre_Producto").val(),
+                        'ingrediente': $("#txtIngrediente_Producto").val()
+                    },
+                    success: function(data, textStatus, jqXHR) {
+                        $("#txtID_Producto").val(data._id);
+                    }
+                });
+            }
+
+            function registraIngredientes(){
+
+                /*
+                var jsonIngredientes = [];
+                if( $("#txtID_Ingrediente_1").val() != "" ){
+                    jsonIngredientes.push({
+                        'proID': $("#txtID_Ingrediente_1").val(),
+                        'nombre': $("#txtNombre_Ingrediente_1").val()
+                    });
+                }
+                if( $("#txtID_Ingrediente_2").val() != "" ){
+                    jsonIngredientes.push({
+                        'proID': $("#txtID_Ingrediente_2").val(),
+                        'nombre': $("#txtNombre_Ingrediente_2").val()
+                    });
+                }
+                if( $("#txtID_Ingrediente_3").val() != "" ){
+                    jsonIngredientes.push({
+                        'proID': $("#txtID_Ingrediente_3").val(),
+                        'nombre': $("#txtNombre_Ingrediente_3").val()
+                    });
+                }
+                if( $("#txtID_Ingrediente_4").val() != "" ){
+                    jsonIngredientes.push({
+                        'proID': $("#txtID_Ingrediente_4").val(),
+                        'nombre': $("#txtNombre_Ingrediente_4").val()
+                    });
+                }
+                if( $("#txtID_Ingrediente_5").val() != "" ){
+                    jsonIngredientes.push({
+                        'proID': $("#txtID_Ingrediente_5").val(),
+                        'nombre': $("#txtNombre_Ingrediente_5").val()
+                    });
+                }
+                */
+                
+                jQuery.ajax({
+                    url: 'http://localhost:3000/api/productos',
+                    type: 'POST',
+                    data: { 'proID': '123' },
+                    success: function(data, textStatus, jqXHR) {
+                        alert(data);
+                        alert(textStatus);
+                        alert(jqXHR);
+                    }
+                });
+                
+            }
+            
+        </script>
+    </head>
+    <body>
+        <div>
+            <div><input type="text" id="txtID_Tipo" /></div>
+            <div><input type="text" id="txtTipID_Tipo" /></div>
+            <div><input type="text" id="txtNombre_Tipo" /></div>
+            <div><input type="text" id="txtNivel_Tipo" /></div>
+            <div><input type="button" value="Registra tipo" onclick="registraTipo()" /></div>
+        </div>
+        <br>
+        <div>
+            <div><input type="text" id="txtID_Producto" /></div>
+            <div><input type="text" id="txtTipID_Producto" /></div>
+            <div><input type="text" id="txtNombre_Producto" /></div>
+            <div><input type="text" id="txtIngrediente_Producto" /></div>
+            <div><input type="button" value="Registra producto" onclick="registraProducto()" /></div>
+        </div>
+        <br>
+        <div>
+            <div><input type="text" id="txtID_Ingrediente" /></div>
+            <div><input type="text" id="txtID_Ingrediente_1" /><input type="text" id="txtNombre_Ingrediente_1" /></div>
+            <div><input type="text" id="txtID_Ingrediente_2" /><input type="text" id="txtNombre_Ingrediente_2" /></div>
+            <div><input type="text" id="txtID_Ingrediente_3" /><input type="text" id="txtNombre_Ingrediente_3" /></div>
+            <div><input type="text" id="txtID_Ingrediente_4" /><input type="text" id="txtNombre_Ingrediente_4" /></div>
+            <div><input type="text" id="txtID_Ingrediente_5" /><input type="text" id="txtNombre_Ingrediente_5" /></div>
+            <div><input type="button" value="Registra ingredientes" onclick="registraIngredientes()" /></div>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,176 @@
+﻿* {
+    padding: 0px;
+    margin: 0px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 20pt;
+}
+
+#formulario {
+    width: 800px;
+    height: 1280px;
+    border: 1px solid red;
+    margin: auto;
+    overflow: hidden;
+}
+
+.pantalla{
+    display: none;
+}
+
+.pantalla * {
+    overflow: hidden;
+}
+
+#divMenuPrincipal {
+    margin: 0px;
+    width: 800px;
+    background-color: black;
+    color: white;
+    text-align: center;
+    height: 80px;
+}
+
+#divMenuPrincipal button.menu {
+    width: 250px;
+    height: 50px;
+    background-color: red;
+    border: 2px solid white;
+    color: white;
+    vertical-align: top;
+    margin: 2px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    display: none;
+}
+
+#divMenu {
+    width: 800px;
+    height: 460px;
+    padding: 0px;
+    margin: 0px;
+    margin-bottom: 2px;
+    background-color: blue;
+    box-sizing: border-box;
+}
+
+#divMenu button.menu {
+    width: 253px;
+    height: 80px;
+    margin: 0px;
+    margin-left: 10px;
+    margin-top: 10px;
+    background-color: navy;
+    border: 2px solid white;
+    color: white;
+    vertical-align: top;
+}
+
+#divMenu button.menu:active {
+    background-color: green;
+}
+
+#divNombre {
+    margin: 0px;
+    margin-bottom: 2px;
+    width: 800px;
+    padding: 10px;
+    background-color: brown;
+    color: white;
+    box-sizing: border-box;
+    line-height: 50px;
+    font-size: 25pt;
+    font-weight: 600;
+}
+
+#divProducto {
+    vertical-align: top;
+}
+
+#divPedido {
+    /*display: none;*/
+    width: 850px;
+    height: 1200px;
+    background-color: black;
+    padding: 20px;
+    box-sizing: border-box;
+    overflow-y: scroll;
+}
+
+#divDetalle .titulo {
+    line-height: 60px;
+    width: 800px;
+    box-sizing: border-box;
+    padding-left: 50px;
+    margin: 0px;
+    margin-bottom: 2px;
+    background-color: silver;
+    font-weight: bold;
+    padding-left: 15px;
+}
+
+#divDetalle .grupo {
+    width: 400px;
+    overflow: hidden;
+    display: inline-block;
+}
+
+#divDetalle .detalle, #divDetalle .grupo .detalle {
+    height: 186px;
+    overflow-y: auto;
+    width: 850px;
+}
+
+#divDetalle .grupo .detalle {
+    height: 372px;
+    overflow-y: auto;
+    width: 850px;
+}
+
+.detalle button {
+    height: 60px;
+    width: 800px;
+    box-sizing: border-box;
+    margin: 0px;
+    margin-bottom: 2px;
+    border: 0px;
+    text-align: left;
+    background-repeat: no-repeat;
+    background-position-x: 10px;
+    background-position-y: center;
+    padding-left: 50px;
+}
+
+#divAgregados button {
+    background-color: #ededed;
+}
+
+#divIngredientes button, #divPrecios button {
+    background-color: antiquewhite;
+}
+
+#divIngredientes .item, #divAgregados .item, #divPrecios .item {
+    background-image: url('../_img/ok.png');
+}
+
+.pantalla{
+    overflow: hidden;
+}
+
+.pedidoItem {
+    width: 760px;
+    border: 2px solid white;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 10px;
+}
+
+.pedidoItem .producto {
+    font-size: 25pt;
+    margin-bottom: 10px;
+    text-align: left;
+}
+
+.pedidoItem .ingrediente {
+    padding-left: 50px;
+    text-align: left;
+}
