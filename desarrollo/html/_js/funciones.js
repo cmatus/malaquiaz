@@ -18,6 +18,19 @@ function getAJAX(url, iEjecucion) {
     return options;
 }
 
+function RetornaAJAX(iPagina, iFuncion, iDATA, iEjecucion) {
+    var options = {
+        type: 'POST',
+        url: iPagina + '/' + iFuncion,
+        data: iDATA,
+        contentType: 'application/json; charset=utf-8',
+        dataType: 'json',
+        success: function (msg) { eval(iEjecucion); },
+        error: function (result) { alert(result.statusText + ' - ' + result.status); }
+    }
+    return options;
+}
+
 function postAJAX(url, data) {
     var options = {
         type: 'POST',

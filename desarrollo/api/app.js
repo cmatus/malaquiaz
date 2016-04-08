@@ -24,29 +24,7 @@ app.use(session({ resave: true,
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(multer());
-
 app.use(cors({ origin: 'http://localhost' }));
-//res.setHeader('Access-Control-Allow-Origin', '*');
-
-/*
-app.use('/api', function(req, res, next) {
-
-    console.log(req.headers.origin);
-
-    var responseSettings = {
-        "AccessControlAllowOrigin": req.headers.origin,
-        "AccessControlAllowHeaders": "Origin, Content-Type, X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5,  Date, X-Api-Version, X-File-Name",
-        "AccessControlAllowMethods": "POST, GET, PUT, DELETE",
-        "AccessControlAllowCredentials": true
-    };
-
-    res.header("Access-Control-Allow-Credentials", responseSettings.AccessControlAllowCredentials);
-    res.header("Access-Control-Allow-Origin",  responseSettings.AccessControlAllowOrigin);
-    res.header("Access-Control-Allow-Headers", (req.headers['access-control-request-headers']) ? req.headers['access-control-request-headers'] : "x-requested-with");
-    res.header("Access-Control-Allow-Methods", (req.headers['access-control-request-method']) ? req.headers['access-control-request-method'] : responseSettings.AccessControlAllowMethods);
-
-});
-*/
 
 var Schema = mongoose.Schema;
 
@@ -113,18 +91,61 @@ app.get('/api/tipo/:tipID', function (req, res) {
     });
 });
 
-app.post('/api/producto/:proID', function (req, res) {
-    var query = productoModelo.find({ '_id': req.params.proID });
-    query.exec(function (err, producto) {
+app.get('/api/producto', function (req, res) {
+    productoModelo.find(function (err, producto) {
         if (!err) {
-            console.log("Producto encontrado");
+            res.send(producto);
         } else {
-            console.log("Error");
+            console.log(err);
         }
     });
-    res.json(producto);
 });
 
+app.get('/api/producto/:proID', function (req, res) {
+    productoModelo.find({ '_id': req.params.proID }, function (err, producto) {
+        if (!err) {
+            res.send(producto);
+        } else {
+            console.log(err);
+        }
+    });
+});
+
+app.post('/api/producto/ingrediente', function (req, res) {
+    productoModelo.findOne({ '_id': req.body.proID }, function (err, producto) {
+        if (!err) {
+            producto.ingredientes = req.body.ingredientes;
+            producto.save(function (err) {
+                if (!err) {
+                    console.log(req.body.ingredientes.length + " ingredientes agregados");
+                } else {
+                    console.log(err);
+                }
+            });
+            res.json(producto);
+        } else {
+            console.log(err);
+        }
+    });
+});
+
+app.post('/api/producto/precio', function (req, res) {
+    productoModelo.findOne({ '_id': req.body.proID }, function (err, producto) {
+        if (!err) {
+            producto.precios = req.body.precios;
+            producto.save(function (err) {
+                if (!err) {
+                    console.log(req.body.precios.length + " precios agregados");
+                } else {
+                    console.log(err);
+                }
+            });
+            res.json(producto);
+        } else {
+            console.log(err);
+        }
+    });
+});
 
 if ('development' == app.get('env')) {
     app.use(errorHandler());
