@@ -25,13 +25,17 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(multer());
 
-app.use(cors({ origin: 'http://localhost:3000/api' }));
+app.use(cors({ origin: 'http://localhost' }));
+//res.setHeader('Access-Control-Allow-Origin', '*');
+
 /*
 app.use('/api', function(req, res, next) {
 
+    console.log(req.headers.origin);
+
     var responseSettings = {
         "AccessControlAllowOrigin": req.headers.origin,
-        "AccessControlAllowHeaders": "Content-Type,X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5,  Date, X-Api-Version, X-File-Name",
+        "AccessControlAllowHeaders": "Origin, Content-Type, X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5,  Date, X-Api-Version, X-File-Name",
         "AccessControlAllowMethods": "POST, GET, PUT, DELETE",
         "AccessControlAllowCredentials": true
     };
@@ -43,6 +47,7 @@ app.use('/api', function(req, res, next) {
 
 });
 */
+
 var Schema = mongoose.Schema;
 
 var Tipo = new Schema({
@@ -51,7 +56,26 @@ var Tipo = new Schema({
     nivel: Number
 }, { collection: 'tipo' });
 
+var Ingrediente = new Schema({
+    proID: String,
+    nombre: String
+});
+
+var Precio = new Schema({
+    tipo: String,
+    valor: Number
+});
+
+var Producto = new Schema({
+    tipID: String,
+    nombre: String,
+    ingredientes: [Ingrediente],
+    precios: [Precio],
+    ingrediente: Boolean
+}, { collection: 'producto' });
+
 var tipoModelo = mongoose.model('Tipo', Tipo);
+var productoModelo = mongoose.model('Producto', Producto);
 
 app.get('/api/tipo', function (req, res) {
     tipoModelo.find(function (err, tipo) {
@@ -88,6 +112,19 @@ app.get('/api/tipo/:tipID', function (req, res) {
         }
     });
 });
+
+app.post('/api/producto/:proID', function (req, res) {
+    var query = productoModelo.find({ '_id': req.params.proID });
+    query.exec(function (err, producto) {
+        if (!err) {
+            console.log("Producto encontrado");
+        } else {
+            console.log("Error");
+        }
+    });
+    res.json(producto);
+});
+
 
 if ('development' == app.get('env')) {
     app.use(errorHandler());

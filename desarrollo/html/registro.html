@@ -71,17 +71,13 @@
             }
 
             function registraTipo(){
-                jQuery.ajax({
-                    url: 'http://localhost:3000/api/tipo',
-                    type: 'POST',
-                    data: { 
-                        'tipID': $("#txtTipID_Tipo").val(),
-                        'nombre': $("#txtNombre_Tipo").val(),
-                        'nivel': $("#txtNivel_Tipo").val()
-                    },
-                    success: function(data) {
-                        $("#txtID_Tipo").val(data._id);
-                    }
+                var data = { 
+                    tipID: $("#txtTipID_Tipo").val(),
+                    nombre: $("#txtNombre_Tipo").val(),
+                    nivel: $("#txtNivel_Tipo").val()
+                }
+                $.post("http://localhost:3000/api/tipo", function(data) {
+                    $("#txtID_Tipo").val(data._id);
                 });
             }
 
@@ -102,7 +98,6 @@
 
             function registraIngredientes(){
 
-                /*
                 var jsonIngredientes = [];
                 if( $("#txtID_Ingrediente_1").val() != "" ){
                     jsonIngredientes.push({
@@ -134,17 +129,10 @@
                         'nombre': $("#txtNombre_Ingrediente_5").val()
                     });
                 }
-                */
                 
-                jQuery.ajax({
-                    url: 'http://localhost:3000/api/productos',
-                    type: 'POST',
-                    data: { 'proID': '123' },
-                    success: function(data, textStatus, jqXHR) {
-                        alert(data);
-                        alert(textStatus);
-                        alert(jqXHR);
-                    }
+                var data = jsonIngredientes;
+                $.post("http://localhost:3000/api/tipo/570175387e0b3adc0a07735d", function(data) {
+                    $("#txtID_Ingrediente").val(data);
                 });
                 
             }
