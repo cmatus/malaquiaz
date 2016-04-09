@@ -4,64 +4,20 @@
         <meta charset="UTF-8">
         <title>Title</title>
         <script src="https://code.jquery.com/jquery-1.12.2.min.js" integrity="sha256-lZFHibXzMHo3GGeehn1hudTAP3Sc0uKXBXAzHX1sjtk=" crossorigin="anonymous"></script>
+        <script src="_js/funciones.js"></script>
         <script>
-            /*
-            jQuery.ajax({
-                url: 'http://localhost:3000/api/producto/ingrediente',
-                type: 'POST',
-                data: { 
-                    '_id': '5701b882deb985d41221f9a4',
-                    'ingredientes': [
-                            { 'tipID': '570175387e0b3adc0a077365', 'nombre': 'Cebolla Blanca Caramelizada' },
-                            { 'tipID': '570175387e0b3adc0a07736a', 'nombre': 'Cilantro' },
-                            { 'tipID': '570175387e0b3adc0a077383', 'nombre': 'Tocino' }
-                        ],
-                    'precios': [
-                            { 'tipo': 'Mediana', 'valor': 4200 },
-                            { 'tipo': 'Familiar', 'valor': 6600 }
-                        ]
-                },
-                success: function(data, textStatus, jqXHR) {
-                    console.log("PUT response:");
-                    console.dir(data);
-                    console.log(textStatus);
-                    console.dir(jqXHR);
-                }
-            });
-            */
-            /*
-                    { 'tipID': '56fca0fa69d6095c2702f356', 'nombre': 'Fría', 'nivel': 1 },
-                    { 'tipID': '56fca0fa69d6095c2702f356', 'nombre': 'Caliente', 'nivel': 1 },
-                    { 'tipID': '56fca0fa69d6095c2702f357', 'nombre': 'Base', 'nivel': 1 },
-                    { 'tipID': '56fca0fa69d6095c2702f358', 'nombre': 'Aderezo', 'nivel': 1 },
-                    { 'tipID': '56fca0fa69d6095c2702f358', 'nombre': 'Carne', 'nivel': 1 },
-                    { 'tipID': '56fca0fa69d6095c2702f358', 'nombre': 'Embutido', 'nivel': 1 },
-                    { 'tipID': '56fca0fa69d6095c2702f358', 'nombre': 'Extra', 'nivel': 1 },
-                    { 'tipID': '56fca0fa69d6095c2702f358', 'nombre': 'Queso', 'nivel': 1 },
-                    { 'tipID': '56fca0fa69d6095c2702f358', 'nombre': 'Vegetal', 'nivel': 1 }
-            */
+            
+            var data = "{ 'texto': ['Claudio', 'Matus', 'Alegría'], 'corte': true, 'apertura': false }";
+            var urlAPI = "http://localhost:3000/api";
 
             $.ajaxSetup({
                 cache: false,
                 async: false
-            }); 
-
-            function RetornaAJAX(iPagina, iFuncion, iDATA, iEjecucion) {
-                var options = {
-                    type: 'POST',
-                    url: iPagina + '/' + iFuncion,
-                    data: iDATA,
-                    contentType: 'application/json; charset=utf-8',
-                    dataType: 'json',
-                    success: function (msg) { eval(iEjecucion); },
-                    error: function (result) { alert(result.statusText + ' - ' + result.status); }
-                }
-                return options;
-            }
-
-            function ejeWSLlamarTicket(){
+            });
+            /*
+            function imprime(data, destino){
                 var retorno = false;
-                var parametro = RetornaAJAX("http://192.168.1.160/impresion/wsimprime.asmx", "imprimir", "{ 'texto': ['Claudio', 'Matus', 'Alegría'], 'corte': true, 'apertura': false }", null);
+                var parametro = RetornaAJAX("http://192.168.1.160/impresion/wsimprime.asmx", "imprimir", data, null);
                 $.when($.ajax(parametro)).done(function (a) {
                     if (a.d != null) {
                         retorno = a.d;
@@ -76,28 +32,25 @@
                     nombre: $("#txtNombre_Tipo").val(),
                     nivel: $("#txtNivel_Tipo").val()
                 }
-                $.post("http://localhost:3000/api/tipo", function(data) {
+                $.post(urlAPI + "/tipo", function(data) {
                     $("#txtID_Tipo").val(data._id);
                 });
             }
+            */
 
             function registraProducto(){
-                jQuery.ajax({
-                    url: 'http://localhost:3000/api/producto',
-                    type: 'POST',
-                    data: { 
-                        'tipID': $("#txtTipID_Producto").val(),
-                        'nombre': $("#txtNombre_Producto").val(),
-                        'ingrediente': $("#txtIngrediente_Producto").val()
-                    },
-                    success: function(data, textStatus, jqXHR) {
-                        $("#txtID_Producto").val(data._id);
-                    }
+                var info = { 
+                    'tipID': $("#txtTipID_Producto").val(),
+                    'nombre': $("#txtNombre_Producto").val(),
+                    'ingrediente': $("#txtIngrediente_Producto").val()
+                }
+                $.post(urlAPI + "/producto", info, function(data) {
+                    $("#txtID_Producto").val(data._id);
                 });
             }
 
-            function registraIngredientes(){
-
+            function registraProductoIngredientes(){
+                
                 var jsonIngredientes = [];
                 if( $("#txtID_Ingrediente_1").val() != "" ){
                     jsonIngredientes.push({
@@ -130,9 +83,58 @@
                     });
                 }
                 
-                var data = jsonIngredientes;
-                $.post("http://localhost:3000/api/tipo/570175387e0b3adc0a07735d", function(data) {
-                    $("#txtID_Ingrediente").val(data);
+                var info = { 
+                    'proID': $("#txtID_Ingrediente").val(), 
+                    'ingredientes': jsonIngredientes 
+                }
+                $.post(urlAPI + "/producto/ingrediente", info, function(data) {
+                    $("#txtID_Ingrediente").val(data._id);
+                    $("#txtNombre_Ingrediente").val(data.nombre);
+                });
+                
+            }  
+
+            function registraProductoPrecios(){
+                
+                var jsonPrecios = [];
+                if( $("#txtID_Precio_1").val() != "" ){
+                    jsonPrecios.push({
+                        'proID': $("#txtID_Precio_1").val(),
+                        'nombre': $("#txtNombre_Precio_1").val()
+                    });
+                }
+                if( $("#txtID_Precio_2").val() != "" ){
+                    jsonPrecios.push({
+                        'proID': $("#txtID_Precio_2").val(),
+                        'nombre': $("#txtNombre_Precio_2").val()
+                    });
+                }
+                if( $("#txtID_Precio_3").val() != "" ){
+                    jsonPrecios.push({
+                        'proID': $("#txtID_Precio_3").val(),
+                        'nombre': $("#txtNombre_Precio_3").val()
+                    });
+                }
+                if( $("#txtID_Precio_4").val() != "" ){
+                    jsonPrecios.push({
+                        'proID': $("#txtID_Precio_4").val(),
+                        'nombre': $("#txtNombre_Precio_4").val()
+                    });
+                }
+                if( $("#txtID_Precio_5").val() != "" ){
+                    jsonPrecios.push({
+                        'proID': $("#txtID_Precio_5").val(),
+                        'nombre': $("#txtNombre_Precio_5").val()
+                    });
+                }
+                
+                var info = { 
+                    'proID': $("#txtID_Precio").val(), 
+                    'Precios': jsonPrecios 
+                }
+                $.post(urlAPI + "/producto/Precio", info, function(data) {
+                    $("#txtID_Precio").val(data._id);
+                    $("#txtNombre_Precio").val(data.nombre);
                 });
                 
             }
@@ -157,13 +159,22 @@
         </div>
         <br>
         <div>
-            <div><input type="text" id="txtID_Ingrediente" /></div>
+            <div><input type="text" id="txtID_Ingrediente" /><input type="text" id="txtNombre_Ingrediente" /></div>
             <div><input type="text" id="txtID_Ingrediente_1" /><input type="text" id="txtNombre_Ingrediente_1" /></div>
             <div><input type="text" id="txtID_Ingrediente_2" /><input type="text" id="txtNombre_Ingrediente_2" /></div>
             <div><input type="text" id="txtID_Ingrediente_3" /><input type="text" id="txtNombre_Ingrediente_3" /></div>
             <div><input type="text" id="txtID_Ingrediente_4" /><input type="text" id="txtNombre_Ingrediente_4" /></div>
             <div><input type="text" id="txtID_Ingrediente_5" /><input type="text" id="txtNombre_Ingrediente_5" /></div>
-            <div><input type="button" value="Registra ingredientes" onclick="registraIngredientes()" /></div>
+            <div><input type="button" value="Registra ingredientes" onclick="registraProductoIngredientes()" /></div>
+        </div>
+        <div>
+            <div><input type="text" id="txtID_Precio" /><input type="text" id="txtNombre_Precio" /></div>
+            <div><input type="text" id="txtID_Precio_1" /><input type="text" id="txtNombre_Precio_1" /></div>
+            <div><input type="text" id="txtID_Precio_2" /><input type="text" id="txtNombre_Precio_2" /></div>
+            <div><input type="text" id="txtID_Precio_3" /><input type="text" id="txtNombre_Precio_3" /></div>
+            <div><input type="text" id="txtID_Precio_4" /><input type="text" id="txtNombre_Precio_4" /></div>
+            <div><input type="text" id="txtID_Precio_5" /><input type="text" id="txtNombre_Precio_5" /></div>
+            <div><input type="button" value="Registra Precios" onclick="registraProductoPrecios()" /></div>
         </div>
     </body>
 </html>
