@@ -6,18 +6,6 @@ $.ajaxSetup({
     async: false
 });
 
-function getAJAX(url, iEjecucion) {
-    var options = {
-        type: 'GET',
-        url: url,
-        contentType: 'application/json; charset=utf-8',
-        dataType: 'json',
-        success: function (msg) { eval(iEjecucion); },
-        error: function (result) { /*alert(result.statusText + ' - ' + result.status);*/ }
-    }
-    return options;
-}
-
 function RetornaAJAX(iPagina, iFuncion, iDATA, iEjecucion) {
     var options = {
         type: 'POST',
@@ -27,6 +15,18 @@ function RetornaAJAX(iPagina, iFuncion, iDATA, iEjecucion) {
         dataType: 'json',
         success: function (msg) { eval(iEjecucion); },
         error: function (result) { alert(result.statusText + ' - ' + result.status); }
+    }
+    return options;
+}
+
+function getAJAX(url, iEjecucion) {
+    var options = {
+        type: 'GET',
+        url: url,
+        contentType: 'application/json; charset=utf-8',
+        dataType: 'json',
+        success: function (msg) { eval(iEjecucion); },
+        error: function (result) { /*alert(result.statusText + ' - ' + result.status);*/ }
     }
     return options;
 }

@@ -56,7 +56,7 @@ var tipoModelo = mongoose.model('Tipo', Tipo);
 var productoModelo = mongoose.model('Producto', Producto);
 
 app.get('/api/tipo', function (req, res) {
-    tipoModelo.find(function (err, tipo) {
+    tipoModelo.find().sort('tipID').sort('nombre').exec(function (err, tipo) {
         if (!err) {
             res.send(tipo);
         } else {
@@ -101,8 +101,36 @@ app.get('/api/producto', function (req, res) {
     });
 });
 
+app.post('/api/producto', function (req, res) {
+    producto = new productoModelo({
+        tipID: req.body.tipID,
+        nombre: req.body.nombre,
+        ingredientes: null,
+        precios: null,
+        ingrediente: req.body.ingrediente
+    });
+    producto.save(function (err) {
+        if (!err) {
+            console.log("Producto creado: " + producto._id);
+        } else {
+            console.log(err);
+        }
+    });
+    res.json(producto);
+});
+
 app.get('/api/producto/:proID', function (req, res) {
-    productoModelo.find({ '_id': req.params.proID }, function (err, producto) {
+    productoModelo.findOne({ '_id': req.params.proID }).sort('nombre').exec(function (err, producto) {
+        if (!err) {
+            res.send(producto);
+        } else {
+            console.log(err);
+        }
+    });
+});
+
+app.get('/api/producto/tipo/:tipID', function (req, res) {
+    productoModelo.find({ 'tipID': req.params.tipID }).sort('nombre').exec(function (err, producto) {
         if (!err) {
             res.send(producto);
         } else {
