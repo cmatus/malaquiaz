@@ -1,0 +1,15 @@
+2016-04-11 14:11:39 - Starting C:\Program Files\nodejs\node.exe --harmony "C:\Users\claudio.matus\AppData\Roaming\npm\node_modules\qckwinsvc\node_modules\node-windows\lib\wrapper.js" -f "C:\cmatus\git\malaquiaz\desarrollo\api\app.js" -l "malaquiaz" -g 0.25 -w 1 -r 3 -a n
+2016-04-11 14:11:39 - Started 14028
+2016-04-11 14:22:11 - Stopping malaquiaz.exe
+2016-04-11 14:22:11 - ProcessKill 14028
+2016-04-11 14:22:11 - Finished malaquiaz.exe
+2016-04-11 16:15:55 - Starting C:\Program Files\nodejs\node.exe --harmony "C:\Users\claudio.matus\AppData\Roaming\npm\node_modules\qckwinsvc\node_modules\node-windows\lib\wrapper.js" -f "C:\cmatus\git\malaquiaz\desarrollo\api\app.js" -l "malaquiaz" -g 0.25 -w 1 -r 3 -a n
+2016-04-11 16:15:55 - Started 4748
+2016-04-11 17:10:04 - Stopping malaquiaz.exe
+2016-04-11 17:10:04 - ProcessKill 4748
+2016-04-11 17:10:04 - Finished malaquiaz.exe
+2016-04-11 17:10:10 - Starting C:\Program Files\nodejs\node.exe --harmony "C:\Users\claudio.matus\AppData\Roaming\npm\node_modules\qckwinsvc\node_modules\node-windows\lib\wrapper.js" -f "C:\cmatus\git\malaquiaz\desarrollo\api\app.js" -l "malaquiaz" -g 0.25 -w 1 -r 3 -a n
+2016-04-11 17:10:10 - Started 5812
+2016-04-11 17:10:28 - Stopping malaquiaz.exe
+2016-04-11 17:10:28 - ProcessKill 5812
+2016-04-11 17:10:28 - Finished malaquiaz.exe

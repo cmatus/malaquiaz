@@ -1,0 +1,85 @@
+Corriendo por puerto: 3000
+[0mGET /api/tipo/%3Cinicio%3E?_=1460394704534 [32m200 [0m21.050 ms - 552[0m
+[0mGET /api/garzon?_=1460394704535 [32m200 [0m4.681 ms - 283[0m
+[0mGET /api/tipo/%3Cinicio%3E?_=1460394712408 [32m200 [0m2.389 ms - 552[0m
+[0mGET /api/garzon?_=1460394712409 [32m200 [0m2.538 ms - 283[0m
+[0mGET /api/tipo/%3Cinicio%3E?_=1460394713259 [32m200 [0m2.991 ms - 552[0m
+[0mGET /api/garzon?_=1460394713260 [32m200 [0m2.669 ms - 283[0m
+[0mGET / [33m404 [0m2.720 ms - 13[0m
+[0mGET /api [33m404 [0m1.940 ms - 16[0m
+[0mGET /api/tipo [32m200 [0m3.975 ms - 552[0m
+[0mGET /api/tipo/%3Cinicio%3E?_=1460398842370 [32m200 [0m3.696 ms - 552[0m
+[0mGET /api/garzon?_=1460398842371 [32m200 [0m2.038 ms - 283[0m
+[0mGET /api/tipo/%3Cinicio%3E?_=1460395188451 [32m200 [0m3.291 ms - 552[0m
+[0mGET /api/garzon?_=1460395188452 [32m200 [0m2.497 ms - 283[0m
+[0mGET /api/tipo/%3Cinicio%3E?_=1460395190608 [32m200 [0m6.270 ms - 552[0m
+[0mGET /api/garzon?_=1460395190609 [32m200 [0m2.215 ms - 283[0m
+[0mPOST /api/garzon [32m200 [0m25.340 ms - 81[0m
+Garzón creado: 570bdcd68eac44202d9ba047
+[0mGET /api/garzon?_=1460398842372 [32m200 [0m3.264 ms - 373[0m
+[0mGET /api/tipo/%3Cinicio%3E?_=1460395227800 [32m200 [0m3.337 ms - 552[0m
+[0mGET /api/garzon?_=1460395227801 [32m200 [0m2.504 ms - 373[0m
+[0mGET /api/tipo/570280d26d582bec2cd0f41a?_=1460395227802 [32m200 [0m3.353 ms - 2[0m
+[0mGET /api/producto/tipo/570280d26d582bec2cd0f41a?_=1460395227803 [32m200 [0m4.134 ms - 577[0m
+[0mGET /api/producto/5702a013d7aa9ba844a2db9e?_=1460395227804 [32m200 [0m3.715 ms - 575[0m
+[0mGET /api/tipo/570280d26d582bec2cd0f41a?_=1460395227805 [32m200 [0m1.655 ms - 2[0m
+[0mGET /api/producto/tipo/570280d26d582bec2cd0f41a?_=1460395227806 [32m200 [0m3.037 ms - 577[0m
+Corriendo por puerto: 3000
+[0mOPTIONS /api/tipo/%3Cinicio%3E?_=1460402159165 [32m204 [0m7.406 ms - -[0m
+[0mGET /api/tipo/%3Cinicio%3E?_=1460402159165 [32m200 [0m16.047 ms - 552[0m
+[0mOPTIONS /api/tipo/570280d26d582bec2cd0f41a?_=1460402159166 [32m204 [0m0.650 ms - -[0m
+[0mGET /api/tipo/570280d26d582bec2cd0f41a?_=1460402159166 [32m200 [0m3.051 ms - 2[0m
+[0mGET /api/producto/tipo/%3Cinicio%3E?_=1460402273781 [32m200 [0m2.971 ms - 2[0m
+[0mGET /api/producto/tipo/%3Cinicio%3E?_=1460402274855 [32m200 [0m1.918 ms - 2[0m
+[0mGET /api/producto/tipo/%3Cinicio%3E?_=1460402274947 [32m200 [0m2.493 ms - 2[0m
+[0mGET /api/producto/tipo/%3Cinicio%3E?_=1460402275119 [32m200 [0m1.943 ms - 2[0m
+[0mGET /api/producto/tipo/%3Cinicio%3E?_=1460402275281 [32m200 [0m1.721 ms - 2[0m
+[0mGET /api/tipo/%3Cinicio%3E?_=1460402284017 [32m200 [0m3.493 ms - 552[0m
+[0mGET /api/tipo/570280d26d582bec2cd0f41a?_=1460402284018 [32m200 [0m1.634 ms - 2[0m
+[0mGET /api/tipo/%3Cinicio%3E?_=1460402360378 [32m200 [0m4.822 ms - 552[0m
+[0mGET /api/tipo/570280d26d582bec2cd0f41a?_=1460402360379 [32m200 [0m1.885 ms - 2[0m
+[0mGET /api/tipo/%3Cinicio%3E?_=1460402442670 [32m200 [0m3.345 ms - 552[0m
+[0mGET /api/tipo/570280d26d582bec2cd0f41a?_=1460402442671 [32m200 [0m1.940 ms - 2[0m
+[0mGET /api/tipo/%3Cinicio%3E?_=1460403247584 [32m200 [0m4.936 ms - 552[0m
+[0mGET /api/tipo/570280d26d582bec2cd0f41a?_=1460403247585 [32m200 [0m2.230 ms - 2[0m
+[0mGET /api/tipo/%3Cinicio%3E?_=1460403271539 [32m200 [0m3.628 ms - 552[0m
+[0mGET /api/tipo/570280d26d582bec2cd0f41a?_=1460403271540 [32m200 [0m1.406 ms - 2[0m
+[0mGET /api/tipo/%3Cinicio%3E?_=1460403300560 [32m200 [0m2.661 ms - 552[0m
+[0mGET /api/tipo/570280d26d582bec2cd0f41a?_=1460403300561 [32m200 [0m1.416 ms - 2[0m
+[0mGET /api/tipo/%3Cinicio%3E?_=1460403319172 [32m200 [0m2.688 ms - 552[0m
+[0mGET /api/tipo/570280d26d582bec2cd0f41a?_=1460403319173 [32m200 [0m1.989 ms - 2[0m
+[0mGET /api/producto/tipo/570280d26d582bec2cd0f41a?_=1460403319174 [32m200 [0m5.280 ms - 577[0m
+[0mGET /api/tipo/%3Cinicio%3E?_=1460403331144 [32m200 [0m4.348 ms - 552[0m
+[0mGET /api/tipo/570280d26d582bec2cd0f41a?_=1460403331145 [32m200 [0m1.440 ms - 2[0m
+[0mGET /api/producto/tipo/570280d26d582bec2cd0f41a?_=1460403331146 [32m200 [0m2.816 ms - 577[0m
+[0mGET /api/tipo/%3Cinicio%3E?_=1460403565936 [32m200 [0m4.063 ms - 552[0m
+[0mGET /api/tipo/570280d26d582bec2cd0f41a?_=1460403565937 [32m200 [0m1.663 ms - 2[0m
+[0mGET /api/producto/tipo/570280d26d582bec2cd0f41a?_=1460403565938 [32m200 [0m2.457 ms - 577[0m
+[0mGET /api/tipo/%3Cinicio%3E?_=1460404478890 [32m200 [0m4.817 ms - 552[0m
+[0mGET /api/tipo/570280d26d582bec2cd0f41a?_=1460404478891 [32m200 [0m1.476 ms - 2[0m
+[0mGET /api/producto/tipo/570280d26d582bec2cd0f41a?_=1460404478892 [32m200 [0m2.807 ms - 577[0m
+[0mGET /api/tipo/%3Cinicio%3E?_=1460404764882 [32m200 [0m4.048 ms - 552[0m
+[0mGET /api/tipo/570280d26d582bec2cd0f41a?_=1460404764883 [32m200 [0m2.834 ms - 2[0m
+[0mGET /api/producto/tipo/570280d26d582bec2cd0f41a?_=1460404764884 [32m200 [0m2.195 ms - 577[0m
+[0mGET /api/tipo/%3Cinicio%3E?_=1460404846831 [32m200 [0m2.443 ms - 552[0m
+[0mGET /api/tipo/%3Cinicio%3E?_=1460404888151 [32m200 [0m3.081 ms - 552[0m
+[0mGET /api/tipo/570280d26d582bec2cd0f41a?_=1460404888152 [32m200 [0m1.250 ms - 2[0m
+[0mGET /api/producto/tipo/570280d26d582bec2cd0f41a?_=1460404888153 [32m200 [0m3.043 ms - 577[0m
+[0mGET /api/tipo/%3Cinicio%3E?_=1460405111929 [32m200 [0m5.118 ms - 552[0m
+[0mGET /api/tipo/570280d26d582bec2cd0f41a?_=1460405111930 [32m200 [0m1.385 ms - 2[0m
+[0mGET /api/producto/tipo/570280d26d582bec2cd0f41a?_=1460405111931 [32m200 [0m2.667 ms - 577[0m
+{ [CastError: Cast to ObjectId failed for value "ingrediente" at path "_id"]
+  stack: 'Error\n    at MongooseError.CastError (C:\\cmatus\\git\\malaquiaz\\desarrollo\\api\\node_modules\\mongoose\\lib\\error\\cast.js:18:16)\n    at ObjectId.cast (C:\\cmatus\\git\\malaquiaz\\desarrollo\\api\\node_modules\\mongoose\\lib\\schema\\objectid.js:132:13)\n    at ObjectId.castForQuery (C:\\cmatus\\git\\malaquiaz\\desarrollo\\api\\node_modules\\mongoose\\lib\\schema\\objectid.js:182:17)\n    at module.exports (C:\\cmatus\\git\\malaquiaz\\desarrollo\\api\\node_modules\\mongoose\\lib\\cast.js:201:32)\n    at Query.cast (C:\\cmatus\\git\\malaquiaz\\desarrollo\\api\\node_modules\\mongoose\\lib\\query.js:2392:10)\n    at Query.findOne (C:\\cmatus\\git\\malaquiaz\\desarrollo\\api\\node_modules\\mongoose\\lib\\query.js:1203:10)\n    at Query.exec (C:\\cmatus\\git\\malaquiaz\\desarrollo\\api\\node_modules\\mongoose\\lib\\query.js:2027:17)\n    at C:\\cmatus\\git\\malaquiaz\\desarrollo\\api\\app.js:199:72\n    at Layer.handle [as handle_request] (C:\\cmatus\\git\\malaquiaz\\desarrollo\\api\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at next (C:\\cmatus\\git\\malaquiaz\\desarrollo\\api\\node_modules\\express\\lib\\router\\route.js:131:13)\n    at Route.dispatch (C:\\cmatus\\git\\malaquiaz\\desarrollo\\api\\node_modules\\express\\lib\\router\\route.js:112:3)\n    at Layer.handle [as handle_request] (C:\\cmatus\\git\\malaquiaz\\desarrollo\\api\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at C:\\cmatus\\git\\malaquiaz\\desarrollo\\api\\node_modules\\express\\lib\\router\\index.js:277:22\n    at param (C:\\cmatus\\git\\malaquiaz\\desarrollo\\api\\node_modules\\express\\lib\\router\\index.js:349:14)\n    at param (C:\\cmatus\\git\\malaquiaz\\desarrollo\\api\\node_modules\\express\\lib\\router\\index.js:365:14)\n    at Function.process_params (C:\\cmatus\\git\\malaquiaz\\desarrollo\\api\\node_modules\\express\\lib\\router\\index.js:410:3)',
+  message: 'Cast to ObjectId failed for value "ingrediente" at path "_id"',
+  name: 'CastError',
+  kind: 'ObjectId',
+  value: 'ingrediente',
+  path: '_id' }
+Corriendo por puerto: 3000
+{ [CastError: Cast to ObjectId failed for value "ingrediente" at path "_id"]
+  stack: 'Error\n    at MongooseError.CastError (C:\\cmatus\\git\\malaquiaz\\desarrollo\\api\\node_modules\\mongoose\\lib\\error\\cast.js:18:16)\n    at ObjectId.cast (C:\\cmatus\\git\\malaquiaz\\desarrollo\\api\\node_modules\\mongoose\\lib\\schema\\objectid.js:132:13)\n    at ObjectId.castForQuery (C:\\cmatus\\git\\malaquiaz\\desarrollo\\api\\node_modules\\mongoose\\lib\\schema\\objectid.js:182:17)\n    at module.exports (C:\\cmatus\\git\\malaquiaz\\desarrollo\\api\\node_modules\\mongoose\\lib\\cast.js:201:32)\n    at Query.cast (C:\\cmatus\\git\\malaquiaz\\desarrollo\\api\\node_modules\\mongoose\\lib\\query.js:2392:10)\n    at Query.findOne (C:\\cmatus\\git\\malaquiaz\\desarrollo\\api\\node_modules\\mongoose\\lib\\query.js:1203:10)\n    at Query.exec (C:\\cmatus\\git\\malaquiaz\\desarrollo\\api\\node_modules\\mongoose\\lib\\query.js:2027:17)\n    at C:\\cmatus\\git\\malaquiaz\\desarrollo\\api\\app.js:199:72\n    at Layer.handle [as handle_request] (C:\\cmatus\\git\\malaquiaz\\desarrollo\\api\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at next (C:\\cmatus\\git\\malaquiaz\\desarrollo\\api\\node_modules\\express\\lib\\router\\route.js:131:13)\n    at Route.dispatch (C:\\cmatus\\git\\malaquiaz\\desarrollo\\api\\node_modules\\express\\lib\\router\\route.js:112:3)\n    at Layer.handle [as handle_request] (C:\\cmatus\\git\\malaquiaz\\desarrollo\\api\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at C:\\cmatus\\git\\malaquiaz\\desarrollo\\api\\node_modules\\express\\lib\\router\\index.js:277:22\n    at param (C:\\cmatus\\git\\malaquiaz\\desarrollo\\api\\node_modules\\express\\lib\\router\\index.js:349:14)\n    at param (C:\\cmatus\\git\\malaquiaz\\desarrollo\\api\\node_modules\\express\\lib\\router\\index.js:365:14)\n    at Function.process_params (C:\\cmatus\\git\\malaquiaz\\desarrollo\\api\\node_modules\\express\\lib\\router\\index.js:410:3)',
+  message: 'Cast to ObjectId failed for value "ingrediente" at path "_id"',
+  name: 'CastError',
+  kind: 'ObjectId',
+  value: 'ingrediente',
+  path: '_id' }

@@ -9,37 +9,45 @@
                 margin: 0px;
                 padding: 0px;
                 font-family: verdana;
-                font-size: 6pt;
+                font-size: 7pt;
             }
-
+            
             input {
                 padding: 1px;
                 margin: 1px;
             }
-
+            
             .trEnc td {
                 background-color: silver;
                 margin: 1px;
                 padding: 2px;
             }
-
+            
             .trDet:hover {
                 background-color: black;
                 color: white;
                 cursor: pointer;
             }
-
+            
             .trDet td {
                 border: 1px solid silver;
                 margin: 1px;
                 padding: 2px;
             }
-
+            
             .id {
                 width: 145px;
             }
-
+            
             .nombre {
+                width: 145px;
+            }
+
+            .nivel {
+                width: 145px;
+            }
+
+            .rut {
                 width: 145px;
             }
 
@@ -48,7 +56,7 @@
         <script src="_js/funciones.js"></script>
         <script>
             
-            var urlAPI = "http://localhost:3000/api";
+            var urlAPI = "http://172.29.114.91:3000/api";
             var urlImpresion = "http://localhost:17048/wsImprime.asmx";
             var txtID;
             var txtNombre;
@@ -81,7 +89,7 @@
             jsonBoleta.push("1 Sprite");
             jsonBoleta.push(" ");
             jsonBoleta.push("--------------- Fin Comanda---------------");
-
+            
             function nuevo() {
                 $("#txtID_Tipo").val("");
                 $("#txtTipID_Tipo").val("");
@@ -320,8 +328,29 @@
                 
             }
 
+            function registraGarzon() {
+                var info = { 
+                    'rut': $("#txtGarzonRut").val(), 
+                    'nombre': $("#txtGarzonNombre").val()
+                }
+                $.post(urlAPI + "/garzon", info, function(data) {
+                    $("#txtGarzonID").val(data._id);
+                    listarGarzon();
+                });
+            }
+
+            function listarGarzon() {
+                $.get(urlAPI + "/garzon", function(data) {
+                    $("#tabGarzon tr.trDet").remove();
+                    for(var x = 0; x < data.length; x++) {
+                        $("#tabGarzon").append("<tr class='trDet'><td>" + data[x].rut + "</td><td>" + data[x].nombre + "</td></tr>");
+                    }
+                });
+            }
+
             function listar() { 
                 listarTipo("tabTipo1", "<inicio>");
+                listarGarzon();
             }
 
             $( document ).ready(function() {
@@ -376,7 +405,6 @@
                         <div><input type="text" class='id' id="txtID_Ingrediente_2" /><input type="text" class='nombre' id="txtNombre_Ingrediente_2" /></div>
                         <div><input type="text" class='id' id="txtID_Ingrediente_3" /><input type="text" class='nombre' id="txtNombre_Ingrediente_3" /></div>
                         <div><input type="text" class='id' id="txtID_Ingrediente_4" /><input type="text" class='nombre' id="txtNombre_Ingrediente_4" /></div>
-                        <div><input type="text" class='id' id="txtID_Ingrediente_5" /><input type="text" class='nombre' id="txtNombre_Ingrediente_5" /></div>
                         <div><input type="button" value="Registra ingredientes" onclick="registraProductoIngredientes()" /></div>
                     </div>
                     <br>
@@ -385,10 +413,15 @@
                         <div><input type="text" class='id' id="txtID_Precio_1" /><input type="text" class='nombre' id="txtNombre_Precio_1" /></div>
                         <div><input type="text" class='id' id="txtID_Precio_2" /><input type="text" class='nombre' id="txtNombre_Precio_2" /></div>
                         <div><input type="text" class='id' id="txtID_Precio_3" /><input type="text" class='nombre' id="txtNombre_Precio_3" /></div>
-                        <div><input type="text" class='id' id="txtID_Precio_4" /><input type="text" class='nombre' id="txtNombre_Precio_4" /></div>
-                        <div><input type="text" class='id' id="txtID_Precio_5" /><input type="text" class='nombre' id="txtNombre_Precio_5" /></div>
                         <div><input type="button" value="Registra Precios" onclick="registraProductoPrecios()" /></div>
-                    </div>    
+                    </div>
+                    <br>
+                    <div>
+                        <div><input type="text" class='id' id="txtGarzonID" /></div>
+                        <div><input type="text" class='rut' id="txtGarzonRut" /></div>
+                        <div><input type="text" class='nombre' id="txtGarzonNombre" /></div>
+                        <div><input type="button" value="Registra Garzón" onclick="registraGarzon()" /></div>
+                    </div>
                 </td>
                 <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
                 <td style="vertical-align:top">
@@ -416,6 +449,13 @@
                     </table>
                     <input type="button" value="Imprimir USB" onclick="imprime('usb')" />
                     <input type="button" value="Imprimir TCP" onclick="imprime('tcp')" />
+                    <br><br>
+                    <table id="tabGarzon" style="border: 1px solid silver">
+                        <tr class="trEnc">
+                            <td style="width:100px">Rut</td>
+                            <td style="width:145px">Nombre</td>
+                        </tr>
+                    </table>
                 </td>
             </tr>
         </table>

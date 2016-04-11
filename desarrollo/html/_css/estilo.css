@@ -10,7 +10,7 @@
     height: 1280px;
     border: 1px solid red;
     margin: auto;
-    overflow: hidden;
+    /*overflow: hidden;*/
 }
 
 .pantalla{
@@ -18,7 +18,7 @@
 }
 
 .pantalla * {
-    overflow: hidden;
+    /*overflow: hidden;*/
 }
 
 #divMenuPrincipal {

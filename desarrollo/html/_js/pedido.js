@@ -1,5 +1,6 @@
 ﻿var jsonTipos = [];
 var jsonProducto = {};
+var jsonProductos = [];
 var jsonPedido = [];
 var jsonPedidoItem = {};
 
@@ -43,7 +44,7 @@ function ver() {
     $("#divPedido").html("");
     for (var x = 0; x < jsonPedido.length; x++) {
         cHTML += "<button class='pedidoItem' onclick='deSerializar(" + x + ")'>";
-        cHTML += "<div class='producto'>" + jsonPedido[x].nombre + " - " + jsonPedido[x].precio.catNombre + "</div>";
+        cHTML += "<div class='producto'>" + jsonPedido[x].nombre + " - " + jsonPedido[x].precio.tipo + "</div>";
         for (var y = 0; y < jsonPedido[x].ingredientes.length; y++) {
             if (jsonPedido[x].ingredientes[y].con == 0) {
                 cHTML += "<div class='ingrediente'>s/" + jsonPedido[x].ingredientes[y].nombre + "</div>";
@@ -54,8 +55,8 @@ function ver() {
         }
         cHTML += "</button>";
     }
+
     $("#divPedido").html(cHTML);
-    
     $("#divPedido").css("display", "block");
     $("#divProducto").css("display", "none");
 
@@ -67,21 +68,21 @@ function deSerializar(item) {
         var json = jsonPedido[numItem];
         if (json != null) {
             listarTipos(json.tipID);
-            desplegarProducto(json.id);
-            /*
-            despliegaPantalla(4);
+            desplegarProducto(json._id);
+            //despliegaPantalla(4);
             for (var x = 0; x < json.ingredientes.length; x++) {
-                $("#butIngredienteItem_" + json.ingredientes[x].id).removeClass("itemSin");
-                $("#butIngredienteItem_" + json.ingredientes[x].id).removeClass("item");
-                $("#butIngredienteItem_" + json.ingredientes[x].id).addClass((json.ingredientes[x].con == 0 ? "itemSin" : "item"));
+                $("#butIngredienteItem_" + json.ingredientes[x].proID).removeClass("itemSin");
+                $("#butIngredienteItem_" + json.ingredientes[x].proID).removeClass("item");
+                $("#butIngredienteItem_" + json.ingredientes[x].proID).addClass((json.ingredientes[x].con == 0 ? "itemSin" : "item"));
             }
+            /*
             for (var x = 0; x < json.agregados.length; x++) {
-                agregaIngrediente($("#butAgregadoItem_" + json.agregados[x].id)[0]);
+                agregaIngrediente($("#butAgregadoItem_" + json.agregados[x].proID)[0]);
             }
-            cambiaPrecio($("#butPrecioItem_" + json.precio.id)[0]);
-            */
+            cambiaPrecio($("#butPrecioItem_" + json.precio.tipo)[0]);
             $("#divPedido").css("display", "none");
             $("#divProducto").css("display", "block");
+            */
         }
         return true;
     } catch (e) {
@@ -94,7 +95,7 @@ function serializar() {
     try {
 
         var retorno = null;
-        if (jsonProducto.ID != null) {
+        if (jsonProducto._id != null) {
 
             var jsonPrecio = {};
             var jsonIngredientes = [];
@@ -105,9 +106,8 @@ function serializar() {
                 if ($(this).attr("class") == "item") {
                     var prec = $(this).attr("id").split("_");
                     jsonPrecio = {
-                        'catID': prec[1],
-                        'catNombre': prec[2],
-                        'catValor': prec[3]
+                        'tipo': prec[1],
+                        'valor': prec[2]
                     };
                 }
             });
@@ -117,7 +117,7 @@ function serializar() {
             $("#divIngredientes button").each(function () {
                 ing = $(this).attr("id").split("_");
                 jsonIngrediente = {
-                    'id': ing[1],
+                    'proID': ing[1],
                     'nombre': $(this).html(),
                     'con': ($(this).attr("class") == "item" ? 1 : 0)
                 };
@@ -130,7 +130,7 @@ function serializar() {
                 if ($(this).attr("class") == "item") {
                     agr = $(this).attr("id").split("_");
                     jsonAgregado = {
-                        'id': agr[1],
+                        'proID': agr[1],
                         'nombre': $(this).html()
                     };
                     jsonAgregados.push(jsonAgregado);
@@ -138,7 +138,7 @@ function serializar() {
             });
 
             json = {
-                'id': jsonProducto.ID,
+                'proID': jsonProducto._id,
                 'tipID': jsonProducto.tipID,
                 'nombre': jsonProducto.nombre,
                 'ingredientes': jsonIngredientes,
@@ -158,41 +158,44 @@ function serializar() {
 
 function listarTipos(tipo) {
 
+    $("#divMenu").html("");
     $("#divIngredientes").html("");
     $("#divAgregados").html("");
     $("#divPrecios").html("");
     
     var json = apiTipoTipID(tipo);
-    if (json != null) {
+    if (json.length > 0) {
         jsonTipos = json;
-        $("#divMenu").html("");
         for (var x = 0; x < json.length; x++) {
             $("#divMenu").append("<button class='menu' id='button_" + json[x]._id + "' onclick='listarTipos(\"" + json[x]._id + "\")'>" + json[x].nombre + "</button>");
         }
     } else {
-        var json = apiTipoID(tipo);
+        var json = apiProductoID(tipo);
         if (json != null) {
-            jsonProducto = json;
-            var json = apiTipoTipID(80);
-            if (json != null) {
-                jsonIngrediente = json;
-                desplegarProducto();
+            jsonProductos = json;
+            for (var x = 0; x < json.length; x++) {
+                $("#divMenu").append("<button class='menu' id='button_" + json[x]._id + "' onclick='desplegarProducto(\"" + json[x]._id + "\")'>" + json[x].nombre + "</button>");
             }
         }
     }
     
 }
 
-function desplegarProducto() {
+function desplegarProducto(id) {
+    for(var x = 0; x < jsonProductos.length; x++) {
+        if(jsonProductos[x]._id == id) {
+            jsonProducto = jsonProductos[x];
+        }
+    }
     if (jsonProducto.ingredientes != null) {
         for (var x = 0; x < jsonProducto.ingredientes.length; x++) {
-            $("#divIngredientes").append("<button id='buttonIngrediente_" + jsonProducto.ingredientes[x].ID + "'>" + jsonProducto.ingredientes[x].nombre + "</button>");
+            $("#divIngredientes").append("<button id='buttonIngrediente_" + jsonProducto.ingredientes[x]._id + "'>" + jsonProducto.ingredientes[x].nombre + "</button>");
         }
     }
     listarAgregados();
     if (jsonProducto.precios != null) {
         for (var x = 0; x < jsonProducto.precios.length; x++) {
-            $("#divPrecios").append("<button id='buttonPrecio_" + jsonProducto.precios[x].catID + "_" + jsonProducto.precios[x].catNombre + "_" + jsonProducto.precios[x].valor + "'>" + jsonProducto.precios[x].catNombre + " $" + jsonProducto.precios[x].valor + "</button>");
+            $("#divPrecios").append("<button id='buttonPrecio_" + jsonProducto.precios[x].tipo + "_" + jsonProducto.precios[x].valor + "'>" + jsonProducto.precios[x].tipo + " $" + jsonProducto.precios[x].valor + "</button>");
         }
     }
     $("#divIngredientes").seleccion(2, true);
@@ -201,12 +204,12 @@ function desplegarProducto() {
 }
 
 function listarAgregados() {
-    var enc = false;
-    for (var x = 0; x < jsonIngrediente.length; x++) {
+    var json = apiTipoIngrediente();
+    for (var x = 0; x < json.length; x++) {
         if (jsonProducto.ingredientes != null) {
             enc = false;
             for (var y = 0; y < jsonProducto.ingredientes.length; y++) {
-                if (jsonProducto.ingredientes[y].ID == jsonIngrediente[x].ID) {
+                if (jsonProducto.ingredientes[y].proID == json[x]._id) {
                     enc = true;
                 }
             }
@@ -214,7 +217,7 @@ function listarAgregados() {
             enc = true;
         }
         if (!enc) {
-            $("#divAgregados").append("<button id='buttonAgregado_" + jsonIngrediente[x].ID + "'>" + jsonIngrediente[x].nombre + "</button>");
+            $("#divAgregados").append("<button id='buttonAgregado_" + json[x]._id + "'>" + json[x].nombre + "</button>");
         }
     }
 }

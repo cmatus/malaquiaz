@@ -52,8 +52,86 @@ var Producto = new Schema({
     ingrediente: Boolean
 }, { collection: 'producto' });
 
+var ComandaPrecio = new Schema({
+    tipo: String,
+    valor: Number,
+    seleccionado: Boolean
+});
+
+var ComandaIngrediente = new Schema({
+    proID: String,
+    nombre: String,
+    incluido: Boolean
+});
+
+var ComandaItem = new Schema({
+    proID: String,
+    nombre: String,
+    ingredientes: [ComandaIngrediente],
+    agregados: [Ingrediente],
+    precios: [ComandaPrecio],
+    impreso: Boolean
+});
+
+var Comanda = new Schema({
+    fecha: String,
+    garzon: String,
+    mesa: String,
+    items: [ComandaItem]
+}, { collection: 'comanda' });
+
+var CuentaItem = new Schema({
+    cantidad: Number,
+    proID: String,
+    nombre: String,
+    valor: Number,
+    total: Number
+});
+
+var Cuenta = new Schema({
+    fecha: String,
+    comID: String,
+    total: Number,
+    items: [CuentaItem]
+}, { collection: 'cuenta' });
+
+var Garzon = new Schema({
+    rut: String,
+    nombre: String,
+    activo: Boolean
+}, { collection: 'garzon' });
+
 var tipoModelo = mongoose.model('Tipo', Tipo);
 var productoModelo = mongoose.model('Producto', Producto);
+var comandaModelo = mongoose.model('Comanda', Comanda);
+var cuentaModelo = mongoose.model('Cuenta', Cuenta);
+var garzonModelo = mongoose.model('Garzon', Garzon);
+
+app.get('/api/garzon', function (req, res) {
+    garzonModelo.find().sort('nombre').exec(function (err, garzon) {
+        if (!err) {
+            res.send(garzon);
+        } else {
+            console.log(err);
+        }
+    });
+});
+
+app.post('/api/garzon', function (req, res) {
+    garzon = new garzonModelo({
+        rut: req.body.rut,
+        nombre: req.body.nombre,
+        activo: true
+    });
+    garzon.save(function (err) {
+        if (!err) {
+            console.log("Garzón creado: " + garzon._id);
+        } else {
+            console.log(err);
+        }
+    });
+    res.json(garzon);
+});
 
 app.get('/api/tipo', function (req, res) {
     tipoModelo.find().sort('tipID').sort('nombre').exec(function (err, tipo) {
@@ -82,7 +160,7 @@ app.post('/api/tipo', function (req, res) {
 });
 
 app.get('/api/tipo/:tipID', function (req, res) {
-    tipoModelo.find({ 'tipID': req.params.tipID }, function (err, tipo) {
+    tipoModelo.find({ 'tipID': req.params.tipID }).sort('nombre').exec(function (err, tipo) {
         if (!err) {
             res.send(tipo);
         } else {
@@ -131,6 +209,16 @@ app.get('/api/producto/:proID', function (req, res) {
 
 app.get('/api/producto/tipo/:tipID', function (req, res) {
     productoModelo.find({ 'tipID': req.params.tipID }).sort('nombre').exec(function (err, producto) {
+        if (!err) {
+            res.send(producto);
+        } else {
+            console.log(err);
+        }
+    });
+});
+
+app.get('/api/producto/ingrediente/:ingrediente', function (req, res) {
+    productoModelo.find({ 'ingrediente': req.params.ingrediente }).sort('nombre').exec(function (err, producto) {
         if (!err) {
             res.send(producto);
         } else {
