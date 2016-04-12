@@ -1,4 +1,4 @@
-var gURL = "http://localhost:3000/api";
+var gURL = "http://192.168.0.10:3000/api";
 
 function apiTipoTipID(tipID) {
     var retorno = null;

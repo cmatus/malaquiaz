@@ -24,7 +24,7 @@ app.use(session({ resave: true,
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(multer());
-app.use(cors({ origin: 'http://localhost' }));
+app.use(cors());
 
 var Schema = mongoose.Schema;
 
