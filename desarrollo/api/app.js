@@ -52,33 +52,33 @@ var Producto = new Schema({
     ingrediente: Boolean
 }, { collection: 'producto' });
 
-var ComandaPrecio = new Schema({
+var PedidoPrecio = new Schema({
     tipo: String,
-    valor: Number,
-    seleccionado: Boolean
+    valor: Number
 });
 
-var ComandaIngrediente = new Schema({
+var PedidoIngrediente = new Schema({
     proID: String,
     nombre: String,
-    incluido: Boolean
+    con: Number
 });
 
-var ComandaItem = new Schema({
+var PedidoItem = new Schema({
     proID: String,
+    tipID: String,
     nombre: String,
-    ingredientes: [ComandaIngrediente],
+    ingredientes: [PedidoIngrediente],
     agregados: [Ingrediente],
-    precios: [ComandaPrecio],
+    precio: [PedidoPrecio],
     impreso: Boolean
 });
 
-var Comanda = new Schema({
+var Pedido = new Schema({
     fecha: String,
     garzon: String,
     mesa: String,
-    items: [ComandaItem]
-}, { collection: 'comanda' });
+    items: [PedidoItem]
+}, { collection: 'pedido' });
 
 var CuentaItem = new Schema({
     cantidad: Number,
@@ -103,7 +103,7 @@ var Garzon = new Schema({
 
 var tipoModelo = mongoose.model('Tipo', Tipo);
 var productoModelo = mongoose.model('Producto', Producto);
-var comandaModelo = mongoose.model('Comanda', Comanda);
+var pedidoModelo = mongoose.model('Pedido', Pedido);
 var cuentaModelo = mongoose.model('Cuenta', Cuenta);
 var garzonModelo = mongoose.model('Garzon', Garzon);
 
@@ -257,6 +257,41 @@ app.post('/api/producto/precio', function (req, res) {
                 }
             });
             res.json(producto);
+        } else {
+            console.log(err);
+        }
+    });
+});
+
+app.post('/api/pedido', function (req, res) {
+    pedido = new pedidoModelo({
+        fecha: req.body.fecha,
+        garzon: req.body.garzon,
+        mesa: req.body.mesa,
+        items: req.body.items
+    });
+    pedido.save(function (err) {
+        if (!err) {
+            console.log("Pedido creado: " + pedido._id);
+        } else {
+            console.log(err);
+        }
+    });
+    res.json(pedido);
+});
+
+app.post('/api/pedido/:pedID', function (req, res) {
+    pedidoModelo.findOne({ '_id': req.body.pedID }, function (err, pedido) {
+        if (!err) {
+            pedido.items = req.body.items;
+            pedido.save(function (err) {
+                if (!err) {
+                    console.log("Items impresos");
+                } else {
+                    console.log(err);
+                }
+            });
+            res.json(pedido);
         } else {
             console.log(err);
         }

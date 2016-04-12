@@ -1,39 +1,50 @@
-var gURL = "http://192.168.0.10:3000/api";
+var gIP = "localhost";
+var gPuerto = "3000";
+var gURL = "http://" + gIP + ":" + gPuerto + "/api";
+var gURLImpresion = "http://" + gIP + "/impresion/wsImprime.asmx";
 
-function apiTipoTipID(tipID) {
-    var retorno = null;
-    $.get(gURL + "/tipo/" + tipID, function(data) {
-        retorno = data;
-    });
-	return retorno;
+var jsonGarzon = {};
+var jsonTipo = {};
+var jsonProducto = {};
+var jsonPedidoItem = {};
+
+var jsonGarzones = [];
+var jsonTipos = [];
+var jsonProductos = [];
+var jsonPedido = {};
+
+function apiGetGarzon() {
+    return apiGET(gURL + "/garzon");
 }
 
-function apiProductoID(tipID) {
-    var retorno = null;
-    $.get(gURL + "/producto/tipo/" + tipID, function(data) {
-        retorno = data;
-    });
-    return retorno;
+function apiGetTipo() {
+    return apiGET(gURL + "/tipo");
 }
 
-function apiTipoID(id) {
-    var retorno = null;
-    var parametro = getAJAX(gURL + "/tipo/ID/" + id, null);
-    $.when($.ajax(parametro)).done(function (a) {
-        if (a != null) {
-            retorno = a;
-        }
-    });
-    return retorno;
+function apiGetTipoID(tipID) {
+    return apiGET(gURL + "/tipo/" + tipID);
 }
 
-function apiTipoIngrediente() {
-    var retorno = null;
-    var parametro = getAJAX(gURL + "/producto/ingrediente/true", null);
-    $.when($.ajax(parametro)).done(function (a) {
-        if (a != null) {
-            retorno = a;
-        }
-    });
-    return retorno;
+function apiGetProducto() {
+    return apiGET(gURL + "/producto");
+}
+
+function apiGetProductoID(proID) {
+    return apiGET(gURL + "/producto/" + proID);
+}
+
+function apiGetProductoPorTipo(tipID) {
+    return apiGET(gURL + "/producto/tipo/" + tipID);
+}
+
+function apiGetProductoEsIngrediente(ingrediente) {
+    return apiGET(gURL + "/producto/ingrediente/" + ingrediente);
+}
+
+function apiPostPedido(json) {
+	if(json.pedID != "") {
+		return apiPOST(gURL + "/pedido/" + json.pedID, json);
+	} else {
+    	return apiPOST(gURL + "/pedido", json);
+	}
 }

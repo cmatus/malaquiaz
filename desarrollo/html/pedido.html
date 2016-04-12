@@ -22,11 +22,15 @@
             </div>
             <div class="pantalla" id="divPedido"></div>
             <div id="divMenuPrincipal">
-                <button class="menu" id="butNuevo"    onclick="nuevo()">Nuevo</button>
-                <button class="menu" id="butAgrega"   onclick="agregar()">Agregar</button>
-                <button class="menu" id="butPedido"   onclick="ver()">Ver pedido</button>
-                <button class="menu" id="butEnviar"   onclick="enviar()">Enviar pedido</button>
-                <button class="menu" id="butCancelar" onclick="cancelar()">Cancelar pedido</button>
+                <button class="menu" id="butProductoLimpiar"  onclick="productoLimpiar(true, -1)">Limpiar</button>
+                <button class="menu" id="butProductoAgregar1" onclick="productoAgregar(1)">Agregar</button>
+                <button class="menu" id="butProductoAgregar2" onclick="productoAgregar(2)">1/2 Pizza</button>
+                <button class="menu" id="butProductoEliminar" onclick="productoEliminar()">Eliminar</button>
+                <button class="menu" id="butProductoVer"      onclick="pedidoVer()">Ver</button>
+                <button class="menu" id="butPedidoLimpiar"    onclick="pedidoLimpiar()">Limpiar</button>
+                <button class="menu" id="butPedidoAgregar"    onclick="pedidoAgregar()">Agregar</button>
+                <button class="menu" id="butPedidoEliminar"   onclick="pedidoEliminar()">Eliminar</button>
+                <button class="menu" id="butPedidoEnviar"     onclick="pedidoEnviar()">Enviar</button>
             </div>
         </div>
     </body>

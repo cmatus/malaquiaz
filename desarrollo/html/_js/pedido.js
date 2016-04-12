@@ -1,88 +1,117 @@
-﻿var jsonTipos = [];
-var jsonProducto = {};
-var jsonProductos = [];
-var jsonPedido = [];
-var jsonPedidoItem = {};
-
-var numItem = -1;
+﻿var numItem = -1;
 
 $(document).ready(function () {
-    nuevo();
+    pedidoLimpiar();
+    verPantalla(4);
 });
 
-function nuevo() {
-    
-    jsonTipos = [];
-    jsonProducto = {};
-    jsonPedidoItem = {};
+function verPantalla(num) {
 
     $("#divPedido").css("display", "none");
-    $("#divProducto").css("display", "block");
-    $("#butNuevo").css("display", "inline-block");
-    $("#butAgrega").css("display", "inline-block");
+    $("#divProducto").css("display", "none");
 
-    numItem = -1;
-    listarTipos("<inicio>");
+    $("#butProductoLimpiar").css("display", "none");
+    $("#butProductoAgregar1").css("display", "none");
+    $("#butProductoAgregar2").css("display", "none");
+    $("#butProductoEliminar").css("display", "none");
+    $("#butProductoVer").css("display", "none");
+    $("#butPedidoLimpiar").css("display", "none");
+    $("#butPedidoAgregar").css("display", "none");
+    $("#butPedidoEliminar").css("display", "none");
+    $("#butPedidoEnviar").css("display", "none");
 
-}
-
-function agregar() {
-    jsonPedidoItem = serializar();
-    if (jsonPedidoItem != null) {
-        if (numItem >= 0) {
-            jsonPedido[numItem] = jsonPedidoItem;
-        } else {
-            jsonPedido.push(jsonPedidoItem);
-        }
-        ver();
+    switch(num) {
+        case 1: /* Garzón */
+            break;
+        case 2: /* Mesa */
+            break;
+        case 3: /* Producto */
+            $("#divProducto").css("display", "block");
+            $("#butProductoLimpiar").css("display", "inline-block");
+            $("#butProductoAgregar1").css("display", "inline-block");
+            $("#butProductoAgregar2").css("display", "inline-block");
+            $("#butProductoEliminar").css("display", "inline-block");
+            $("#butProductoVer").css("display", "inline-block");
+            break;
+        case 4: /* Pedido */
+            $("#divPedido").css("display", "block");
+            $("#butPedidoLimpiar").css("display", "inline-block");
+            $("#butPedidoAgregar").css("display", "inline-block");
+            $("#butPedidoEliminar").css("display", "inline-block");
+            $("#butPedidoEnviar").css("display", "inline-block");
+            break;
     }
+
 }
 
-function ver() {
+/* Pedido */
 
+function pedidoLimpiar() {
+
+    var f = new Date();
+    var fecha = zeroFill(f.getDate(), 2) + "/" + zeroFill((f.getMonth() + 1), 2) + "/" + f.getFullYear() + " " + zeroFill(f.getHours(), 2) + ":" + zeroFill(f.getMinutes(), 2);
+
+    jsonPedido = {
+        'pedID': '',
+        'fecha': fecha,
+        'garzon': 'José Canseco',
+        'mesa': 1,
+        'items': []
+    };
+    $("#divPedido").html("");
+}
+
+function pedidoAgregar() {
+    if(jsonPedido.items.length == 0) {
+        pedidoLimpiar();
+    }
+    productoLimpiar(false, -1);
+    listarTipos("<inicio>");
+    verPantalla(3);
+}
+
+function pedidoVer() {
     var cHTML = "";
     $("#divPedido").html("");
-    for (var x = 0; x < jsonPedido.length; x++) {
-        cHTML += "<button class='pedidoItem' onclick='deSerializar(" + x + ")'>";
-        cHTML += "<div class='producto'>" + jsonPedido[x].nombre + " - " + jsonPedido[x].precio.tipo + "</div>";
-        for (var y = 0; y < jsonPedido[x].ingredientes.length; y++) {
-            if (jsonPedido[x].ingredientes[y].con == 0) {
-                cHTML += "<div class='ingrediente'>s/" + jsonPedido[x].ingredientes[y].nombre + "</div>";
+    for (var x = 0; x < jsonPedido.items.length; x++) {
+        cHTML += "<button class='pedidoItem' onclick='deserializarPedidoItem(" + x + ")'>";
+        cHTML += "<div class='producto'>" + jsonPedido.items[x].nombre + " - " + jsonPedido.items[x].precio.tipo + "</div>";
+        for (var y = 0; y < jsonPedido.items[x].ingredientes.length; y++) {
+            if (jsonPedido.items[x].ingredientes[y].con == 0) {
+                cHTML += "<div class='ingrediente'>s/" + jsonPedido.items[x].ingredientes[y].nombre + "</div>";
             }
         }
-        for (var y = 0; y < jsonPedido[x].agregados.length; y++) {
-            cHTML += "<div class='ingrediente'>" + jsonPedido[x].agregados[y].nombre + "</div>";
+        for (var y = 0; y < jsonPedido.items[x].agregados.length; y++) {
+            cHTML += "<div class='ingrediente'>" + jsonPedido.items[x].agregados[y].nombre + "</div>";
         }
         cHTML += "</button>";
     }
-
     $("#divPedido").html(cHTML);
-    $("#divPedido").css("display", "block");
-    $("#divProducto").css("display", "none");
-
+    verPantalla(4);
 }
 
-function deSerializar(item) {
+function deserializarPedidoItem(item) {
     try {
         numItem = item;
-        var json = jsonPedido[numItem];
+        var json = jsonPedido.items[numItem];
         if (json != null) {
+            productoLimpiar(false, numItem);
             listarTipos(json.tipID);
-            desplegarProducto(json._id);
-            //despliegaPantalla(4);
+            desplegarProducto(json.proID);
             for (var x = 0; x < json.ingredientes.length; x++) {
-                $("#butIngredienteItem_" + json.ingredientes[x].proID).removeClass("itemSin");
-                $("#butIngredienteItem_" + json.ingredientes[x].proID).removeClass("item");
-                $("#butIngredienteItem_" + json.ingredientes[x].proID).addClass((json.ingredientes[x].con == 0 ? "itemSin" : "item"));
+                $("#buttonIngrediente_" + json.ingredientes[x].proID).removeClass("item");
+                if(json.ingredientes[x].con == 1) {
+                    $("#buttonIngrediente_" + json.ingredientes[x].proID).addClass("item");
+                }
             }
-            /*
             for (var x = 0; x < json.agregados.length; x++) {
-                agregaIngrediente($("#butAgregadoItem_" + json.agregados[x].proID)[0]);
+                agregaIngrediente($("#buttonAgregado_" + json.agregados[x].proID));
             }
-            cambiaPrecio($("#butPrecioItem_" + json.precio.tipo)[0]);
-            $("#divPedido").css("display", "none");
-            $("#divProducto").css("display", "block");
-            */
+            cambiaPrecio($("#buttonPrecio_" + json.precio.tipo + "_" + json.precio.valor));
+            $("#divIngredientes").acomoda();
+            $("#divAgregados").acomoda();
+            $("#divPrecios").acomoda();
+            verPantalla(3);
         }
         return true;
     } catch (e) {
@@ -90,7 +119,114 @@ function deSerializar(item) {
     }
 }
 
-function serializar() {
+function pedidoEnviar() {
+    var data = apiPostPedido(jsonPedido);
+    if(data._id != null) {
+        jsonPedido.pedID = data._id;
+        if(pedidoImprimir()) {
+            pedidoLimpiar();
+            verPantalla(4);
+        }
+    }
+}
+
+function pedidoImprimir() {
+    
+    var retorno = false;
+    var imprimir = false;
+    if(jsonPedido.items.length > 0) {
+
+        var jsonBoleta = [];
+
+        jsonBoleta.push("----------------- Comanda ----------------");
+        jsonBoleta.push("Atendida por: " + jsonPedido.garzon);
+        jsonBoleta.push("Mesa N°" + jsonPedido.mesa);
+        jsonBoleta.push("Fecha/Hora: " + jsonPedido.fecha);
+        jsonBoleta.push("------------------------------------------");
+        jsonBoleta.push(" ");
+
+        for(var x = 0; x < jsonPedido.items.length; x++) {
+            if(!jsonPedido.items[x].impreso) {
+                imprimir = true;
+                jsonBoleta.push(jsonPedido.items[x].nombre + " " + jsonPedido.items[x].precio.tipo);
+                for(var y = 0; y < jsonPedido.items[x].ingredientes.length; y++) {
+                    if(jsonPedido.items[x].ingredientes[y].con == 0) {
+                        jsonBoleta.push("   s/" + jsonPedido.items[x].ingredientes[y].nombre);
+                    }
+                }
+                if(jsonPedido.items[x].agregados.length > 0) {
+                    jsonBoleta.push(" ");
+                    for(var y = 0; y < jsonPedido.items[x].agregados.length; y++) {
+                        jsonBoleta.push("   + " + jsonPedido.items[x].agregados[y].nombre);
+                    }
+                }
+                jsonBoleta.push(" ");
+            }
+        }
+        jsonBoleta.push("--------------- Fin Comanda---------------");
+
+        if(imprimir) {
+            var info = { 
+                'texto': jsonBoleta, 
+                'corte': true, 
+                'apertura': false, 
+                'tipo': 'tcp'
+            }
+            var parametro = RetornaAJAX(gURLImpresion, "imprimir", JSON.stringify(info), null);
+            $.when($.ajax(parametro)).done(function (a) {
+                if (a.d != null) {
+                    for(var x = 0; x < jsonPedido.items.length; x++) {
+                        jsonPedido.items[x].impreso = true;
+                    }
+                    var data = apiPostPedido(jsonPedido);
+                    if(data._id != null) {
+                        retorno = true;
+                    }
+                }
+            });
+        } else {
+            retorno = true;
+        }
+
+    }
+    return retorno;
+
+}
+
+/* Producto */
+
+function productoLimpiar(tipo, num) {
+    
+    jsonTipos = [];
+    jsonProducto = {};
+    jsonProductos = [];
+    jsonPedidoItem = {};
+    numItem = num;
+
+    $("#divMenu").html("");
+    $("#divIngredientes").html("");
+    $("#divAgregados").html("");
+    $("#divPrecios").html("");
+
+    if(tipo) {
+        listarTipos("<inicio>");
+    }
+
+}
+
+function productoAgregar(tipo) {
+    jsonPedidoItem = serializarProducto(tipo);
+    if (jsonPedidoItem != null) {
+        if (numItem >= 0) {
+            jsonPedido.items[numItem] = jsonPedidoItem;
+        } else {
+            jsonPedido.items.push(jsonPedidoItem);
+        }
+        pedidoVer();
+    }
+}
+
+function serializarProducto(tipo) {
 
     try {
 
@@ -140,13 +276,14 @@ function serializar() {
             json = {
                 'proID': jsonProducto._id,
                 'tipID': jsonProducto.tipID,
-                'nombre': jsonProducto.nombre,
+                'nombre': (tipo == 2 ? "(1/2)": "") + jsonProducto.nombre,
                 'ingredientes': jsonIngredientes,
                 'agregados': jsonAgregados,
-                'precio': jsonPrecio
+                'precio': jsonPrecio,
+                'impreso': false
             }
             retorno = json;
-
+            
         }
         return retorno;
 
@@ -156,21 +293,16 @@ function serializar() {
 
 }
 
-function listarTipos(tipo) {
-
-    $("#divMenu").html("");
-    $("#divIngredientes").html("");
-    $("#divAgregados").html("");
-    $("#divPrecios").html("");
-    
-    var json = apiTipoTipID(tipo);
+function listarTipos(tipID) {
+    productoLimpiar(false, numItem);
+    var json = apiGetTipoID(tipID);
     if (json.length > 0) {
         jsonTipos = json;
         for (var x = 0; x < json.length; x++) {
             $("#divMenu").append("<button class='menu' id='button_" + json[x]._id + "' onclick='listarTipos(\"" + json[x]._id + "\")'>" + json[x].nombre + "</button>");
         }
     } else {
-        var json = apiProductoID(tipo);
+        var json = apiGetProductoPorTipo(tipID);
         if (json != null) {
             jsonProductos = json;
             for (var x = 0; x < json.length; x++) {
@@ -178,7 +310,6 @@ function listarTipos(tipo) {
             }
         }
     }
-    
 }
 
 function desplegarProducto(id) {
@@ -204,7 +335,7 @@ function desplegarProducto(id) {
 }
 
 function listarAgregados() {
-    var json = apiTipoIngrediente();
+    var json = apiGetProductoEsIngrediente(true);
     for (var x = 0; x < json.length; x++) {
         if (jsonProducto.ingredientes != null) {
             enc = false;
@@ -220,4 +351,18 @@ function listarAgregados() {
             $("#divAgregados").append("<button id='buttonAgregado_" + json[x]._id + "'>" + json[x].nombre + "</button>");
         }
     }
+}
+
+function agregaIngrediente(obj) {
+    if (obj.attr("class") == "item") {
+        obj.removeClass("item");
+    } else {
+        obj.addClass("item");
+    }
+}
+
+function cambiaPrecio(obj) {
+    var objButtons = $("#divPrecios").find("button");
+    objButtons.removeClass("item");
+    obj.addClass("item");
 }

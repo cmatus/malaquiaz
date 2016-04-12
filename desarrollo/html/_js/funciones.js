@@ -6,6 +6,29 @@ $.ajaxSetup({
     async: false
 });
 
+function zeroFill(numero, zero){
+    var retorno = "0".repeat(zero);
+    retorno = retorno + numero;
+    retorno = retorno.substr(retorno.length - zero, zero);
+    return retorno;
+}
+
+function apiGET(url) {
+    var retorno = null;
+    $.get(url, function(data) {
+        retorno = data;
+    });
+    return retorno;
+}
+
+function apiPOST(url, info) {
+    var retorno = null;
+    $.post(url, info, function(data) {
+        retorno = data;
+    });
+    return retorno;
+}
+
 function RetornaAJAX(iPagina, iFuncion, iDATA, iEjecucion) {
     var options = {
         type: 'POST',
