@@ -52,11 +52,11 @@
             }
 
         </style>
-        <script src="https://code.jquery.com/jquery-1.12.2.min.js" integrity="sha256-lZFHibXzMHo3GGeehn1hudTAP3Sc0uKXBXAzHX1sjtk=" crossorigin="anonymous"></script>
+        <script src="_js/jquery.min.js"></script>
         <script src="_js/funciones.js"></script>
         <script>
             
-            var urlAPI = "http://192.168.0.10:3000/api";
+            var urlAPI = "http://localhost:3000/api";
             var urlImpresion = "impresion/wsImprime.asmx";
             var txtID;
             var txtNombre;
@@ -325,7 +325,7 @@
                     $("#txtID_Precio").val(data._id);
                     $("#txtNombre_Precio").val(data.nombre);
                 });
-                
+                    
             }
 
             function registraGarzon() {
@@ -400,11 +400,11 @@
                     </div>
                     <br>
                     <div>
-                        <div><input type="text" class='id' id="txtID_Ingrediente" /><input type="text" class='nombre' id="txtNombre_Ingrediente" /></div>
-                        <div><input type="text" class='id' id="txtID_Ingrediente_1" /><input type="text" class='nombre' id="txtNombre_Ingrediente_1" /></div>
-                        <div><input type="text" class='id' id="txtID_Ingrediente_2" /><input type="text" class='nombre' id="txtNombre_Ingrediente_2" /></div>
-                        <div><input type="text" class='id' id="txtID_Ingrediente_3" /><input type="text" class='nombre' id="txtNombre_Ingrediente_3" /></div>
-                        <div><input type="text" class='id' id="txtID_Ingrediente_4" /><input type="text" class='nombre' id="txtNombre_Ingrediente_4" /></div>
+                        <div><input type="hidden" id="txtID_Ingrediente"   /><input type="text" class='nombre' id="txtNombre_Ingrediente" /></div>
+                        <div><input type="hidden" id="txtID_Ingrediente_1" /><input type="text" class='nombre' id="txtNombre_Ingrediente_1" /></div>
+                        <div><input type="hidden" id="txtID_Ingrediente_2" /><input type="text" class='nombre' id="txtNombre_Ingrediente_2" /></div>
+                        <div><input type="hidden" id="txtID_Ingrediente_3" /><input type="text" class='nombre' id="txtNombre_Ingrediente_3" /></div>
+                        <div><input type="hidden" id="txtID_Ingrediente_4" /><input type="text" class='nombre' id="txtNombre_Ingrediente_4" /></div>
                         <div><input type="button" value="Registra ingredientes" onclick="registraProductoIngredientes()" /></div>
                     </div>
                     <br>
@@ -427,14 +427,14 @@
                 <td style="vertical-align:top">
                     <table id="tabTipo1" style="border: 1px solid silver">
                         <tr class="trEnc">
-                            <td style="width:145px">Código</td>
+                            <td style="width:0px">Código</td>
                             <td style="width:100px">Nombre</td>
                         </tr>
                     </table>
                     <br>
                     <table id="tabTipo2" style="border: 1px solid silver">
                         <tr class="trEnc">
-                            <td style="width:145px">Código</td>
+                            <td style="width:0px">Código</td>
                             <td style="width:100px">Nombre</td>
                         </tr>
                     </table>
@@ -443,7 +443,7 @@
                 <td style="vertical-align:top">
                     <table id="tabProducto" style="border: 1px solid silver">
                         <tr class="trEnc">
-                            <td style="width:145px">Código</td>
+                            <td style="width:0px">Código</td>
                             <td style="width:100px">Nombre</td>
                         </tr>
                     </table>
@@ -452,7 +452,7 @@
                     <br><br>
                     <table id="tabGarzon" style="border: 1px solid silver">
                         <tr class="trEnc">
-                            <td style="width:100px">Rut</td>
+                            <td style="width:0px">Rut</td>
                             <td style="width:145px">Nombre</td>
                         </tr>
                     </table>

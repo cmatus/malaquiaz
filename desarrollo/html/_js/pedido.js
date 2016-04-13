@@ -1,12 +1,13 @@
 ﻿var numItem = -1;
 
 $(document).ready(function () {
-    pedidoLimpiar();
-    verPantalla(4);
+    verPantalla(1);
 });
 
 function verPantalla(num) {
 
+    $("#divGarzon").css("display", "none");
+    $("#divMesa").css("display", "none");
     $("#divPedido").css("display", "none");
     $("#divProducto").css("display", "none");
 
@@ -22,8 +23,11 @@ function verPantalla(num) {
 
     switch(num) {
         case 1: /* Garzón */
+            garzonDesplegar();
+            $("#divGarzon").css("display", "block");
             break;
         case 2: /* Mesa */
+            $("#divMesa").css("display", "block");
             break;
         case 3: /* Producto */
             $("#divProducto").css("display", "block");
@@ -44,16 +48,41 @@ function verPantalla(num) {
 
 }
 
+/* Mesa */
+
+function mesaDesplegar(nombre) {
+    $("#divMesa").html("");
+    verPantalla(2);
+    for(var x = 1; x <= 12; x++) {
+        $("#divMesa").append("<button onclick='desplegarPedido(" + x + ")'>Mesa N°" + x + "</button>")
+    }
+}
+
+function desplegarPedido(mesa) {
+    pedidoLimpiar(mesa);
+    verPantalla(4);    
+}
+
+/* Garzón */
+
+function garzonDesplegar() {
+    $("#divGarzon").html("");
+    jsonGarzones = apiGetGarzon();
+    for(var x = 0; x < jsonGarzones.length; x++) {
+        $("#divGarzon").append("<button onclick='mesaDesplegar(\"" + jsonGarzones[x].nombre + "\")'>" + jsonGarzones[x].nombre + "</button>")
+    }
+}
+
 /* Pedido */
 
-function pedidoLimpiar() {
+function pedidoLimpiar(mesa) {
 
     var f = new Date();
     var fecha = zeroFill(f.getDate(), 2) + "/" + zeroFill((f.getMonth() + 1), 2) + "/" + f.getFullYear() + " " + zeroFill(f.getHours(), 2) + ":" + zeroFill(f.getMinutes(), 2);
 
     jsonPedido = {
         'pedID': '',
-        'fecha': fecha,
+        'fecha': mesa,
         'garzon': 'José Canseco',
         'mesa': 1,
         'items': []
@@ -124,8 +153,7 @@ function pedidoEnviar() {
     if(data._id != null) {
         jsonPedido.pedID = data._id;
         if(pedidoImprimir()) {
-            pedidoLimpiar();
-            verPantalla(4);
+            verPantalla(1);
         }
     }
 }

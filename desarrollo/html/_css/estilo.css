@@ -77,6 +77,25 @@
     font-weight: 600;
 }
 
+#divGarzon, #divMesa {
+    width: 880px;
+    height: 1200px;
+    background-color: black;
+    padding: 20px;
+    overflow-y: scroll;
+}
+
+#divGarzon button, #divMesa button {
+    padding: 20px;
+    background-color: blue;
+    border: 4px solid white;
+    color: white;
+    font-size: 14pt;
+    font-weight: bold;
+    width: 730px;
+    margin: 10px;
+}
+
 #divProducto {
     vertical-align: top;
 }
