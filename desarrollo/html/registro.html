@@ -54,10 +54,9 @@
         </style>
         <script src="_js/jquery.min.js"></script>
         <script src="_js/funciones.js"></script>
+        <script src="_js/servicios.js"></script>
         <script>
             
-            var urlAPI = "http://localhost:3000/api";
-            var urlImpresion = "impresion/wsImprime.asmx";
             var txtID;
             var txtNombre;
 
@@ -142,7 +141,7 @@
                     'apertura': false, 
                     'tipo': tipo
                 }
-                var parametro = RetornaAJAX(urlImpresion, "imprimir", JSON.stringify(info), null);
+                var parametro = RetornaAJAX(gURLImpresion, "imprimir", JSON.stringify(info), null);
                 $.when($.ajax(parametro)).done(function (a) {
                     if (a.d != null) {
                         retorno = a.d;
@@ -156,14 +155,14 @@
                     nombre: $("#txtNombre_Tipo").val(),
                     nivel: $("#txtNivel_Tipo").val()
                 }
-                $.post(urlAPI + "/tipo", info, function(data) {
+                $.post(gURL + "/tipo", info, function(data) {
                     $("#txtID_Tipo").val(data._id);
                     listar();
                 });
             }
 
             function listarTipo(tabla, tipID) {
-                $.get(urlAPI + "/tipo/" + tipID, function(data) {
+                $.get(gURL + "/tipo/" + tipID, function(data) {
                     $("#" + tabla + " tr.trDet").remove();
                     for(var x = 0; x < data.length; x++) {
                         $("#" + tabla).append("<tr class='trDet' onclick='listarTipo(\"tabTipo2\", \"" + data[x]._id + "\")'><td>" + data[x]._id + "</td><td>" + data[x].nombre + "</td></tr>");
@@ -184,14 +183,14 @@
                     'nombre': $("#txtNombre_Producto").val(),
                     'ingrediente': $("#txtIngrediente_Producto").val()
                 }
-                $.post(urlAPI + "/producto", info, function(data) {
+                $.post(gURL + "/producto", info, function(data) {
                     $("#txtID_Producto").val(data._id);
                     listarProducto("tabProducto", $("#txtTipID_Producto").val())
                 });
             }
 
             function listarProducto(tabla, tipID) {
-                $.get(urlAPI + "/producto/tipo/" + tipID, function(data) {
+                $.get(gURL + "/producto/tipo/" + tipID, function(data) {
                     $("#" + tabla + " tr.trDet").remove();
                     for(var x = 0; x < data.length; x++) {
                         $("#" + tabla).append("<tr class='trDet' onclick='despliegaProducto(\"" + data[x]._id + "\", \"" + data[x].nombre + "\", " + data[x].ingrediente + ")'><td>" + data[x]._id + "</td><td>" + data[x].nombre + "</td></tr>");
@@ -202,7 +201,7 @@
             function buscarProducto(id) {
                 
                 nuevoProducto();
-                $.get(urlAPI + "/producto/" + id, function(data) {
+                $.get(gURL + "/producto/" + id, function(data) {
                     
                     $("#txtID_Producto").val(data._id);
                     $("#txtTipID_Producto").val(data.tipID);
@@ -276,7 +275,7 @@
                     'proID': $("#txtID_Ingrediente").val(), 
                     'ingredientes': jsonIngredientes 
                 }
-                $.post(urlAPI + "/producto/ingrediente", info, function(data) {
+                $.post(gURL + "/producto/ingrediente", info, function(data) {
                     $("#txtID_Ingrediente").val(data._id);
                     $("#txtNombre_Ingrediente").val(data.nombre);
                 });
@@ -321,7 +320,7 @@
                     'proID': $("#txtID_Precio").val(), 
                     'precios': jsonPrecios 
                 }
-                $.post(urlAPI + "/producto/precio", info, function(data) {
+                $.post(gURL + "/producto/precio", info, function(data) {
                     $("#txtID_Precio").val(data._id);
                     $("#txtNombre_Precio").val(data.nombre);
                 });
@@ -333,19 +332,29 @@
                     'rut': $("#txtGarzonRut").val(), 
                     'nombre': $("#txtGarzonNombre").val()
                 }
-                $.post(urlAPI + "/garzon", info, function(data) {
+                $.post(gURL + "/garzon", info, function(data) {
                     $("#txtGarzonID").val(data._id);
                     listarGarzon();
                 });
             }
 
             function listarGarzon() {
-                $.get(urlAPI + "/garzon", function(data) {
+                $.get(gURL + "/garzon", function(data) {
                     $("#tabGarzon tr.trDet").remove();
                     for(var x = 0; x < data.length; x++) {
                         $("#tabGarzon").append("<tr class='trDet'><td>" + data[x].rut + "</td><td>" + data[x].nombre + "</td></tr>");
                     }
                 });
+            }
+
+            function registraMesa() {
+                var info = { 
+                    'numero': $("#txtMesaNum").val(), 
+                    'estado': $("#txtMesaEstado").val()
+                }
+                $.post(gURL + "/mesa", info, function(data) {
+                    $("#txtMesaID").val(data._id);
+                });                
             }
 
             function listar() { 
@@ -421,6 +430,13 @@
                         <div><input type="text" class='rut' id="txtGarzonRut" /></div>
                         <div><input type="text" class='nombre' id="txtGarzonNombre" /></div>
                         <div><input type="button" value="Registra Garzón" onclick="registraGarzon()" /></div>
+                    </div>
+                    <br>
+                    <div>
+                        <div><input type="text" class='id' id="txtMesaID" /></div>
+                        <div><input type="text" class='id' id="txtMesaNum" /></div>
+                        <div><input type="text" class='rut' id="txtMesaEstado" value="0" /></div>
+                        <div><input type="button" value="Registra Mesa" onclick="registraMesa()" /></div>
                     </div>
                 </td>
                 <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>

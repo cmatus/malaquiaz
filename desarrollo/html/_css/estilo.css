@@ -87,13 +87,36 @@
 
 #divGarzon button, #divMesa button {
     padding: 20px;
-    background-color: blue;
     border: 4px solid white;
     color: white;
     font-size: 14pt;
     font-weight: bold;
     width: 730px;
     margin: 10px;
+}
+
+#divGarzon button {
+    background-color: blue;
+}
+
+#divMesa button.estadoDIS {
+    background-color: blue;
+    color: white;
+}
+
+#divMesa button.estadoATE {
+    background-color: yellow;
+    color: red;
+}
+
+#divMesa button.estadoCTA {
+    background-color: red;
+    color: white;
+}
+
+#divMesa button.estadoEMI {
+    background-color: green;
+    color: white;
 }
 
 #divProducto {
@@ -166,7 +189,7 @@
     overflow: hidden;
 }
 
-.pedidoItem {
+.pedidoItem, .pedidoItemImpreso {
     width: 760px;
     border: 2px solid white;
     border-radius: 10px;
@@ -174,13 +197,17 @@
     margin-bottom: 10px;
 }
 
-.pedidoItem .producto {
+.pedidoItemImpreso {
+    background-color: yellow;
+}
+
+.pedidoItem .producto, .pedidoItemImpreso .producto {
     font-size: 25pt;
     margin-bottom: 10px;
     text-align: left;
 }
 
-.pedidoItem .ingrediente {
+.pedidoItem .ingrediente, .pedidoItemImpreso .ingrediente {
     padding-left: 50px;
     text-align: left;
 }

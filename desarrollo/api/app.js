@@ -74,6 +74,7 @@ var PedidoItem = new Schema({
 });
 
 var Pedido = new Schema({
+    cueID: String,
     fecha: String,
     garzon: String,
     mesa: String,
@@ -84,14 +85,17 @@ var CuentaItem = new Schema({
     cantidad: Number,
     proID: String,
     nombre: String,
+    tipo: String,
     valor: Number,
     total: Number
 });
 
 var Cuenta = new Schema({
     fecha: String,
-    comID: String,
+    pedID: String,
     total: Number,
+    mesa: Number,
+    garzon: String,
     items: [CuentaItem]
 }, { collection: 'cuenta' });
 
@@ -101,11 +105,17 @@ var Garzon = new Schema({
     activo: Boolean
 }, { collection: 'garzon' });
 
+var Mesa = new Schema({
+    numero: Number,
+    estado: Number
+}, { collection: 'mesa' });
+
 var tipoModelo = mongoose.model('Tipo', Tipo);
 var productoModelo = mongoose.model('Producto', Producto);
 var pedidoModelo = mongoose.model('Pedido', Pedido);
 var cuentaModelo = mongoose.model('Cuenta', Cuenta);
 var garzonModelo = mongoose.model('Garzon', Garzon);
+var mesaModelo = mongoose.model('Mesa', Mesa);
 
 app.get('/api/garzon', function (req, res) {
     garzonModelo.find().sort('nombre').exec(function (err, garzon) {
@@ -131,6 +141,49 @@ app.post('/api/garzon', function (req, res) {
         }
     });
     res.json(garzon);
+});
+
+app.get('/api/mesa', function (req, res) {
+    mesaModelo.find().sort('numero').exec(function (err, mesa) {
+        if (!err) {
+            res.json(mesa);
+        } else {
+            console.log(err);
+        }
+    });
+});
+
+app.post('/api/mesa', function (req, res) {
+    mesa = new mesaModelo({
+        numero: req.body.numero,
+        estado: req.body.estado
+    });
+    mesa.save(function (err) {
+        if (!err) {
+            console.log("Mesa creada: " + mesa._id);
+        } else {
+            console.log(err);
+        }
+    });
+    res.json(mesa);
+});
+
+app.post('/api/mesa/:numero', function (req, res) {
+    mesaModelo.findOne({ 'numero': req.params.numero }, function (err, mesa) {
+        if (!err) {
+            mesa.estado = req.body.estado;
+            mesa.save(function (err) {
+                if (!err) {
+                    console.log("Estado de la mesa modificado");
+                } else {
+                    console.log(err);
+                }
+            });
+            res.json(mesa);
+        } else {
+            console.log(err);
+        }
+    });
 });
 
 app.get('/api/tipo', function (req, res) {
@@ -280,9 +333,20 @@ app.post('/api/pedido', function (req, res) {
     res.json(pedido);
 });
 
+app.get('/api/pedido/:pedID', function (req, res) {
+    pedidoModelo.findOne({ '_id': req.params.pedID }, function (err, pedido) {
+        if (!err) {
+            res.json(pedido);
+        } else {
+            console.log(err);
+        }
+    });
+});
+
 app.post('/api/pedido/:pedID', function (req, res) {
     pedidoModelo.findOne({ '_id': req.body.pedID }, function (err, pedido) {
         if (!err) {
+            pedido.cueID = req.body.cueID;
             pedido.items = req.body.items;
             pedido.save(function (err) {
                 if (!err) {
@@ -296,6 +360,35 @@ app.post('/api/pedido/:pedID', function (req, res) {
             console.log(err);
         }
     });
+});
+
+app.get('/api/pedido/mesa/:mesID', function (req, res) {
+    pedidoModelo.findOne({ 'mesa': req.params.mesID, 'cueID': '' }, function (err, pedido) {
+        if (!err) {
+            res.json(pedido);
+        } else {
+            console.log(err);
+        }
+    });
+});
+
+app.post('/api/cuenta', function (req, res) {
+    cuenta = new cuentaModelo({
+        fecha: req.body.fecha,
+        pedID: req.body.pedID,
+        total: req.body.total,
+        mesa: req.body.mesa,
+        garzon: req.body.garzon,
+        items: req.body.items
+    });
+    cuenta.save(function (err) {
+        if (!err) {
+            console.log("Cuenta creada: " + cuenta._id);
+        } else {
+            console.log(err);
+        }
+    });
+    res.json(cuenta);
 });
 
 if ('development' == app.get('env')) {

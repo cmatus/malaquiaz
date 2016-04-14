@@ -1,6 +1,7 @@
 ﻿var numItem = -1;
 
 $(document).ready(function () {
+    garzonDesplegar();
     verPantalla(1);
 });
 
@@ -23,7 +24,6 @@ function verPantalla(num) {
 
     switch(num) {
         case 1: /* Garzón */
-            garzonDesplegar();
             $("#divGarzon").css("display", "block");
             break;
         case 2: /* Mesa */
@@ -51,16 +51,30 @@ function verPantalla(num) {
 /* Mesa */
 
 function mesaDesplegar(nombre) {
+    
     $("#divMesa").html("");
-    verPantalla(2);
-    for(var x = 1; x <= 12; x++) {
-        $("#divMesa").append("<button onclick='desplegarPedido(" + x + ")'>Mesa N°" + x + "</button>")
+    pedidoLimpiar();
+    jsonPedido.garzon = nombre;
+
+    var json = apiGetMesa();
+    if(json != null) {
+        verPantalla(2);
+        for(var x = 0; x <= json.length; x++) {
+            $("#divMesa").append("<button onclick='desplegarPedido(" + json[x].numero + ")' class='" + jsonEstado[json[x].estado].estilo + "'>Mesa N°" + json[x].numero + "</button>")
+        }
     }
+
 }
 
 function desplegarPedido(mesa) {
-    pedidoLimpiar(mesa);
-    verPantalla(4);    
+    var json = apiGetPedidoMesa(mesa);
+    if(json != null) {
+        jsonPedido = json;
+        jsonPedido.pedID = json._id;
+    } else {
+        jsonPedido.mesa = mesa;
+    }
+    pedidoVer();
 }
 
 /* Garzón */
@@ -75,25 +89,20 @@ function garzonDesplegar() {
 
 /* Pedido */
 
-function pedidoLimpiar(mesa) {
-
-    var f = new Date();
-    var fecha = zeroFill(f.getDate(), 2) + "/" + zeroFill((f.getMonth() + 1), 2) + "/" + f.getFullYear() + " " + zeroFill(f.getHours(), 2) + ":" + zeroFill(f.getMinutes(), 2);
-
+function pedidoLimpiar() {
     jsonPedido = {
         'pedID': '',
-        'fecha': mesa,
-        'garzon': 'José Canseco',
-        'mesa': 1,
+        'cueID': '',
+        'fecha': '',
+        'garzon': '',
+        'mesa': 0,
         'items': []
     };
     $("#divPedido").html("");
+    verPantalla(1);
 }
 
 function pedidoAgregar() {
-    if(jsonPedido.items.length == 0) {
-        pedidoLimpiar();
-    }
     productoLimpiar(false, -1);
     listarTipos("<inicio>");
     verPantalla(3);
@@ -101,10 +110,12 @@ function pedidoAgregar() {
 
 function pedidoVer() {
     var cHTML = "";
+    var itemsImpresos = 0;
     $("#divPedido").html("");
     for (var x = 0; x < jsonPedido.items.length; x++) {
-        cHTML += "<button class='pedidoItem' onclick='deserializarPedidoItem(" + x + ")'>";
-        cHTML += "<div class='producto'>" + jsonPedido.items[x].nombre + " - " + jsonPedido.items[x].precio.tipo + "</div>";
+        itemsImpresos = itemsImpresos + (jsonPedido.items[x].impreso ? 1 : 0);
+        cHTML += "<button class='pedidoItem" + (jsonPedido.items[x].impreso ? "Impreso" : "") + "' onclick='deserializarPedidoItem(" + x + ")'>";
+        cHTML += "<div class='producto'>" + jsonPedido.items[x].nombre + " - " + jsonPedido.items[x].precio[0].tipo + "</div>";
         for (var y = 0; y < jsonPedido.items[x].ingredientes.length; y++) {
             if (jsonPedido.items[x].ingredientes[y].con == 0) {
                 cHTML += "<div class='ingrediente'>s/" + jsonPedido.items[x].ingredientes[y].nombre + "</div>";
@@ -117,6 +128,15 @@ function pedidoVer() {
     }
     $("#divPedido").html(cHTML);
     verPantalla(4);
+    if(jsonPedido.items.length > 0) {
+        $("#butPedidoEnviar").css("display", "none");
+        $("#butPedidoCuenta").css("display", "none");
+        if(itemsImpresos == jsonPedido.items.length) {
+            $("#butPedidoCuenta").css("display", "inline-block");
+        } else {
+            $("#butPedidoEnviar").css("display", "inline-block");
+        }
+    }
 }
 
 function deserializarPedidoItem(item) {
@@ -136,7 +156,7 @@ function deserializarPedidoItem(item) {
             for (var x = 0; x < json.agregados.length; x++) {
                 agregaIngrediente($("#buttonAgregado_" + json.agregados[x].proID));
             }
-            cambiaPrecio($("#buttonPrecio_" + json.precio.tipo + "_" + json.precio.valor));
+            cambiaPrecio($("#buttonPrecio_" + json.precio[0].tipo + "_" + json.precio[0].valor));
             $("#divIngredientes").acomoda();
             $("#divAgregados").acomoda();
             $("#divPrecios").acomoda();
@@ -149,6 +169,11 @@ function deserializarPedidoItem(item) {
 }
 
 function pedidoEnviar() {
+    
+    var f = new Date();
+    var fecha = zeroFill(f.getDate(), 2) + "/" + zeroFill((f.getMonth() + 1), 2) + "/" + f.getFullYear() + " " + zeroFill(f.getHours(), 2) + ":" + zeroFill(f.getMinutes(), 2);
+    jsonPedido.fecha = fecha;
+    
     var data = apiPostPedido(jsonPedido);
     if(data._id != null) {
         jsonPedido.pedID = data._id;
@@ -156,6 +181,7 @@ function pedidoEnviar() {
             verPantalla(1);
         }
     }
+    
 }
 
 function pedidoImprimir() {
@@ -176,7 +202,7 @@ function pedidoImprimir() {
         for(var x = 0; x < jsonPedido.items.length; x++) {
             if(!jsonPedido.items[x].impreso) {
                 imprimir = true;
-                jsonBoleta.push(jsonPedido.items[x].nombre + " " + jsonPedido.items[x].precio.tipo);
+                jsonBoleta.push(jsonPedido.items[x].nombre + " " + jsonPedido.items[x].precio[0].tipo);
                 for(var y = 0; y < jsonPedido.items[x].ingredientes.length; y++) {
                     if(jsonPedido.items[x].ingredientes[y].con == 0) {
                         jsonBoleta.push("   s/" + jsonPedido.items[x].ingredientes[y].nombre);
@@ -200,9 +226,11 @@ function pedidoImprimir() {
                 'apertura': false, 
                 'tipo': 'tcp'
             }
+            /*
             var parametro = RetornaAJAX(gURLImpresion, "imprimir", JSON.stringify(info), null);
             $.when($.ajax(parametro)).done(function (a) {
                 if (a.d != null) {
+            */
                     for(var x = 0; x < jsonPedido.items.length; x++) {
                         jsonPedido.items[x].impreso = true;
                     }
@@ -210,14 +238,55 @@ function pedidoImprimir() {
                     if(data._id != null) {
                         retorno = true;
                     }
+            /*
                 }
             });
+            */
         } else {
             retorno = true;
         }
 
     }
     return retorno;
+
+}
+
+function pedidoCuenta() {
+
+    var f = new Date();
+    var fecha = zeroFill(f.getDate(), 2) + "/" + zeroFill((f.getMonth() + 1), 2) + "/" + f.getFullYear() + " " + zeroFill(f.getHours(), 2) + ":" + zeroFill(f.getMinutes(), 2);
+    var total = 0;
+
+    var jsonCuenta = {
+        fecha: fecha,
+        pedID: jsonPedido._id,
+        total: 0,
+        mesa: jsonPedido.mesa,
+        garzon: jsonPedido.garzon,
+        items: []
+    }
+
+    total = 0;
+    for(var x = 0; x < jsonPedido.items.length; x++) {
+        jsonCuenta.items.push({
+            cantidad: 1,
+            proID: jsonPedido.items[x].proID,
+            nombre: jsonPedido.items[x].nombre,
+            tipo: jsonPedido.items[x].precio[0].tipo,
+            valor: jsonPedido.items[x].precio[0].valor,
+            total: jsonPedido.items[x].precio[0].valor
+        });
+        total = total + parseInt(jsonPedido.items[x].precio[0].valor);
+    }
+    jsonCuenta.total = total;
+    var data = apiPostCuenta(jsonCuenta);
+    if(data._id != null) {
+        jsonPedido.cueID = data._id;
+        data = apiPostPedido(jsonPedido);
+        if(data._id != null) {
+            verPantalla(1);
+        }
+    }
 
 }
 
@@ -261,7 +330,7 @@ function serializarProducto(tipo) {
         var retorno = null;
         if (jsonProducto._id != null) {
 
-            var jsonPrecio = {};
+            var jsonPrecio = [];
             var jsonIngredientes = [];
             var jsonAgregados = [];
             var json = {};
@@ -269,10 +338,10 @@ function serializarProducto(tipo) {
             $("#divPrecios button").each(function () {
                 if ($(this).attr("class") == "item") {
                     var prec = $(this).attr("id").split("_");
-                    jsonPrecio = {
+                    jsonPrecio.push({
                         'tipo': prec[1],
                         'valor': prec[2]
-                    };
+                    });
                 }
             });
 

@@ -13,6 +13,13 @@ var jsonTipos = [];
 var jsonProductos = [];
 var jsonPedido = {};
 
+var jsonEstado = [
+    { 'estado': 'Disponible', 'estilo': 'estadoDIS' },
+    { 'estado': 'En atención', 'estilo': 'estadoATE' },
+    { 'estado': 'Solicitando cuenta', 'estilo': 'estadoCTA' },
+    { 'estado': 'Cuenta emitida', 'estilo': 'estadoEMI' }
+];
+
 function apiGetGarzon() {
     return apiGET(gURL + "/garzon");
 }
@@ -47,4 +54,21 @@ function apiPostPedido(json) {
 	} else {
     	return apiPOST(gURL + "/pedido", json);
 	}
+}
+
+function apiPostCuenta(json) {
+    return apiPOST(gURL + "/cuenta", json);
+}
+
+function apiGetPedidoMesa(mesa) {
+    return apiGET(gURL + "/pedido/mesa/" + mesa);
+}
+
+function apiGetMesa() {
+    return apiGET(gURL + "/mesa");
+}
+
+function apiPostMesa(mesa, estado) {
+    var info = { 'estado': estado }
+    return apiPOST(gURL + "/mesa/" + mesa, info);
 }
