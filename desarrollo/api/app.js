@@ -386,27 +386,6 @@ app.post('/api/producto/precio', function (req, res) {
     });
 });
 
-app.post('/api/productos', function (req, res) {
-    for(var x = 0; x < req.body.data.length; x++) {
-        producto = new productoModelo({
-            _id: req.body.data[x]._id,
-            tipID: req.body.data[x].tipID,
-            nombre: req.body.data[x].nombre,
-            ingredientes: null,
-            precios: null,
-            ingrediente: req.body.data[x].ingrediente
-        });
-        producto.save(function (err) {
-            if (!err) {
-                console.log("Producto creado");
-            } else {
-                console.log(err);
-            }
-        });
-    }
-    res.send(req.body.data.length + " registros agregados");
-});
-
 app.post('/api/pedido', function (req, res) {
     pedido = new pedidoModelo({
         fecha: req.body.fecha,

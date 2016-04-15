@@ -36,7 +36,15 @@
             }
             
             .id {
-                width: 145px;
+                width: 30px;
+                text-align: right;
+                background-color: silver;
+            }
+
+            .id:disabled {
+                font-weight: bold;
+                width: 30px;
+                text-align: right;
             }
             
             .nombre {
@@ -393,7 +401,7 @@
             <tr>
                 <td style="vertical-align:top">
                     <div>
-                        <div><input type="text" class='id' id="txtID_Tipo" /></div>
+                        <div><input type="text" class='id' disabled='disable' id="txtID_Tipo" /></div>
                         <div><input type="text" class='id' id="txtTipID_Tipo" /></div>
                         <div><input type="text" class='nombre' id="txtNombre_Tipo" /></div>
                         <div><input type="text" class='nivel' id="txtNivel_Tipo" /></div>
@@ -401,7 +409,7 @@
                     </div>
                     <br>
                     <div>
-                        <div><input type="text" class='id' id="txtID_Producto" /></div>
+                        <div><input type="text" class='id' disabled='disable' id="txtID_Producto" /></div>
                         <div><input type="text" class='id' id="txtTipID_Producto" /></div>
                         <div><input type="text" class='nombre' id="txtNombre_Producto" /></div>
                         <div><input type="text" class='nivel' id="txtIngrediente_Producto" /></div>
@@ -409,7 +417,7 @@
                     </div>
                     <br>
                     <div>
-                        <div><input type="hidden" id="txtID_Ingrediente"   /><input type="text" class='nombre' id="txtNombre_Ingrediente" /></div>
+                        <div><input type="hidden" id="txtID_Ingrediente" disabled='disable'   /><input type="text" class='nombre' id="txtNombre_Ingrediente" /></div>
                         <div><input type="hidden" id="txtID_Ingrediente_1" /><input type="text" class='nombre' id="txtNombre_Ingrediente_1" /></div>
                         <div><input type="hidden" id="txtID_Ingrediente_2" /><input type="text" class='nombre' id="txtNombre_Ingrediente_2" /></div>
                         <div><input type="hidden" id="txtID_Ingrediente_3" /><input type="text" class='nombre' id="txtNombre_Ingrediente_3" /></div>
@@ -418,7 +426,7 @@
                     </div>
                     <br>
                     <div>
-                        <div><input type="text" class='id' id="txtID_Precio" /><input type="text" class='nombre' id="txtNombre_Precio" /></div>
+                        <div><input type="text" class='id' disabled='disable' id="txtID_Precio" /><input type="text" class='nombre' id="txtNombre_Precio" /></div>
                         <div><input type="text" class='id' id="txtID_Precio_1" /><input type="text" class='nombre' id="txtNombre_Precio_1" /></div>
                         <div><input type="text" class='id' id="txtID_Precio_2" /><input type="text" class='nombre' id="txtNombre_Precio_2" /></div>
                         <div><input type="text" class='id' id="txtID_Precio_3" /><input type="text" class='nombre' id="txtNombre_Precio_3" /></div>
@@ -426,14 +434,14 @@
                     </div>
                     <br>
                     <div>
-                        <div><input type="text" class='id' id="txtGarzonID" /></div>
+                        <div><input type="text" class='id' disabled='disable' id="txtGarzonID" /></div>
                         <div><input type="text" class='rut' id="txtGarzonRut" /></div>
                         <div><input type="text" class='nombre' id="txtGarzonNombre" /></div>
                         <div><input type="button" value="Registra Garzón" onclick="registraGarzon()" /></div>
                     </div>
                     <br>
                     <div>
-                        <div><input type="text" class='id' id="txtMesaID" /></div>
+                        <div><input type="text" class='id' disabled='disable' id="txtMesaID" /></div>
                         <div><input type="text" class='id' id="txtMesaNum" /></div>
                         <div><input type="text" class='rut' id="txtMesaEstado" value="0" /></div>
                         <div><input type="button" value="Registra Mesa" onclick="registraMesa()" /></div>
