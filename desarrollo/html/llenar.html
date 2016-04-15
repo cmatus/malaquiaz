@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+        <style>
+            * {
+                margin: 0px;
+                padding: 0px;
+                font-family: verdana;
+                font-size: 7pt;
+            }
+        </style>
+        <script src="_js/jquery.min.js"></script>
+        <script src="_js/funciones.js"></script>
+        <script src="_js/servicios.js"></script>
+        <script>
+
+            $.ajaxSetup({
+                cache: false,
+                async: false
+            });
+
+			var infoGarzones = { 'data': [
+					{ '_id': 1, 'rut': '1', 'nombre': 'Garzón N°1' },
+					{ '_id': 2, 'rut': '1', 'nombre': 'Garzón N°2' },
+					{ '_id': 3, 'rut': '1', 'nombre': 'Garzón N°3' },
+					{ '_id': 4, 'rut': '1', 'nombre': 'Garzón N°4' },
+					{ '_id': 5, 'rut': '1', 'nombre': 'Garzón N°5' },
+					{ '_id': 6, 'rut': '1', 'nombre': 'Garzón N°6' }
+				]};
+
+			var infoMesas = { 'data': [
+					{ '_id': 1, 'estado': 0 },
+					{ '_id': 2, 'estado': 0 },
+					{ '_id': 3, 'estado': 0 },
+					{ '_id': 4, 'estado': 0 },
+					{ '_id': 5, 'estado': 0 },
+					{ '_id': 6, 'estado': 0 },
+					{ '_id': 7, 'estado': 0 },
+					{ '_id': 8, 'estado': 0 },
+					{ '_id': 9, 'estado': 0 },
+					{ '_id': 10, 'estado': 0 },
+					{ '_id': 11, 'estado': 0 },
+					{ '_id': 12, 'estado': 0 }
+				]};
+
+			var infoTipos = { 'data': [
+					{ '_id': 1, 'tipID': 0, 'nombre': 'Almuerzo', 'nivel': 0 },
+					{ '_id': 2, 'tipID': 0, 'nombre': 'Bebida', 'nivel': 0 },
+					{ '_id': 3, 'tipID': 0, 'nombre': 'Cerveza', 'nivel': 0 },
+					{ '_id': 4, 'tipID': 0, 'nombre': 'Ensalada', 'nivel': 0 },
+					{ '_id': 5, 'tipID': 0, 'nombre': 'Ingrediente', 'nivel': 0 },
+					{ '_id': 6, 'tipID': 0, 'nombre': 'Jugo', 'nivel': 0 },
+					{ '_id': 7, 'tipID': 0, 'nombre': 'Pizza', 'nivel': 0 },
+					{ '_id': 8, 'tipID': 0, 'nombre': 'Sandwich', 'nivel': 0 },
+					{ '_id': 9, 'tipID': 0, 'nombre': 'Té/Café', 'nivel': 0 }
+				]};
+
+			var infoProductos = { 'data': [
+				{ '_id': 1,  'tipID': 1, 'nombre': 'Carne', 'ingredientes': null, 'precios': null, 'ingrediente': false },
+				{ '_id': 2,  'tipID': 1, 'nombre': 'Vegetariano', 'ingredientes': null, 'precios': null, 'ingrediente': false },
+				{ '_id': 3,  'tipID': 2, 'nombre': 'Agua Mineral c/gas', 'ingredientes': null, 'precios': null, 'ingrediente': false },
+				{ '_id': 4,  'tipID': 2, 'nombre': 'Agua Mineral s/gas', 'ingredientes': null, 'precios': null, 'ingrediente': false },
+				{ '_id': 5,  'tipID': 2, 'nombre': 'Coca Cola', 'ingredientes': null, 'precios': null, 'ingrediente': false },
+				{ '_id': 6,  'tipID': 2, 'nombre': 'Coca Cola Light', 'ingredientes': null, 'precios': null, 'ingrediente': false },
+				{ '_id': 7,  'tipID': 2, 'nombre': 'Coca Cola Zero', 'ingredientes': null, 'precios': null, 'ingrediente': false },
+				{ '_id': 8,  'tipID': 2, 'nombre': 'Fanta', 'ingredientes': null, 'precios': null, 'ingrediente': false },
+				{ '_id': 9,  'tipID': 2, 'nombre': 'Milk Shake', 'ingredientes': null, 'precios': null, 'ingrediente': false },
+				{ '_id': 10, 'tipID': 2, 'nombre': 'Sprite', 'ingredientes': null, 'precios': null, 'ingrediente': false },
+				{ '_id': 11, 'tipID': 3, 'nombre': 'Corona', 'ingredientes': null, 'precios': null, 'ingrediente': false },
+				{ '_id': 12, 'tipID': 3, 'nombre': 'Cuzqueña', 'ingredientes': null, 'precios': null, 'ingrediente': false },
+				{ '_id': 13, 'tipID': 3, 'nombre': 'cuzqueña Negra', 'ingredientes': null, 'precios': null, 'ingrediente': false },
+				{ '_id': 14, 'tipID': 3, 'nombre': 'Grosh', 'ingredientes': null, 'precios': null, 'ingrediente': false },
+				{ '_id': 15, 'tipID': 3, 'nombre': 'Hanedel', 'ingredientes': null, 'precios': null, 'ingrediente': false },
+				{ '_id': 16, 'tipID': 3, 'nombre': 'Kross', 'ingredientes': null, 'precios': null, 'ingrediente': false },
+				{ '_id': 17, 'tipID': 3, 'nombre': 'Kunstmann', 'ingredientes': null, 'precios': null, 'ingrediente': false },
+				{ '_id': 18, 'tipID': 3, 'nombre': 'Mahou Negra', 'ingredientes': null, 'precios': null, 'ingrediente': false },
+				{ '_id': 19, 'tipID': 3, 'nombre': 'Michelada', 'ingredientes': null, 'precios': null, 'ingrediente': false },
+				{ '_id': 20, 'tipID': 3, 'nombre': 'Miller', 'ingredientes': null, 'precios': null, 'ingrediente': false },
+				{ '_id': 21, 'tipID': 3, 'nombre': 'Sativa Golden', 'ingredientes': null, 'precios': null, 'ingrediente': false },
+				{ '_id': 22, 'tipID': 3, 'nombre': 'Stella Artois', 'ingredientes': null, 'precios': null, 'ingrediente': false },
+				{ '_id': 23, 'tipID': 4, 'nombre': 'Ensalada', 'ingredientes': null, 'precios': null, 'ingrediente': false },
+				{ '_id': 24, 'tipID': 5, 'nombre': 'Aceitunas Negras', 'ingredientes': null, 'precios': null, 'ingrediente': true },
+				{ '_id': 25, 'tipID': 5, 'nombre': 'Aceitunas Verdes', 'ingredientes': null, 'precios': null, 'ingrediente': true },
+				{ '_id': 26, 'tipID': 5, 'nombre': 'Adeherezo César', 'ingredientes': null, 'precios': null, 'ingrediente': true },
+				{ '_id': 27, 'tipID': 5, 'nombre': 'Adherezo Blue Cheese', 'ingredientes': null, 'precios': null, 'ingrediente': true },
+				{ '_id': 28, 'tipID': 5, 'nombre': 'Albahaca', 'ingredientes': null, 'precios': null, 'ingrediente': true },
+				{ '_id': 29, 'tipID': 5, 'nombre': 'Berenjenas', 'ingredientes': null, 'precios': null, 'ingrediente': true },
+				{ '_id': 30, 'tipID': 5, 'nombre': 'Berenjenas Marinadas', 'ingredientes': null, 'precios': null, 'ingrediente': true },
+				{ '_id': 31, 'tipID': 5, 'nombre': 'Camarones', 'ingredientes': null, 'precios': null, 'ingrediente': true },
+				{ '_id': 32, 'tipID': 5, 'nombre': 'Camrarones al merken', 'ingredientes': null, 'precios': null, 'ingrediente': true },
+				{ '_id': 33, 'tipID': 5, 'nombre': 'Cebolla Blanca', 'ingredientes': null, 'precios': null, 'ingrediente': true },
+				{ '_id': 34, 'tipID': 5, 'nombre': 'Cebolla Blanca Aros', 'ingredientes': null, 'precios': null, 'ingrediente': true },
+				{ '_id': 35, 'tipID': 5, 'nombre': 'Cebolla Blanca Caramelizada', 'ingredientes': null, 'precios': null, 'ingrediente': true },
+				{ '_id': 36, 'tipID': 5, 'nombre': 'Cebolla Blanca Salteada', 'ingredientes': null, 'precios': null, 'ingrediente': true },
+				{ '_id': 37, 'tipID': 5, 'nombre': 'Cebolla Morada', 'ingredientes': null, 'precios': null, 'ingrediente': true },
+				{ '_id': 38, 'tipID': 5, 'nombre': 'Cebolla Morada Aros', 'ingredientes': null, 'precios': null, 'ingrediente': true },
+				{ '_id': 39, 'tipID': 5, 'nombre': 'Cebolla Morada Salteada al Vino', 'ingredientes': null, 'precios': null, 'ingrediente': true },
+				{ '_id': 40, 'tipID': 5, 'nombre': 'Champiñon Salteado', 'ingredientes': null, 'precios': null, 'ingrediente': true },
+				{ '_id': 41, 'tipID': 5, 'nombre': 'Choclo a la crema', 'ingredientes': null, 'precios': null, 'ingrediente': true },
+				{ '_id': 42, 'tipID': 5, 'nombre': 'Choricillo', 'ingredientes': null, 'precios': null, 'ingrediente': true },
+				{ '_id': 43, 'tipID': 5, 'nombre': 'Churrasco', 'ingredientes': null, 'precios': null, 'ingrediente': true },
+				{ '_id': 44, 'tipID': 5, 'nombre': 'Churrasco picado', 'ingredientes': null, 'precios': null, 'ingrediente': true },
+				{ '_id': 45, 'tipID': 5, 'nombre': 'Cilantro', 'ingredientes': null, 'precios': null, 'ingrediente': true },
+				{ '_id': 46, 'tipID': 5, 'nombre': 'Crutones', 'ingredientes': null, 'precios': null, 'ingrediente': true },
+				{ '_id': 47, 'tipID': 5, 'nombre': 'Jamón Pierna', 'ingredientes': null, 'precios': null, 'ingrediente': true },
+				{ '_id': 48, 'tipID': 5, 'nombre': 'Jamón Serrano', 'ingredientes': null, 'precios': null, 'ingrediente': true },
+				{ '_id': 49, 'tipID': 5, 'nombre': 'Michelada', 'ingredientes': null, 'precios': null, 'ingrediente': true },
+				{ '_id': 50, 'tipID': 5, 'nombre': 'Mostaza Miel', 'ingredientes': null, 'precios': null, 'ingrediente': true },
+				{ '_id': 51, 'tipID': 5, 'nombre': 'Oregano', 'ingredientes': null, 'precios': null, 'ingrediente': true },
+				{ '_id': 52, 'tipID': 5, 'nombre': 'Palta', 'ingredientes': null, 'precios': null, 'ingrediente': true },
+				{ '_id': 53, 'tipID': 5, 'nombre': 'Pepperoni', 'ingredientes': null, 'precios': null, 'ingrediente': true },
+				{ '_id': 54, 'tipID': 5, 'nombre': 'Pesto', 'ingredientes': null, 'precios': null, 'ingrediente': true },
+				{ '_id': 55, 'tipID': 5, 'nombre': 'Pimiento Rojo', 'ingredientes': null, 'precios': null, 'ingrediente': true },
+				{ '_id': 56, 'tipID': 5, 'nombre': 'Pimiento Verde', 'ingredientes': null, 'precios': null, 'ingrediente': true },
+				{ '_id': 57, 'tipID': 5, 'nombre': 'Pollo Barbecue', 'ingredientes': null, 'precios': null, 'ingrediente': true },
+				{ '_id': 58, 'tipID': 5, 'nombre': 'Pollo Marinado', 'ingredientes': null, 'precios': null, 'ingrediente': true },
+				{ '_id': 59, 'tipID': 5, 'nombre': 'Quesillo', 'ingredientes': null, 'precios': null, 'ingrediente': true },
+				{ '_id': 60, 'tipID': 5, 'nombre': 'Queso Azul', 'ingredientes': null, 'precios': null, 'ingrediente': true },
+				{ '_id': 61, 'tipID': 5, 'nombre': 'Queso Cabra', 'ingredientes': null, 'precios': null, 'ingrediente': true },
+				{ '_id': 62, 'tipID': 5, 'nombre': 'Queso Gauda', 'ingredientes': null, 'precios': null, 'ingrediente': true },
+				{ '_id': 63, 'tipID': 5, 'nombre': 'Queso Mozzarella', 'ingredientes': null, 'precios': null, 'ingrediente': true },
+				{ '_id': 64, 'tipID': 5, 'nombre': 'Rúcula', 'ingredientes': null, 'precios': null, 'ingrediente': true },
+				{ '_id': 65, 'tipID': 5, 'nombre': 'Tocino', 'ingredientes': null, 'precios': null, 'ingrediente': true },
+				{ '_id': 66, 'tipID': 5, 'nombre': 'Tomate', 'ingredientes': null, 'precios': null, 'ingrediente': true },
+				{ '_id': 67, 'tipID': 5, 'nombre': 'Tomate Cherry', 'ingredientes': null, 'precios': null, 'ingrediente': true },
+				{ '_id': 68, 'tipID': 5, 'nombre': 'Tomate Deshidratado', 'ingredientes': null, 'precios': null, 'ingrediente': true },
+				{ '_id': 69, 'tipID': 5, 'nombre': 'Zapallo Italiano', 'ingredientes': null, 'precios': null, 'ingrediente': true },
+				{ '_id': 70, 'tipID': 6, 'nombre': 'Jugo Natural', 'ingredientes': null, 'precios': null, 'ingrediente': false },
+				{ '_id': 71, 'tipID': 6, 'nombre': 'Limonada', 'ingredientes': null, 'precios': null, 'ingrediente': false },
+				{ '_id': 72, 'tipID': 7, 'nombre': 'Fugazza', 'ingredientes': null, 'precios': null, 'ingrediente': false },
+				{ '_id': 73, 'tipID': 7, 'nombre': 'Pizza 4 Quesos', 'ingredientes': null, 'precios': null, 'ingrediente': false },
+				{ '_id': 74, 'tipID': 7, 'nombre': 'Pizza Castellana', 'ingredientes': null, 'precios': null, 'ingrediente': false },
+				{ '_id': 75, 'tipID': 7, 'nombre': 'Pizza Choclo Crema', 'ingredientes': null, 'precios': null, 'ingrediente': false },
+				{ '_id': 76, 'tipID': 7, 'nombre': 'Pizza De Pirque 2.0', 'ingredientes': null, 'precios': null, 'ingrediente': false },
+				{ '_id': 77, 'tipID': 7, 'nombre': 'Pizza Genovesa', 'ingredientes': null, 'precios': null, 'ingrediente': false },
+				{ '_id': 78, 'tipID': 7, 'nombre': 'Pizza La Gringa', 'ingredientes': null, 'precios': null, 'ingrediente': false },
+				{ '_id': 79, 'tipID': 7, 'nombre': 'Pizza Malaquiaz', 'ingredientes': null, 'precios': null, 'ingrediente': false },
+				{ '_id': 80, 'tipID': 7, 'nombre': 'Pizza Mapuche', 'ingredientes': null, 'precios': null, 'ingrediente': false },
+				{ '_id': 81, 'tipID': 7, 'nombre': 'Pizza Osornina', 'ingredientes': null, 'precios': null, 'ingrediente': false },
+				{ '_id': 82, 'tipID': 7, 'nombre': 'Pizza Pacífica', 'ingredientes': null, 'precios': null, 'ingrediente': false },
+				{ '_id': 83, 'tipID': 7, 'nombre': 'Pizza Patagonia', 'ingredientes': null, 'precios': null, 'ingrediente': false },
+				{ '_id': 84, 'tipID': 7, 'nombre': 'Pizza Pollo Pimentón', 'ingredientes': null, 'precios': null, 'ingrediente': false },
+				{ '_id': 85, 'tipID': 7, 'nombre': 'Pizza Romana de toda la vida', 'ingredientes': null, 'precios': null, 'ingrediente': false },
+				{ '_id': 86, 'tipID': 7, 'nombre': 'Pizza Sevillana', 'ingredientes': null, 'precios': null, 'ingrediente': false },
+				{ '_id': 87, 'tipID': 8, 'nombre': 'Sandwich Bustamante', 'ingredientes': null, 'precios': null, 'ingrediente': false },
+				{ '_id': 88, 'tipID': 8, 'nombre': 'Sandwich Caprese', 'ingredientes': null, 'precios': null, 'ingrediente': false },
+				{ '_id': 89, 'tipID': 8, 'nombre': 'Sandwich Caupolicán', 'ingredientes': null, 'precios': null, 'ingrediente': false },
+				{ '_id': 90, 'tipID': 8, 'nombre': 'Sandwich Vegeta', 'ingredientes': null, 'precios': null, 'ingrediente': false },
+				{ '_id': 91, 'tipID': 9, 'nombre': 'Café Americano', 'ingredientes': null, 'precios': null, 'ingrediente': false },
+				{ '_id': 92, 'tipID': 9, 'nombre': 'Café Capuccino', 'ingredientes': null, 'precios': null, 'ingrediente': false },
+				{ '_id': 93, 'tipID': 9, 'nombre': 'Café Cortado', 'ingredientes': null, 'precios': null, 'ingrediente': false },
+				{ '_id': 94, 'tipID': 9, 'nombre': 'Café Espresso', 'ingredientes': null, 'precios': null, 'ingrediente': false },
+				{ '_id': 95, 'tipID': 9, 'nombre': 'Café Espresso Doble', 'ingredientes': null, 'precios': null, 'ingrediente': false },
+				{ '_id': 96, 'tipID': 9, 'nombre': 'Café Espresso Macchiato', 'ingredientes': null, 'precios': null, 'ingrediente': false },
+				{ '_id': 97, 'tipID': 9, 'nombre': 'Café Latte', 'ingredientes': null, 'precios': null, 'ingrediente': false },
+				{ '_id': 98, 'tipID': 9, 'nombre': 'Tetera de té', 'ingredientes': null, 'precios': null, 'ingrediente': false }
+			]};
+			
+            function registraGarzon() {
+            	for(var x = 0; x < infoGarzones.data.length; x++) {
+	                $.post(gURL + "/garzon", infoGarzones.data[x], function(data) {
+	                	alert(x);
+	                    document.write("Garzón: " + data._id + "<br>");
+	                });
+            	}
+            }
+
+            function registraMesa() {
+            	for(var x = 0; x < infoMesas.data.length; x++) {
+	                $.post(gURL + "/mesa", infoMesas.data[x], function(data) {
+	                	alert(x);
+	                    document.write("Mesa: " + data + "<br>");
+	                });                
+	            }
+            }
+
+            function registraTipo() {
+            	for(var x = 0; x < infoTipos.data.length; x++) {
+	                $.post(gURL + "/tipo", infoTipos.data[x], function(data) {
+	                	alert(x);
+	                    document.write("Tipo: " + data + "<br>");
+	                });                
+	            }
+            }
+			
+            function registraProducto() {
+            	for(var x = 0; x < infoProductos.data.length; x++) {
+	                $.post(gURL + "/producto", infoProductos.data[x], function(data) {
+	                	alert(x);
+	                    document.write("Producto: " + data + "<br>");
+	                });
+            	}
+            }
+            
+            $( document ).ready(function() {
+            	//registraGarzon();
+            	//registraMesa();
+            	//registraTipo();
+            	registraProducto();
+            });
+
+		</script>
+    </head>
+    <body>
+    	<div id="ok"></div>
+    </body>
+</html>

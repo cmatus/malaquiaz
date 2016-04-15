@@ -28,14 +28,8 @@ app.use(cors());
 
 var Schema = mongoose.Schema;
 
-var Tipo = new Schema({
-    tipID: String,
-    nombre: String,
-    nivel: Number
-}, { collection: 'tipo' });
-
 var Ingrediente = new Schema({
-    proID: String,
+    proID: Number,
     nombre: String
 });
 
@@ -44,28 +38,20 @@ var Precio = new Schema({
     valor: Number
 });
 
-var Producto = new Schema({
-    tipID: String,
-    nombre: String,
-    ingredientes: [Ingrediente],
-    precios: [Precio],
-    ingrediente: Boolean
-}, { collection: 'producto' });
-
 var PedidoPrecio = new Schema({
-    tipo: String,
+    tipo: Number,
     valor: Number
 });
 
 var PedidoIngrediente = new Schema({
-    proID: String,
+    proID: Number,
     nombre: String,
     con: Number
 });
 
 var PedidoItem = new Schema({
-    proID: String,
-    tipID: String,
+    proID: Number,
+    tipID: Number,
     nombre: String,
     ingredientes: [PedidoIngrediente],
     agregados: [Ingrediente],
@@ -73,42 +59,127 @@ var PedidoItem = new Schema({
     impreso: Boolean
 });
 
-var Pedido = new Schema({
-    cueID: String,
-    fecha: String,
-    garzon: String,
-    mesa: String,
-    items: [PedidoItem]
-}, { collection: 'pedido' });
-
 var CuentaItem = new Schema({
     cantidad: Number,
-    proID: String,
+    proID: Number,
     nombre: String,
     tipo: String,
     valor: Number,
     total: Number
 });
 
-var Cuenta = new Schema({
+var Garzon = new Schema({
+    _id: Number,
+    rut: String,
+    nombre: String,
+    activo: Boolean
+}, { collection: 'garzon', versionKey: false, _id: false });
+
+var Mesa = new Schema({
+    _id: Number,
+    estado: Number
+}, { collection: 'mesa', versionKey: false, _id: false });
+
+var Tipo = new Schema({
+    _id: Number,
+    tipID: Number,
+    nombre: String,
+    nivel: Number
+}, { collection: 'tipo', versionKey: false, _id: false });
+
+var Producto = new Schema({
+    _id: Number,
+    tipID: Number,
+    nombre: String,
+    ingredientes: [Ingrediente],
+    precios: [Precio],
+    ingrediente: Boolean
+}, { collection: 'producto', versionKey: false, _id: false });
+
+var Pedido = new Schema({
+    _id: Number,
+    cueID: Number,
     fecha: String,
-    pedID: String,
+    garzon: String,
+    mesa: Number,
+    items: [PedidoItem]
+}, { collection: 'pedido', versionKey: false, _id: false });
+
+var Cuenta = new Schema({
+    _id: Number,
+    fecha: String,
+    pedID: Number,
     total: Number,
     mesa: Number,
     garzon: String,
     items: [CuentaItem]
-}, { collection: 'cuenta' });
+}, { collection: 'cuenta', versionKey: false, _id: false });
 
-var Garzon = new Schema({
-    rut: String,
-    nombre: String,
-    activo: Boolean
-}, { collection: 'garzon' });
+Garzon.pre('save', function(next) {
+    var doc = this;
+    if(doc._id == null) {
+        var newDoc = garzonModelo.findOne().sort('-_id').exec(function(err, item) {
+            doc._id = (item == null ? 0 : item._id) + 1;
+            next();
+        });
+    } else {
+        next();
+    }
+});
 
-var Mesa = new Schema({
-    numero: Number,
-    estado: Number
-}, { collection: 'mesa' });
+Mesa.pre('save', function(next) {
+    var doc = this;
+    if(doc._id == null) {
+        var newDoc = mesaModelo.findOne().sort('-_id').exec(function(err, item) {
+            doc._id = (item == null ? 0 : item._id) + 1;
+            next();
+        });
+    } else { 
+        next();
+    }
+});
+
+Tipo.pre('save', function(next) {
+    var doc = this;
+    if(doc._id == null) {
+        var newDoc = tipoModelo.findOne().sort('-_id').exec(function(err, item) {
+            doc._id = (item == null ? 0 : item._id) + 1;
+            next();
+        });
+    } else {
+        next();
+    }
+});
+
+Producto.pre('save', function(next) {
+    var doc = this;
+    if(doc._id == null) {
+        var newDoc = productoModelo.findOne().sort('-_id').exec(function(err, item) {
+            doc._id = (item == null ? 0 : item._id) + 1;
+            next();
+        });
+    } else {
+        next();
+    }
+});
+
+Pedido.pre('save', function(next) {
+    console.log("Pre");
+    var doc = this;
+    var newDoc = pedidoModelo.findOne().sort('-_id').exec(function(err, item) {
+        doc._id = (item == null ? 0 : item._id) + 1;
+        next();
+    });
+});
+
+Cuenta.pre('save', function(next) {
+    console.log("Pre");
+    var doc = this;
+    var newDoc = cuentaModelo.findOne().sort('-_id').exec(function(err, item) {
+        doc._id = (item == null ? 0 : item._id) + 1;
+        next();
+    });
+});
 
 var tipoModelo = mongoose.model('Tipo', Tipo);
 var productoModelo = mongoose.model('Producto', Producto);
@@ -155,12 +226,11 @@ app.get('/api/mesa', function (req, res) {
 
 app.post('/api/mesa', function (req, res) {
     mesa = new mesaModelo({
-        numero: req.body.numero,
         estado: req.body.estado
     });
     mesa.save(function (err) {
         if (!err) {
-            console.log("Mesa creada: " + mesa._id);
+            console.log("Mesa N°" + mesa._id + " creada");
         } else {
             console.log(err);
         }
@@ -168,13 +238,13 @@ app.post('/api/mesa', function (req, res) {
     res.json(mesa);
 });
 
-app.post('/api/mesa/:numero', function (req, res) {
-    mesaModelo.findOne({ 'numero': req.params.numero }, function (err, mesa) {
+app.post('/api/mesa/:_id', function (req, res) {
+    mesaModelo.findById(req.params._id, function (err, mesa) {
         if (!err) {
             mesa.estado = req.body.estado;
             mesa.save(function (err) {
                 if (!err) {
-                    console.log("Estado de la mesa modificado");
+                    console.log("Estado de la mesa N°" + mesa._id + " modificado");
                 } else {
                     console.log(err);
                 }
@@ -250,8 +320,8 @@ app.post('/api/producto', function (req, res) {
     res.json(producto);
 });
 
-app.get('/api/producto/:proID', function (req, res) {
-    productoModelo.findOne({ '_id': req.params.proID }).sort('nombre').exec(function (err, producto) {
+app.get('/api/producto/:_id', function (req, res) {
+    productoModelo.findById(req.params._id).sort('nombre').exec(function (err, producto) {
         if (!err) {
             res.send(producto);
         } else {
@@ -281,7 +351,7 @@ app.get('/api/producto/ingrediente/:ingrediente', function (req, res) {
 });
 
 app.post('/api/producto/ingrediente', function (req, res) {
-    productoModelo.findOne({ '_id': req.body.proID }, function (err, producto) {
+    productoModelo.findById(req.body.proID, function (err, producto) {
         if (!err) {
             producto.ingredientes = req.body.ingredientes;
             producto.save(function (err) {
@@ -299,7 +369,7 @@ app.post('/api/producto/ingrediente', function (req, res) {
 });
 
 app.post('/api/producto/precio', function (req, res) {
-    productoModelo.findOne({ '_id': req.body.proID }, function (err, producto) {
+    productoModelo.findById(req.body.proID, function (err, producto) {
         if (!err) {
             producto.precios = req.body.precios;
             producto.save(function (err) {
@@ -314,6 +384,27 @@ app.post('/api/producto/precio', function (req, res) {
             console.log(err);
         }
     });
+});
+
+app.post('/api/productos', function (req, res) {
+    for(var x = 0; x < req.body.data.length; x++) {
+        producto = new productoModelo({
+            _id: req.body.data[x]._id,
+            tipID: req.body.data[x].tipID,
+            nombre: req.body.data[x].nombre,
+            ingredientes: null,
+            precios: null,
+            ingrediente: req.body.data[x].ingrediente
+        });
+        producto.save(function (err) {
+            if (!err) {
+                console.log("Producto creado");
+            } else {
+                console.log(err);
+            }
+        });
+    }
+    res.send(req.body.data.length + " registros agregados");
 });
 
 app.post('/api/pedido', function (req, res) {
@@ -333,8 +424,8 @@ app.post('/api/pedido', function (req, res) {
     res.json(pedido);
 });
 
-app.get('/api/pedido/:pedID', function (req, res) {
-    pedidoModelo.findOne({ '_id': req.params.pedID }, function (err, pedido) {
+app.get('/api/pedido/:_id', function (req, res) {
+    pedidoModelo.findById(req.params._id, function (err, pedido) {
         if (!err) {
             res.json(pedido);
         } else {
@@ -343,8 +434,8 @@ app.get('/api/pedido/:pedID', function (req, res) {
     });
 });
 
-app.post('/api/pedido/:pedID', function (req, res) {
-    pedidoModelo.findOne({ '_id': req.body.pedID }, function (err, pedido) {
+app.post('/api/pedido/:_id', function (req, res) {
+    pedidoModelo.findById(req.body._id, function (err, pedido) {
         if (!err) {
             pedido.cueID = req.body.cueID;
             pedido.items = req.body.items;

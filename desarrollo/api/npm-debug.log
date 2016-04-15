@@ -1,0 +1,380 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'C:\\Program Files\\nodejs\\node.exe',
+1 verbose cli   'C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js',
+1 verbose cli   'install',
+1 verbose cli   'mongoose-auto-increment' ]
+2 info using npm@2.14.20
+3 info using node@v4.4.1
+4 verbose install initial load of C:\cmatus\git\malaquiaz\desarrollo\api\package.json
+5 verbose installManyTop reading scoped package data from C:\cmatus\git\malaquiaz\desarrollo\api\node_modules\body-parser\package.json
+6 verbose installManyTop reading scoped package data from C:\cmatus\git\malaquiaz\desarrollo\api\node_modules\cors\package.json
+7 verbose installManyTop reading scoped package data from C:\cmatus\git\malaquiaz\desarrollo\api\node_modules\errorhandler\package.json
+8 verbose installManyTop reading scoped package data from C:\cmatus\git\malaquiaz\desarrollo\api\node_modules\express\package.json
+9 verbose installManyTop reading scoped package data from C:\cmatus\git\malaquiaz\desarrollo\api\node_modules\express-session\package.json
+10 verbose installManyTop reading scoped package data from C:\cmatus\git\malaquiaz\desarrollo\api\node_modules\jade\package.json
+11 verbose installManyTop reading scoped package data from C:\cmatus\git\malaquiaz\desarrollo\api\node_modules\method-override\package.json
+12 verbose installManyTop reading scoped package data from C:\cmatus\git\malaquiaz\desarrollo\api\node_modules\mongoose\package.json
+13 verbose installManyTop reading scoped package data from C:\cmatus\git\malaquiaz\desarrollo\api\node_modules\mongoose-auto-increment\package.json
+14 verbose installManyTop reading scoped package data from C:\cmatus\git\malaquiaz\desarrollo\api\node_modules\morgan\package.json
+15 verbose installManyTop reading scoped package data from C:\cmatus\git\malaquiaz\desarrollo\api\node_modules\multer\package.json
+16 verbose installManyTop reading scoped package data from C:\cmatus\git\malaquiaz\desarrollo\api\node_modules\serve-favicon\package.json
+17 info package.json mongoose-auto-increment@5.0.1 No license field.
+18 verbose readDependencies loading dependencies from C:\cmatus\git\malaquiaz\desarrollo\api\package.json
+19 verbose install mongoose-auto-increment is installed as 5.0.1
+20 silly cache add args [ 'mongoose-auto-increment', null ]
+21 verbose cache add spec mongoose-auto-increment
+22 silly cache add parsed spec Result {
+22 silly cache add   raw: 'mongoose-auto-increment',
+22 silly cache add   scope: null,
+22 silly cache add   name: 'mongoose-auto-increment',
+22 silly cache add   rawSpec: '',
+22 silly cache add   spec: 'latest',
+22 silly cache add   type: 'tag' }
+23 silly addNamed mongoose-auto-increment@latest
+24 verbose addNamed "latest" is being treated as a dist-tag for mongoose-auto-increment
+25 info addNameTag [ 'mongoose-auto-increment', 'latest' ]
+26 silly mapToRegistry name mongoose-auto-increment
+27 silly mapToRegistry using default registry
+28 silly mapToRegistry registry https://registry.npmjs.org/
+29 silly mapToRegistry uri https://registry.npmjs.org/mongoose-auto-increment
+30 verbose addNameTag registry:https://registry.npmjs.org/mongoose-auto-increment not in flight; fetching
+31 verbose request uri https://registry.npmjs.org/mongoose-auto-increment
+32 verbose request no auth needed
+33 info attempt registry request try #1 at 12:09:18
+34 verbose request id 69c3700405c799b1
+35 verbose etag "3HRI2XSITJJLDHT0RNAGGJM1T"
+36 http request GET https://registry.npmjs.org/mongoose-auto-increment
+37 http 304 https://registry.npmjs.org/mongoose-auto-increment
+38 verbose headers { date: 'Thu, 14 Apr 2016 15:07:41 GMT',
+38 verbose headers   via: '1.1 varnish',
+38 verbose headers   'cache-control': 'max-age=300',
+38 verbose headers   etag: '"3HRI2XSITJJLDHT0RNAGGJM1T"',
+38 verbose headers   age: '0',
+38 verbose headers   connection: 'keep-alive',
+38 verbose headers   'x-served-by': 'cache-iad2143-IAD',
+38 verbose headers   'x-cache': 'HIT',
+38 verbose headers   'x-cache-hits': '1',
+38 verbose headers   'x-timer': 'S1460646461.843513,VS0,VE25',
+38 verbose headers   vary: 'Accept-Encoding' }
+39 silly get cb [ 304,
+39 silly get   { date: 'Thu, 14 Apr 2016 15:07:41 GMT',
+39 silly get     via: '1.1 varnish',
+39 silly get     'cache-control': 'max-age=300',
+39 silly get     etag: '"3HRI2XSITJJLDHT0RNAGGJM1T"',
+39 silly get     age: '0',
+39 silly get     connection: 'keep-alive',
+39 silly get     'x-served-by': 'cache-iad2143-IAD',
+39 silly get     'x-cache': 'HIT',
+39 silly get     'x-cache-hits': '1',
+39 silly get     'x-timer': 'S1460646461.843513,VS0,VE25',
+39 silly get     vary: 'Accept-Encoding' } ]
+40 verbose etag https://registry.npmjs.org/mongoose-auto-increment from cache
+41 verbose get saving mongoose-auto-increment to C:\Users\claudio.matus\AppData\Roaming\npm-cache\registry.npmjs.org\mongoose-auto-increment\.cache.json
+42 verbose correctMkdir C:\Users\claudio.matus\AppData\Roaming\npm-cache correctMkdir not in flight; initializing
+43 silly addNameTag next cb for mongoose-auto-increment with tag latest
+44 silly addNamed mongoose-auto-increment@5.0.1
+45 verbose addNamed "5.0.1" is a plain semver version for mongoose-auto-increment
+46 silly cache afterAdd mongoose-auto-increment@5.0.1
+47 verbose afterAdd C:\Users\claudio.matus\AppData\Roaming\npm-cache\mongoose-auto-increment\5.0.1\package\package.json not in flight; writing
+48 verbose correctMkdir C:\Users\claudio.matus\AppData\Roaming\npm-cache correctMkdir not in flight; initializing
+49 verbose afterAdd C:\Users\claudio.matus\AppData\Roaming\npm-cache\mongoose-auto-increment\5.0.1\package\package.json written
+50 silly install resolved [ { name: 'mongoose-auto-increment',
+50 silly install resolved     version: '5.0.1',
+50 silly install resolved     description: 'This plugin allows you to auto-increment any field on any mongoose schema that you wish.',
+50 silly install resolved     repository:
+50 silly install resolved      { type: 'git',
+50 silly install resolved        url: 'git://github.com/codetunnel/mongoose-auto-increment.git' },
+50 silly install resolved     dependencies: { extend: '^3.0.0' },
+50 silly install resolved     peerDependencies: { mongoose: '^4.1.12' },
+50 silly install resolved     devDependencies: { async: '*', chai: '*', mocha: '*', mongoose: '^4.1.12' },
+50 silly install resolved     keywords:
+50 silly install resolved      [ 'mongoose',
+50 silly install resolved        'plugin',
+50 silly install resolved        'auto-increment',
+50 silly install resolved        'auto',
+50 silly install resolved        'increment',
+50 silly install resolved        'automatic',
+50 silly install resolved        'autoincrement',
+50 silly install resolved        'auto_increment',
+50 silly install resolved        'autoinc',
+50 silly install resolved        'auto-inc',
+50 silly install resolved        'auto_inc',
+50 silly install resolved        'pureautoinc',
+50 silly install resolved        'mongoose-pureautoinc' ],
+50 silly install resolved     author:
+50 silly install resolved      { name: 'Alex Ford',
+50 silly install resolved        email: 'alex.ford@codetunnel.com',
+50 silly install resolved        url: 'Chevex' },
+50 silly install resolved     contributors: [ [Object], [Object], [Object], [Object] ],
+50 silly install resolved     scripts: { test: 'node_modules/mocha/bin/mocha' },
+50 silly install resolved     bugs: { url: 'https://github.com/codetunnel/mongoose-auto-increment/issues' },
+50 silly install resolved     gitHead: '50bd2a642c7565cf0a9f2c368d437b83160ad0a6',
+50 silly install resolved     homepage: 'https://github.com/codetunnel/mongoose-auto-increment#readme',
+50 silly install resolved     _id: 'mongoose-auto-increment@5.0.1',
+50 silly install resolved     _shasum: '827e051d9cc371dabe8bff1a704431d341cb79df',
+50 silly install resolved     _from: 'mongoose-auto-increment@latest',
+50 silly install resolved     _npmVersion: '3.3.8',
+50 silly install resolved     _nodeVersion: '4.2.1',
+50 silly install resolved     _npmUser: { name: 'chevex', email: 'alex.ford@codetunnel.com' },
+50 silly install resolved     dist:
+50 silly install resolved      { shasum: '827e051d9cc371dabe8bff1a704431d341cb79df',
+50 silly install resolved        tarball: 'https://registry.npmjs.org/mongoose-auto-increment/-/mongoose-auto-increment-5.0.1.tgz' },
+50 silly install resolved     maintainers: [ [Object] ],
+50 silly install resolved     directories: {},
+50 silly install resolved     _resolved: 'https://registry.npmjs.org/mongoose-auto-increment/-/mongoose-auto-increment-5.0.1.tgz',
+50 silly install resolved     readme: 'ERROR: No README data found!' } ]
+51 info install mongoose-auto-increment@5.0.1 into C:\cmatus\git\malaquiaz\desarrollo\api
+52 info installOne mongoose-auto-increment@5.0.1
+53 verbose installOne of mongoose-auto-increment to C:\cmatus\git\malaquiaz\desarrollo\api not in flight; installing
+54 verbose correctMkdir C:\Users\claudio.matus\AppData\Roaming\npm-cache\_locks correctMkdir not in flight; initializing
+55 verbose lock using C:\Users\claudio.matus\AppData\Roaming\npm-cache\_locks\mongoose-auto-increment-4155832a7e06e1d5.lock for C:\cmatus\git\malaquiaz\desarrollo\api\node_modules\mongoose-auto-increment
+56 silly install write writing mongoose-auto-increment 5.0.1 to C:\cmatus\git\malaquiaz\desarrollo\api\node_modules\mongoose-auto-increment
+57 verbose unbuild node_modules\mongoose-auto-increment
+58 info preuninstall mongoose-auto-increment@5.0.1
+59 info uninstall mongoose-auto-increment@5.0.1
+60 verbose unbuild rmStuff mongoose-auto-increment@5.0.1 from C:\cmatus\git\malaquiaz\desarrollo\api\node_modules
+61 info postuninstall mongoose-auto-increment@5.0.1
+62 silly gentlyRm C:\cmatus\git\malaquiaz\desarrollo\api\node_modules\mongoose-auto-increment is being purged from base C:\cmatus\git\malaquiaz\desarrollo\api
+63 verbose gentlyRm don't care about contents; nuking C:\cmatus\git\malaquiaz\desarrollo\api\node_modules\mongoose-auto-increment
+64 silly vacuum-fs purging C:\cmatus\git\malaquiaz\desarrollo\api\node_modules\mongoose-auto-increment
+65 silly vacuum-fs quitting because other entries in C:\cmatus\git\malaquiaz\desarrollo\api\node_modules
+66 verbose tar unpack C:\Users\claudio.matus\AppData\Roaming\npm-cache\mongoose-auto-increment\5.0.1\package.tgz
+67 verbose tar unpacking to C:\cmatus\git\malaquiaz\desarrollo\api\node_modules\mongoose-auto-increment
+68 silly gentlyRm C:\cmatus\git\malaquiaz\desarrollo\api\node_modules\mongoose-auto-increment is being purged
+69 verbose gentlyRm don't care about contents; nuking C:\cmatus\git\malaquiaz\desarrollo\api\node_modules\mongoose-auto-increment
+70 silly gunzTarPerm modes [ '777', '666' ]
+71 silly gunzTarPerm extractEntry package.json
+72 silly gunzTarPerm modified mode [ 'package.json', 420, 438 ]
+73 silly gunzTarPerm extractEntry .npmignore
+74 silly gunzTarPerm modified mode [ '.npmignore', 420, 438 ]
+75 silly gunzTarPerm extractEntry README.md
+76 silly gunzTarPerm modified mode [ 'README.md', 420, 438 ]
+77 silly gunzTarPerm extractEntry LICENSE
+78 silly gunzTarPerm modified mode [ 'LICENSE', 420, 438 ]
+79 silly gunzTarPerm extractEntry index.js
+80 silly gunzTarPerm modified mode [ 'index.js', 420, 438 ]
+81 silly gunzTarPerm extractEntry .travis.yml
+82 silly gunzTarPerm modified mode [ '.travis.yml', 420, 438 ]
+83 silly gunzTarPerm extractEntry CONTRIBUTING.md
+84 silly gunzTarPerm modified mode [ 'CONTRIBUTING.md', 420, 438 ]
+85 silly gunzTarPerm extractEntry test/test.js
+86 silly gunzTarPerm modified mode [ 'test/test.js', 420, 438 ]
+87 silly gunzTarPerm extractEntry test/mocha.opts
+88 silly gunzTarPerm modified mode [ 'test/mocha.opts', 420, 438 ]
+89 verbose write writing to C:\cmatus\git\malaquiaz\desarrollo\api\node_modules\mongoose-auto-increment\package.json
+90 info preinstall mongoose-auto-increment@5.0.1
+91 verbose readDependencies loading dependencies from C:\cmatus\git\malaquiaz\desarrollo\api\node_modules\mongoose-auto-increment\package.json
+92 silly prepareForInstallMany adding extend@^3.0.0 from mongoose-auto-increment dependencies
+93 silly prepareForInstallMany adding mongoose@^4.1.12 from mongoose-auto-increment peerDependencies
+94 warn peerDependencies The peer dependency mongoose@^4.1.12 included from mongoose-auto-increment will no
+95 warn peerDependencies longer be automatically installed to fulfill the peerDependency
+96 warn peerDependencies in npm 3+. Your application will need to depend on it explicitly.
+97 verbose readDependencies loading dependencies from C:\cmatus\git\malaquiaz\desarrollo\api\node_modules\mongoose-auto-increment\package.json
+98 silly cache add args [ 'extend@^3.0.0', null ]
+99 verbose cache add spec extend@^3.0.0
+100 silly cache add parsed spec Result {
+100 silly cache add   raw: 'extend@^3.0.0',
+100 silly cache add   scope: null,
+100 silly cache add   name: 'extend',
+100 silly cache add   rawSpec: '^3.0.0',
+100 silly cache add   spec: '>=3.0.0 <4.0.0',
+100 silly cache add   type: 'range' }
+101 silly addNamed extend@>=3.0.0 <4.0.0
+102 verbose addNamed ">=3.0.0 <4.0.0" is a valid semver range for extend
+103 silly addNameRange { name: 'extend', range: '>=3.0.0 <4.0.0', hasData: false }
+104 silly mapToRegistry name extend
+105 silly mapToRegistry using default registry
+106 silly mapToRegistry registry https://registry.npmjs.org/
+107 silly mapToRegistry uri https://registry.npmjs.org/extend
+108 verbose addNameRange registry:https://registry.npmjs.org/extend not in flight; fetching
+109 verbose request uri https://registry.npmjs.org/extend
+110 verbose request no auth needed
+111 info attempt registry request try #1 at 12:09:19
+112 verbose etag "E6RVQQEEWSRD0L7UTZBKWFVHR"
+113 http request GET https://registry.npmjs.org/extend
+114 http 304 https://registry.npmjs.org/extend
+115 verbose headers { date: 'Thu, 14 Apr 2016 15:07:42 GMT',
+115 verbose headers   via: '1.1 varnish',
+115 verbose headers   'cache-control': 'max-age=300',
+115 verbose headers   etag: '"E6RVQQEEWSRD0L7UTZBKWFVHR"',
+115 verbose headers   age: '67',
+115 verbose headers   connection: 'keep-alive',
+115 verbose headers   'x-served-by': 'cache-iad2142-IAD',
+115 verbose headers   'x-cache': 'HIT',
+115 verbose headers   'x-cache-hits': '2',
+115 verbose headers   'x-timer': 'S1460646462.522664,VS0,VE0',
+115 verbose headers   vary: 'Accept-Encoding' }
+116 silly get cb [ 304,
+116 silly get   { date: 'Thu, 14 Apr 2016 15:07:42 GMT',
+116 silly get     via: '1.1 varnish',
+116 silly get     'cache-control': 'max-age=300',
+116 silly get     etag: '"E6RVQQEEWSRD0L7UTZBKWFVHR"',
+116 silly get     age: '67',
+116 silly get     connection: 'keep-alive',
+116 silly get     'x-served-by': 'cache-iad2142-IAD',
+116 silly get     'x-cache': 'HIT',
+116 silly get     'x-cache-hits': '2',
+116 silly get     'x-timer': 'S1460646462.522664,VS0,VE0',
+116 silly get     vary: 'Accept-Encoding' } ]
+117 verbose etag https://registry.npmjs.org/extend from cache
+118 verbose get saving extend to C:\Users\claudio.matus\AppData\Roaming\npm-cache\registry.npmjs.org\extend\.cache.json
+119 verbose correctMkdir C:\Users\claudio.matus\AppData\Roaming\npm-cache correctMkdir not in flight; initializing
+120 silly addNameRange number 2 { name: 'extend', range: '>=3.0.0 <4.0.0', hasData: true }
+121 silly addNameRange versions [ 'extend',
+121 silly addNameRange   [ '1.0.0',
+121 silly addNameRange     '1.1.0',
+121 silly addNameRange     '1.1.1',
+121 silly addNameRange     '1.1.3',
+121 silly addNameRange     '1.2.0',
+121 silly addNameRange     '1.2.1',
+121 silly addNameRange     '1.3.0',
+121 silly addNameRange     '2.0.0',
+121 silly addNameRange     '2.0.1',
+121 silly addNameRange     '3.0.0' ] ]
+122 silly addNamed extend@3.0.0
+123 verbose addNamed "3.0.0" is a plain semver version for extend
+124 silly cache afterAdd extend@3.0.0
+125 verbose afterAdd C:\Users\claudio.matus\AppData\Roaming\npm-cache\extend\3.0.0\package\package.json not in flight; writing
+126 verbose correctMkdir C:\Users\claudio.matus\AppData\Roaming\npm-cache correctMkdir not in flight; initializing
+127 verbose afterAdd C:\Users\claudio.matus\AppData\Roaming\npm-cache\extend\3.0.0\package\package.json written
+128 silly install resolved [ { name: 'extend',
+128 silly install resolved     author:
+128 silly install resolved      { name: 'Stefan Thomas',
+128 silly install resolved        email: 'justmoon@members.fsf.org',
+128 silly install resolved        url: 'http://www.justmoon.net' },
+128 silly install resolved     version: '3.0.0',
+128 silly install resolved     description: 'Port of jQuery.extend for node.js and the browser',
+128 silly install resolved     main: 'index',
+128 silly install resolved     scripts:
+128 silly install resolved      { test: 'npm run lint && node test/index.js && npm run coverage-quiet',
+128 silly install resolved        coverage: 'covert test/index.js',
+128 silly install resolved        'coverage-quiet': 'covert test/index.js --quiet',
+128 silly install resolved        lint: 'npm run jscs && npm run eslint',
+128 silly install resolved        jscs: 'jscs *.js */*.js',
+128 silly install resolved        eslint: 'eslint *.js */*.js' },
+128 silly install resolved     contributors: [ [Object] ],
+128 silly install resolved     keywords: [ 'extend', 'clone', 'merge' ],
+128 silly install resolved     repository:
+128 silly install resolved      { type: 'git',
+128 silly install resolved        url: 'git+https://github.com/justmoon/node-extend.git' },
+128 silly install resolved     dependencies: {},
+128 silly install resolved     devDependencies:
+128 silly install resolved      { tape: '^4.0.0',
+128 silly install resolved        covert: '^1.1.0',
+128 silly install resolved        jscs: '^1.13.1',
+128 silly install resolved        eslint: '^0.24.0' },
+128 silly install resolved     license: 'MIT',
+128 silly install resolved     gitHead: '148e7270cab2e9413af2cd0cab147070d755ed6d',
+128 silly install resolved     bugs: { url: 'https://github.com/justmoon/node-extend/issues' },
+128 silly install resolved     homepage: 'https://github.com/justmoon/node-extend#readme',
+128 silly install resolved     _id: 'extend@3.0.0',
+128 silly install resolved     _shasum: '5a474353b9f3353ddd8176dfd37b91c83a46f1d4',
+128 silly install resolved     _from: 'extend@>=3.0.0 <4.0.0',
+128 silly install resolved     _npmVersion: '2.11.3',
+128 silly install resolved     _nodeVersion: '2.3.1',
+128 silly install resolved     _npmUser: { name: 'ljharb', email: 'ljharb@gmail.com' },
+128 silly install resolved     dist:
+128 silly install resolved      { shasum: '5a474353b9f3353ddd8176dfd37b91c83a46f1d4',
+128 silly install resolved        tarball: 'https://registry.npmjs.org/extend/-/extend-3.0.0.tgz' },
+128 silly install resolved     maintainers: [ [Object], [Object] ],
+128 silly install resolved     directories: {},
+128 silly install resolved     _resolved: 'https://registry.npmjs.org/extend/-/extend-3.0.0.tgz',
+128 silly install resolved     readme: 'ERROR: No README data found!' } ]
+129 info install extend@3.0.0 into C:\cmatus\git\malaquiaz\desarrollo\api\node_modules\mongoose-auto-increment
+130 info installOne extend@3.0.0
+131 verbose installOne of extend to C:\cmatus\git\malaquiaz\desarrollo\api\node_modules\mongoose-auto-increment not in flight; installing
+132 verbose correctMkdir C:\Users\claudio.matus\AppData\Roaming\npm-cache\_locks correctMkdir not in flight; initializing
+133 verbose lock using C:\Users\claudio.matus\AppData\Roaming\npm-cache\_locks\extend-159151555af6ea43.lock for C:\cmatus\git\malaquiaz\desarrollo\api\node_modules\mongoose-auto-increment\node_modules\extend
+134 silly install write writing extend 3.0.0 to C:\cmatus\git\malaquiaz\desarrollo\api\node_modules\mongoose-auto-increment\node_modules\extend
+135 verbose unbuild node_modules\mongoose-auto-increment\node_modules\extend
+136 silly gentlyRm C:\cmatus\git\malaquiaz\desarrollo\api\node_modules\mongoose-auto-increment\node_modules\extend is being purged from base C:\cmatus\git\malaquiaz\desarrollo\api
+137 verbose gentlyRm don't care about contents; nuking C:\cmatus\git\malaquiaz\desarrollo\api\node_modules\mongoose-auto-increment\node_modules\extend
+138 verbose tar unpack C:\Users\claudio.matus\AppData\Roaming\npm-cache\extend\3.0.0\package.tgz
+139 verbose tar unpacking to C:\cmatus\git\malaquiaz\desarrollo\api\node_modules\mongoose-auto-increment\node_modules\extend
+140 silly gentlyRm C:\cmatus\git\malaquiaz\desarrollo\api\node_modules\mongoose-auto-increment\node_modules\extend is being purged
+141 verbose gentlyRm don't care about contents; nuking C:\cmatus\git\malaquiaz\desarrollo\api\node_modules\mongoose-auto-increment\node_modules\extend
+142 silly gunzTarPerm modes [ '777', '666' ]
+143 silly gunzTarPerm extractEntry package.json
+144 silly gunzTarPerm modified mode [ 'package.json', 420, 438 ]
+145 silly gunzTarPerm extractEntry .npmignore
+146 silly gunzTarPerm modified mode [ '.npmignore', 420, 438 ]
+147 silly gunzTarPerm extractEntry README.md
+148 silly gunzTarPerm modified mode [ 'README.md', 420, 438 ]
+149 silly gunzTarPerm extractEntry LICENSE
+150 silly gunzTarPerm modified mode [ 'LICENSE', 420, 438 ]
+151 silly gunzTarPerm extractEntry index.js
+152 silly gunzTarPerm modified mode [ 'index.js', 420, 438 ]
+153 silly gunzTarPerm extractEntry CHANGELOG.md
+154 silly gunzTarPerm modified mode [ 'CHANGELOG.md', 420, 438 ]
+155 silly gunzTarPerm extractEntry .jscs.json
+156 silly gunzTarPerm modified mode [ '.jscs.json', 420, 438 ]
+157 silly gunzTarPerm extractEntry component.json
+158 silly gunzTarPerm modified mode [ 'component.json', 420, 438 ]
+159 silly gunzTarPerm extractEntry .eslintrc
+160 silly gunzTarPerm modified mode [ '.eslintrc', 420, 438 ]
+161 silly gunzTarPerm extractEntry .travis.yml
+162 silly gunzTarPerm modified mode [ '.travis.yml', 420, 438 ]
+163 verbose write writing to C:\cmatus\git\malaquiaz\desarrollo\api\node_modules\mongoose-auto-increment\node_modules\extend\package.json
+164 info preinstall extend@3.0.0
+165 verbose readDependencies loading dependencies from C:\cmatus\git\malaquiaz\desarrollo\api\node_modules\mongoose-auto-increment\node_modules\extend\package.json
+166 verbose readDependencies loading dependencies from C:\cmatus\git\malaquiaz\desarrollo\api\node_modules\mongoose-auto-increment\node_modules\extend\package.json
+167 silly install resolved []
+168 verbose about to build C:\cmatus\git\malaquiaz\desarrollo\api\node_modules\mongoose-auto-increment\node_modules\extend
+169 info build C:\cmatus\git\malaquiaz\desarrollo\api\node_modules\mongoose-auto-increment\node_modules\extend
+170 info linkStuff extend@3.0.0
+171 silly linkStuff extend@3.0.0 has C:\cmatus\git\malaquiaz\desarrollo\api\node_modules\mongoose-auto-increment\node_modules as its parent node_modules
+172 verbose linkBins extend@3.0.0
+173 verbose linkMans extend@3.0.0
+174 verbose rebuildBundles extend@3.0.0
+175 info install extend@3.0.0
+176 info postinstall extend@3.0.0
+177 verbose unlock done using C:\Users\claudio.matus\AppData\Roaming\npm-cache\_locks\extend-159151555af6ea43.lock for C:\cmatus\git\malaquiaz\desarrollo\api\node_modules\mongoose-auto-increment\node_modules\extend
+178 verbose about to build C:\cmatus\git\malaquiaz\desarrollo\api\node_modules\mongoose-auto-increment
+179 info build C:\cmatus\git\malaquiaz\desarrollo\api\node_modules\mongoose-auto-increment
+180 info linkStuff mongoose-auto-increment@5.0.1
+181 silly linkStuff mongoose-auto-increment@5.0.1 has C:\cmatus\git\malaquiaz\desarrollo\api\node_modules as its parent node_modules
+182 verbose linkBins mongoose-auto-increment@5.0.1
+183 verbose linkMans mongoose-auto-increment@5.0.1
+184 verbose rebuildBundles mongoose-auto-increment@5.0.1
+185 verbose rebuildBundles [ 'extend' ]
+186 info install mongoose-auto-increment@5.0.1
+187 info postinstall mongoose-auto-increment@5.0.1
+188 verbose readDependencies loading dependencies from C:\cmatus\git\malaquiaz\desarrollo\api\package.json
+189 verbose targetResolver reading package data from C:\cmatus\git\malaquiaz\desarrollo\api\node_modules\body-parser\package.json
+190 verbose targetResolver reading package data from C:\cmatus\git\malaquiaz\desarrollo\api\node_modules\cors\package.json
+191 verbose targetResolver reading package data from C:\cmatus\git\malaquiaz\desarrollo\api\node_modules\errorhandler\package.json
+192 verbose targetResolver reading package data from C:\cmatus\git\malaquiaz\desarrollo\api\node_modules\express\package.json
+193 verbose targetResolver reading package data from C:\cmatus\git\malaquiaz\desarrollo\api\node_modules\express-session\package.json
+194 verbose targetResolver reading package data from C:\cmatus\git\malaquiaz\desarrollo\api\node_modules\jade\package.json
+195 verbose targetResolver reading package data from C:\cmatus\git\malaquiaz\desarrollo\api\node_modules\method-override\package.json
+196 verbose targetResolver reading package data from C:\cmatus\git\malaquiaz\desarrollo\api\node_modules\mongoose\package.json
+197 verbose targetResolver reading package data from C:\cmatus\git\malaquiaz\desarrollo\api\node_modules\mongoose-auto-increment\package.json
+198 verbose targetResolver reading package data from C:\cmatus\git\malaquiaz\desarrollo\api\node_modules\morgan\package.json
+199 verbose targetResolver reading package data from C:\cmatus\git\malaquiaz\desarrollo\api\node_modules\multer\package.json
+200 verbose targetResolver reading package data from C:\cmatus\git\malaquiaz\desarrollo\api\node_modules\serve-favicon\package.json
+201 verbose targetResolver reading package data from C:\cmatus\git\malaquiaz\desarrollo\api\node_modules\.bin\jade\package.json
+202 verbose targetResolver reading package data from C:\cmatus\git\malaquiaz\desarrollo\api\node_modules\.bin\jade.cmd\package.json
+203 verbose already installed skipping mongoose@^4.1.12 C:\cmatus\git\malaquiaz\desarrollo\api
+204 silly install resolved []
+205 verbose unlock done using C:\Users\claudio.matus\AppData\Roaming\npm-cache\_locks\mongoose-auto-increment-4155832a7e06e1d5.lock for C:\cmatus\git\malaquiaz\desarrollo\api\node_modules\mongoose-auto-increment
+206 verbose validateInstall loading C:\cmatus\git\malaquiaz\desarrollo\api\package.json for validation
+207 verbose stack Error: The package mongoose@4.0.8 does not satisfy its siblings' peerDependencies requirements!
+207 verbose stack     at C:\Program Files\nodejs\node_modules\npm\lib\install.js:125:32
+207 verbose stack     at C:\Program Files\nodejs\node_modules\npm\lib\install.js:268:7
+207 verbose stack     at C:\Program Files\nodejs\node_modules\npm\node_modules\read-installed\read-installed.js:142:5
+207 verbose stack     at C:\Program Files\nodejs\node_modules\npm\node_modules\read-installed\read-installed.js:263:14
+207 verbose stack     at cb (C:\Program Files\nodejs\node_modules\npm\node_modules\slide\lib\async-map.js:47:24)
+207 verbose stack     at C:\Program Files\nodejs\node_modules\npm\node_modules\read-installed\read-installed.js:263:14
+207 verbose stack     at cb (C:\Program Files\nodejs\node_modules\npm\node_modules\slide\lib\async-map.js:47:24)
+207 verbose stack     at C:\Program Files\nodejs\node_modules\npm\node_modules\read-installed\read-installed.js:263:14
+207 verbose stack     at cb (C:\Program Files\nodejs\node_modules\npm\node_modules\slide\lib\async-map.js:47:24)
+207 verbose stack     at C:\Program Files\nodejs\node_modules\npm\node_modules\read-installed\read-installed.js:263:14
+208 verbose cwd C:\cmatus\git\malaquiaz\desarrollo\api
+209 error Windows_NT 6.3.9600
+210 error argv "C:\\Program Files\\nodejs\\node.exe" "C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js" "install" "mongoose-auto-increment"
+211 error node v4.4.1
+212 error npm  v2.14.20
+213 error code EPEERINVALID
+214 error peerinvalid The package mongoose@4.0.8 does not satisfy its siblings' peerDependencies requirements!
+214 error peerinvalid Peer mongoose-auto-increment@5.0.1 wants mongoose@^4.1.12
+215 verbose exit [ 1, true ]

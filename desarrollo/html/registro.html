@@ -353,12 +353,12 @@
                     'estado': $("#txtMesaEstado").val()
                 }
                 $.post(gURL + "/mesa", info, function(data) {
-                    $("#txtMesaID").val(data._id);
+                    $("#txtMesaID").val(data.numero);
                 });                
             }
 
             function listar() { 
-                listarTipo("tabTipo1", "<inicio>");
+                listarTipo("tabTipo1", 0);
                 listarGarzon();
             }
 

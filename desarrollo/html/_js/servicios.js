@@ -41,6 +41,7 @@ function apiGetProductoID(proID) {
 }
 
 function apiGetProductoPorTipo(tipID) {
+    alert(gURL + "/producto/tipo/" + tipID);
     return apiGET(gURL + "/producto/tipo/" + tipID);
 }
 

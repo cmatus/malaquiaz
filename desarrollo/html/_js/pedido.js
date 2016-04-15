@@ -48,6 +48,16 @@ function verPantalla(num) {
 
 }
 
+/* Garzón */
+
+function garzonDesplegar() {
+    $("#divGarzon").html("");
+    jsonGarzones = apiGetGarzon();
+    for(var x = 0; x < jsonGarzones.length; x++) {
+        $("#divGarzon").append("<button onclick='mesaDesplegar(\"" + jsonGarzones[x].nombre + "\")'>" + jsonGarzones[x].nombre + "</button>")
+    }
+}
+
 /* Mesa */
 
 function mesaDesplegar(nombre) {
@@ -60,7 +70,7 @@ function mesaDesplegar(nombre) {
     if(json != null) {
         verPantalla(2);
         for(var x = 0; x <= json.length; x++) {
-            $("#divMesa").append("<button onclick='desplegarPedido(" + json[x].numero + ")' class='" + jsonEstado[json[x].estado].estilo + "'>Mesa N°" + json[x].numero + "</button>")
+            $("#divMesa").append("<button onclick='desplegarPedido(" + json[x]._id + ")' class='" + jsonEstado[json[x].estado].estilo + "'>Mesa N°" + json[x]._id + "</button>")
         }
     }
 
@@ -75,16 +85,6 @@ function desplegarPedido(mesa) {
         jsonPedido.mesa = mesa;
     }
     pedidoVer();
-}
-
-/* Garzón */
-
-function garzonDesplegar() {
-    $("#divGarzon").html("");
-    jsonGarzones = apiGetGarzon();
-    for(var x = 0; x < jsonGarzones.length; x++) {
-        $("#divGarzon").append("<button onclick='mesaDesplegar(\"" + jsonGarzones[x].nombre + "\")'>" + jsonGarzones[x].nombre + "</button>")
-    }
 }
 
 /* Pedido */
@@ -104,7 +104,7 @@ function pedidoLimpiar() {
 
 function pedidoAgregar() {
     productoLimpiar(false, -1);
-    listarTipos("<inicio>");
+    listarTipos(0);
     verPantalla(3);
 }
 
@@ -306,7 +306,7 @@ function productoLimpiar(tipo, num) {
     $("#divPrecios").html("");
 
     if(tipo) {
-        listarTipos("<inicio>");
+        listarTipos(0);
     }
 
 }
