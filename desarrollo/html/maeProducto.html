@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+        <style>
+            
+            * {
+                margin: 0px;
+                padding: 0px;
+                font-family: verdana;
+                font-size: 7pt;
+            }
+            
+            input[type='text'] {
+                padding: 1px;
+                margin: 1px;
+                border: 1px solid silver;
+            }
+
+            input[type='button'] {
+                padding: 3px;
+                margin-top: 3px;
+                border: 1px solid silver;
+                width: 80px;
+            }
+            
+            .trEnc td {
+                background-color: #959595;
+                padding: 2px;
+            }
+            
+            .trDet:hover td {
+                background-color: black;
+                color: white;
+                cursor: pointer;
+            }
+
+            .trDet:nth-child(even) {
+                background-color: #cccccc;
+            }
+
+            .trDet:nth-child(odd) {
+                background-color: #E6E6E6;
+            }
+
+            .trDet:last-child td {
+                border-bottom: 1px solid white;
+            }
+            
+            .trDet td {
+                padding: 2px;
+                border-right: 1px solid white;
+            }
+            
+            .id {
+                width: 30px;
+                text-align: right;
+            }
+
+            .id:disabled {
+                font-weight: bold;
+                background-color: silver;
+            }
+            
+            .nombre {
+                width: 145px;
+            }
+
+            .nombre:disabled {
+                font-weight: bold;
+                background-color: silver;
+            }
+
+            .etiqueta, .valor, .precio {
+                display: inline-block;
+            }
+
+            .etiqueta {
+                width: 70px;
+            }
+
+            .valor input {
+                width: 145px;
+            }
+
+            .precio input {
+                width: 65px;
+            }
+
+        </style>
+        <script src="_js/jquery.min.js"></script>
+        <script src="_js/funciones.js"></script>
+        <script src="_js/servicios.js"></script>
+        <script>
+
+            var objIngSelID;
+            var objIngSelNombre;
+
+            $( document ).ready(function() {
+                tipoListar(0);
+            });
+
+            function listarIngrediente(nombre) {
+                
+                var tabla = "tabIngrediente";
+                var url = "";
+                var buscar = false;
+
+                switch(nombre) {
+                    case "Almuerzo":
+                        url = gURL + "/producto/tipo/10";
+                        break;
+                    case "Bebida":
+                        url = gURL + "/producto/tipo/11";
+                        break;
+                    case "Cerveza":
+                        url = gURL + "/producto/tipo/12";
+                        break;
+                    case "Ensalada":
+                        url = gURL + "/producto/tipo/13";
+                        break;
+                    case "Jugo":
+                        url = gURL + "/producto/tipo/14";
+                        break;
+                    case "Pizza":
+                        url = gURL + "/producto/tipo/15";
+                        buscar = true;
+                        break;
+                    case "Sandwich":
+                        url = gURL + "/producto/tipo/16";
+                        buscar = true;
+                        break;
+                }
+
+                $("#" + tabla + " tr").remove();
+                if(buscar) {
+                    $.get(url, function(data) {
+                        $("#" + tabla + " tr.trDet").remove();
+                        for(var x = 0; x < data.length; x++) {
+                            $("#" + tabla).append("<tr class='trDet' onclick='ingredienteAgrega(\"" + data[x]._id + "\", \"" + data[x].nombre + "\")'><td style='width:40px'>" + data[x]._id + "</td><td style='width:181px'>" + data[x].nombre + "</td></tr>");
+                        }
+                    });
+                }
+
+            }
+
+            function ingredienteLimpiar() {
+
+            }
+
+            function ingredienteAgrega(id, nombre) {
+                objIngSelID.val(id);
+                objIngSelNombre.val(nombre);
+            }
+
+            function tipoListar(tipID) {
+                var tabla = "tabTipo";
+                $.get(gURL + "/tipo/" + tipID, function(data) {
+                    $("#" + tabla + " tr.trDet").remove();
+                    for(var x = 0; x < data.length; x++) {
+                        $("#" + tabla).append("<tr class='trDet' onclick='tipoDesplegar(" + data[x]._id + ", " + data[x].tipID + ", \"" + data[x].nombre + "\", " + data[x].nivel + "); productoListar(" + data[x]._id + "); listarIngrediente(\"" + data[x].nombre + "\")'><td style='width:40px'>" + data[x]._id + "</td><td style='width:181px'>" + data[x].nombre + "</td></tr>");
+                    }
+                });
+            }
+
+            function tipoLimpiar() {
+
+                $("#txtTipoPadreID").val("");
+                $("#txtTipoPadreNombre").val("");
+                $("#txtTipoID").val("");
+                $("#txtTipoNombre").val("");
+                $("#txtTipoNivel").val("");
+
+                $("#tabProducto tr.trDet").remove();
+                $("#tabIngrediente tr.trDet").remove();
+
+                productoLimpiar();
+                ingredienteLimpiar();
+
+            }
+
+            function tipoDesplegar(id, tipID, nombre, nivel) {
+                $("#txtTipoID").val(id);
+                $("#txtTipoPadreID").val(tipID);
+                $("#txtTipoNombre").val(nombre);
+                $("#txtTipoNivel").val(nivel);
+            }
+
+            function tipoRegistrar() {
+                info = { 
+                    'tipID': $("#txtTipoPadreID").val(),
+                    'nombre': $("#txtTipoNombre").val() ,
+                    'nivel': $("#txtTipoNivel").val() 
+                };
+                $.post(gURL + "/tipo/" + $("#txtTipoID").val(), info, function(data) {
+                    tipoListar($("#txtTipoPadreID").val());
+                });
+            }
+
+            function productoListar(tipID) {
+                var tabla = "tabProducto";
+                $("#" + tabla + " tr.trDet").remove();
+                $.get(gURL + "/producto/tipo/" + tipID, function(data) {
+                    $("#" + tabla + " tr.trDet").remove();
+                    for(var x = 0; x < data.length; x++) {
+                        $("#" + tabla).append("<tr class='trDet' onclick='productoDesplegar(\"" + data[x]._id + "\", \"" + data[x].nombre + "\", " + data[x].ingrediente + ")'><td style='width:40px'>" + data[x]._id + "</td><td style='width:181px'>" + data[x].nombre + "</td></tr>");
+                    }
+                });
+            }
+
+            function productoDesplegar(id, nombre, ingrediente) {
+                
+                $("#txtProductoID").val(id);
+                $("#txtProductoNombre").val(nombre);
+
+                $.get(gURL + "/producto/" + id, function(data) {
+                    for(var x = 0; x < data.ingredientes.length; x++) {
+                        $("#txtIngredienteID" + (x + 1)).val(data.ingredientes[x]._id);
+                        $("#txtIngredienteNombre" + (x + 1)).val(data.ingredientes[x].nombre);
+                    }
+                    for(var x = 0; x < data.precios.length; x++) {
+                        $("#txtPrecioValor" + (x + 1)).val(data.ingredientes[x].valor);
+                        $("#txtPrecioNombre" + (x + 1)).val(data.ingredientes[x].tipo);
+                    }
+                });   
+
+            }
+
+            function productoLimpiar() {
+                $("#txtID").val("");
+                $("#txtProductoNombre").val("");
+                $("#txtIngredienteID1").val("");
+                $("#txtIngredienteNombre1").val("");
+                $("#txtIngredienteID2").val("");
+                $("#txtIngredienteNombre2").val("");
+                $("#txtIngredienteID3").val("");
+                $("#txtIngredienteNombre3").val("");
+                $("#txtIngredienteID4").val("");
+                $("#txtIngredienteNombre4").val("");
+                $("#txtIngredienteID5").val("");
+                $("#txtIngredienteNombre5").val("");
+                $("#txtPrecioNombre1").val("");
+                $("#txtPrecioValor1").val("");
+                $("#txtPrecioNombre2").val("");
+                $("#txtPrecioValor2").val("");
+                $("#txtPrecioNombre3").val("");
+                $("#txtPrecioValor3").val("");
+            }
+
+            function productoRegistrar() {
+
+                var id = $("#txtProductoID").val();
+                var infoIngredientes = [];
+                var infoPrecios = [];
+
+                for(var x = 0; x < 5; x++) {
+                    if( $("#txtIngredienteID" + (x + 1)).val() != "" ){
+                        infoIngredientes.push({
+                            'proID': $("#txtIngredienteID" + (x + 1)).val(),
+                            'nombre': $("#txtIngredienteNombre" + (x + 1)).val()
+                        });
+                    }
+                }
+
+                for(var x = 0; x < 3; x++) {
+                    if( $("#txtPrecioNombre" + (x + 1)).val() != "" ){
+                        infoPrecios.push({
+                            'tipo': $("#txtPrecioNombre" + (x + 1)).val(),
+                            'valor': $("#txtPrecioValor" + (x + 1)).val()
+                        });
+                    }
+                }
+
+                var info = { 
+                    'proID': $("#txtID").val(),
+                    'tipID': $("#txtTipoID").val(),
+                    'nombre': $("#txtProductoNombre").val(),
+                    'ingrediente': false,
+                    'ingredientes': infoIngredientes,
+                    'precios': infoPrecios
+                };
+                $.post(gURL + "/producto/" + id, info, function(data) {
+                    productoListar(data.tipID);
+                });
+                
+            }
+
+            function seleccionaTexto(id) {
+                objIngSelID = $("#txtIngredienteID" + id);
+                objIngSelNombre = $("#txtIngredienteNombre" + id);
+            }
+
+        </script>
+    </head>
+    <body>
+        <table>
+            <tr>
+                <td>
+                    <div style='border:1px solid silver; width: 248px; overflow: hidden'>
+                        <table cellpadding='0' cellspacing='0'>
+                            <tr class="trEnc"><td colspan='2' style='border-bottom: 1px solid white;text-align: center'>Tipo</td></tr>
+                            <tr class="trEnc">
+                                <td style="width:40px;border-right:1px solid white;text-align: center">Código</td>
+                                <td style="width:199px;text-align: center">Nombre</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div style='border:1px solid silver; border-top: 1px solid white; width: 248px; height: 255px; overflow: hidden; overflow-y: scroll'>
+                        <table cellpadding='0' cellspacing='0' id="tabTipo"></table>
+                    </div>
+                </td>
+                <td>
+                    <div style='border:1px solid silver; width: 248px; overflow: hidden'>
+                        <table cellpadding='0' cellspacing='0'>
+                        <tr class="trEnc"><td colspan='2' style='border-bottom: 1px solid white;text-align: center'>Producto</td></tr>
+                            <tr class="trEnc">
+                                <td style="width:40px;border-right:1px solid white;text-align: center">Código</td>
+                                <td style="width:199px;text-align: center">Nombre</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div style='border:1px solid silver; border-top: 1px solid white; width: 248px; height: 255px; overflow: hidden; overflow-y: scroll'>
+                        <table cellpadding='0' cellspacing='0' id="tabProducto"></table>
+                    </div>
+                </td>
+                <td>
+                    <div style='border:1px solid silver; width: 248px; overflow: hidden'>
+                        <table cellpadding='0' cellspacing='0'>
+                            <tr class="trEnc"><td colspan='2' style='border-bottom: 1px solid white;text-align: center'>Ingrediente</td></tr>
+                            <tr class="trEnc">
+                                <td style="width:40px;border-right:1px solid white;text-align: center">Código</td>
+                                <td style="width:199px;text-align: center">Nombre</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div style='border:1px solid silver; border-top: 1px solid white; width: 248px; height: 255px; overflow: hidden; overflow-y: scroll'>
+                        <table cellpadding='0' cellspacing='0' id="tabIngrediente"></table>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td style="vertical-align:top">
+                    <div style='border:1px solid silver; width: 228px; padding: 10px;'>
+                        <div style="margin:auto">
+                            <div class="etiqueta">Padre</div>
+                            <div class="valor"><input type="hidden" id="txtTipoPadreID" /><input type="text" id="txtTipoPadreNombre" /></div>
+                        </div>
+                        <div style="margin:auto">
+                            <div class="etiqueta">Nombre</div>
+                            <div class="valor"><input type="hidden" id="txtTipoID" /><input type="text" id="txtTipoNombre" /></div>
+                        </div>
+                        <div style="margin:auto">
+                            <div class="etiqueta">Nivel</div>
+                            <div class="valor"><input type="text" id="txtTipoNivel" /></div>
+                        </div>
+                    </div>
+                    <input type="button" value="Limpiar" onclick="tipoLimpiar()">
+                    <input type="button" value="Registrar" onclick="tipoRegistrar()">
+                </td>
+                <td style="vertical-align:top">
+                    <div style='border:1px solid silver; width: 228px; padding: 10px;'>
+                        <div style="margin:auto">
+                            <div class="etiqueta">Nombre</div>
+                            <div class="valor"><input type="hidden" id="txtProductoID" /><input type="text" id="txtProductoNombre" /></div>
+                        </div>
+                        <br>
+                        <div style="margin:auto">
+                            <div class="etiqueta">Ingrediente 1</div>
+                            <div class="valor"><input type="hidden" id="txtIngredienteID1" /><input type="text" id="txtIngredienteNombre1" onclick="seleccionaTexto(1)" /></div>
+                        </div>
+                        <div style="margin:auto">
+                            <div class="etiqueta">Ingrediente 2</div>
+                            <div class="valor"><input type="hidden" id="txtIngredienteID2" /><input type="text" id="txtIngredienteNombre2" onclick="seleccionaTexto(2)" /></div>
+                        </div>
+                        <div style="margin:auto">
+                            <div class="etiqueta">Ingrediente 3</div>
+                            <div class="valor"><input type="hidden" id="txtIngredienteID3" /><input type="text" id="txtIngredienteNombre3" onclick="seleccionaTexto(3)" /></div>
+                        </div>
+                        <div style="margin:auto">
+                            <div class="etiqueta">Ingrediente 4</div>
+                            <div class="valor"><input type="hidden" id="txtIngredienteID4" /><input type="text" id="txtIngredienteNombre4" onclick="seleccionaTexto(4)" /></div>
+                        </div>
+                        <div style="margin:auto">
+                            <div class="etiqueta">Ingrediente 5</div>
+                            <div class="valor"><input type="hidden" id="txtIngredienteID5" /><input type="text" id="txtIngredienteNombre5" onclick="seleccionaTexto(5)" /></div>
+                        </div>
+                        <br>
+                        <div style="margin:auto">
+                            <div class="precio"><input type="text" id="txtPrecioNombre1" /></div>
+                            <div class="precio"><input type="text" id="txtPrecioValor1" /></div>
+                        </div>
+                        <div style="margin:auto">
+                            <div class="precio"><input type="text" id="txtPrecioNombre2" /></div>
+                            <div class="precio"><input type="text" id="txtPrecioValor2" /></div>
+                        </div>
+                        <div style="margin:auto">
+                            <div class="precio"><input type="text" id="txtPrecioNombre3" /></div>
+                            <div class="precio"><input type="text" id="txtPrecioValor3" /></div>
+                        </div>
+                    </div>
+                    <input type="button" value="Limpiar" onclick="productoLimpiar()">
+                    <input type="button" value="Registrar" onclick="productoRegistrar()">
+                </td>
+                <td style="vertical-align:top"></td>
+            </tr>
+        </table>
+    </body>
+</html>

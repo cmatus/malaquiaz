@@ -292,6 +292,21 @@ app.get('/api/tipo/:tipID', function (req, res) {
     });
 });
 
+app.post('/api/tipo/:_id', function (req, res) {
+    tipoModelo.findById(req.params._id).exec(function (err, tipo) {
+        tipo.nombre = req.body.nombre;
+        tipo.nivel = req.body.nivel
+        tipo.save(function (err) {
+            if (!err) {
+                console.log("Tipo modificado");
+            } else {
+                console.log(err);
+            }
+        });
+        res.json(tipo);
+    });
+});
+
 app.get('/api/producto', function (req, res) {
     productoModelo.find(function (err, producto) {
         if (!err) {
@@ -321,9 +336,29 @@ app.post('/api/producto', function (req, res) {
 });
 
 app.get('/api/producto/:_id', function (req, res) {
-    productoModelo.findById(req.params._id).sort('nombre').exec(function (err, producto) {
+    productoModelo.findById(req.params._id).exec(function (err, producto) {
         if (!err) {
             res.send(producto);
+        } else {
+            console.log(err);
+        }
+    });
+});
+
+app.post('/api/producto/:_id', function (req, res) {
+    productoModelo.findById(req.params._id).exec(function (err, producto) {
+        if (!err) {
+            producto.nombre = req.body.nombre;
+            producto.ingredientes = req.body.ingredientes;
+            //producto.precios = req.body.precios;
+            producto.save(function (err) {
+                if (!err) {
+                    console.log("Producto modificado");
+                } else {
+                    console.log(err);
+                }
+            });
+            res.json(producto);
         } else {
             console.log(err);
         }
@@ -349,7 +384,7 @@ app.get('/api/producto/ingrediente/:ingrediente', function (req, res) {
         }
     });
 });
-
+/*
 app.post('/api/producto/ingrediente', function (req, res) {
     productoModelo.findById(req.body.proID, function (err, producto) {
         if (!err) {
@@ -361,6 +396,7 @@ app.post('/api/producto/ingrediente', function (req, res) {
                     console.log(err);
                 }
             });
+            console.log("Encontrado");
             res.json(producto);
         } else {
             console.log(err);
@@ -385,7 +421,7 @@ app.post('/api/producto/precio', function (req, res) {
         }
     });
 });
-
+*/
 app.post('/api/pedido', function (req, res) {
     pedido = new pedidoModelo({
         fecha: req.body.fecha,

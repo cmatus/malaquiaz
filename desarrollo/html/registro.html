@@ -15,6 +15,14 @@
             input {
                 padding: 1px;
                 margin: 1px;
+                border: 1px solid silver;
+            }
+
+            input[type='button'] {
+                padding: 3px;
+                margin: 1px;
+                border: 1px solid silver;
+                width: 120px;
             }
             
             .trEnc td {
@@ -38,17 +46,20 @@
             .id {
                 width: 30px;
                 text-align: right;
-                background-color: silver;
             }
 
             .id:disabled {
                 font-weight: bold;
-                width: 30px;
-                text-align: right;
+                background-color: silver;
             }
             
             .nombre {
                 width: 145px;
+            }
+
+            .nombre:disabled {
+                font-weight: bold;
+                background-color: silver;
             }
 
             .nivel {
@@ -244,7 +255,7 @@
                     txtNombre.val(nombre);
                 }
             }
-
+            
             function registraProductoIngredientes(){
                 
                 var jsonIngredientes = [];
@@ -350,7 +361,7 @@
                 $.get(gURL + "/garzon", function(data) {
                     $("#tabGarzon tr.trDet").remove();
                     for(var x = 0; x < data.length; x++) {
-                        $("#tabGarzon").append("<tr class='trDet'><td>" + data[x].rut + "</td><td>" + data[x].nombre + "</td></tr>");
+                        $("#tabGarzon").append("<tr class='trDet'><td>" + data[x]._id + "</td><td>" + data[x].nombre + "</td></tr>");
                     }
                 });
             }
@@ -362,7 +373,7 @@
                 }
                 $.post(gURL + "/mesa", info, function(data) {
                     $("#txtMesaID").val(data.numero);
-                });                
+                });
             }
 
             function listar() { 
@@ -417,16 +428,16 @@
                     </div>
                     <br>
                     <div>
-                        <div><input type="hidden" id="txtID_Ingrediente" disabled='disable'   /><input type="text" class='nombre' id="txtNombre_Ingrediente" /></div>
-                        <div><input type="hidden" id="txtID_Ingrediente_1" /><input type="text" class='nombre' id="txtNombre_Ingrediente_1" /></div>
-                        <div><input type="hidden" id="txtID_Ingrediente_2" /><input type="text" class='nombre' id="txtNombre_Ingrediente_2" /></div>
-                        <div><input type="hidden" id="txtID_Ingrediente_3" /><input type="text" class='nombre' id="txtNombre_Ingrediente_3" /></div>
-                        <div><input type="hidden" id="txtID_Ingrediente_4" /><input type="text" class='nombre' id="txtNombre_Ingrediente_4" /></div>
+                        <div><input type="text" class='id' id="txtID_Ingrediente" disabled='disable' /><input type="text" class='nombre' id="txtNombre_Ingrediente" disabled='disable' /></div>
+                        <div><input type="text" class='id' id="txtID_Ingrediente_1" /><input type="text" class='nombre' id="txtNombre_Ingrediente_1" /></div>
+                        <div><input type="text" class='id' id="txtID_Ingrediente_2" /><input type="text" class='nombre' id="txtNombre_Ingrediente_2" /></div>
+                        <div><input type="text" class='id' id="txtID_Ingrediente_3" /><input type="text" class='nombre' id="txtNombre_Ingrediente_3" /></div>
+                        <div><input type="text" class='id' id="txtID_Ingrediente_4" /><input type="text" class='nombre' id="txtNombre_Ingrediente_4" /></div>
                         <div><input type="button" value="Registra ingredientes" onclick="registraProductoIngredientes()" /></div>
                     </div>
                     <br>
                     <div>
-                        <div><input type="text" class='id' disabled='disable' id="txtID_Precio" /><input type="text" class='nombre' id="txtNombre_Precio" /></div>
+                        <div><input type="text" class='id' disabled='disable' id="txtID_Precio" /><input type="text" class='nombre' id="txtNombre_Precio" disabled='disable' /></div>
                         <div><input type="text" class='id' id="txtID_Precio_1" /><input type="text" class='nombre' id="txtNombre_Precio_1" /></div>
                         <div><input type="text" class='id' id="txtID_Precio_2" /><input type="text" class='nombre' id="txtNombre_Precio_2" /></div>
                         <div><input type="text" class='id' id="txtID_Precio_3" /><input type="text" class='nombre' id="txtNombre_Precio_3" /></div>
@@ -451,15 +462,15 @@
                 <td style="vertical-align:top">
                     <table id="tabTipo1" style="border: 1px solid silver">
                         <tr class="trEnc">
-                            <td style="width:0px">Código</td>
-                            <td style="width:100px">Nombre</td>
+                            <td style="width:40px">Código</td>
+                            <td style="width:200px">Nombre</td>
                         </tr>
                     </table>
                     <br>
                     <table id="tabTipo2" style="border: 1px solid silver">
                         <tr class="trEnc">
-                            <td style="width:0px">Código</td>
-                            <td style="width:100px">Nombre</td>
+                            <td style="width:40px">Código</td>
+                            <td style="width:200px">Nombre</td>
                         </tr>
                     </table>
                 </td>
@@ -467,8 +478,8 @@
                 <td style="vertical-align:top">
                     <table id="tabProducto" style="border: 1px solid silver">
                         <tr class="trEnc">
-                            <td style="width:0px">Código</td>
-                            <td style="width:100px">Nombre</td>
+                            <td style="width:40px">Código</td>
+                            <td style="width:200px">Nombre</td>
                         </tr>
                     </table>
                     <input type="button" value="Imprimir USB" onclick="imprime('usb')" />
@@ -476,8 +487,8 @@
                     <br><br>
                     <table id="tabGarzon" style="border: 1px solid silver">
                         <tr class="trEnc">
-                            <td style="width:0px">Rut</td>
-                            <td style="width:145px">Nombre</td>
+                            <td style="width:40px">Rut</td>
+                            <td style="width:200px">Nombre</td>
                         </tr>
                     </table>
                 </td>
