@@ -21,6 +21,7 @@
             input[type='button'] {
                 padding: 3px;
                 margin-top: 3px;
+                margin-bottom: 5px;
                 border: 1px solid silver;
                 width: 80px;
             }
@@ -101,65 +102,12 @@
                 tipoListar(0);
             });
 
-            function listarIngrediente(nombre) {
-                
-                var tabla = "tabIngrediente";
-                var url = "";
-                var buscar = false;
-
-                switch(nombre) {
-                    case "Almuerzo":
-                        url = gURL + "/producto/tipo/10";
-                        break;
-                    case "Bebida":
-                        url = gURL + "/producto/tipo/11";
-                        break;
-                    case "Cerveza":
-                        url = gURL + "/producto/tipo/12";
-                        break;
-                    case "Ensalada":
-                        url = gURL + "/producto/tipo/13";
-                        break;
-                    case "Jugo":
-                        url = gURL + "/producto/tipo/14";
-                        break;
-                    case "Pizza":
-                        url = gURL + "/producto/tipo/15";
-                        buscar = true;
-                        break;
-                    case "Sandwich":
-                        url = gURL + "/producto/tipo/16";
-                        buscar = true;
-                        break;
-                }
-
-                $("#" + tabla + " tr").remove();
-                if(buscar) {
-                    $.get(url, function(data) {
-                        $("#" + tabla + " tr.trDet").remove();
-                        for(var x = 0; x < data.length; x++) {
-                            $("#" + tabla).append("<tr class='trDet' onclick='ingredienteAgrega(\"" + data[x]._id + "\", \"" + data[x].nombre + "\")'><td style='width:40px'>" + data[x]._id + "</td><td style='width:181px'>" + data[x].nombre + "</td></tr>");
-                        }
-                    });
-                }
-
-            }
-
-            function ingredienteLimpiar() {
-
-            }
-
-            function ingredienteAgrega(id, nombre) {
-                objIngSelID.val(id);
-                objIngSelNombre.val(nombre);
-            }
-
             function tipoListar(tipID) {
                 var tabla = "tabTipo";
                 $.get(gURL + "/tipo/" + tipID, function(data) {
                     $("#" + tabla + " tr.trDet").remove();
                     for(var x = 0; x < data.length; x++) {
-                        $("#" + tabla).append("<tr class='trDet' onclick='tipoDesplegar(" + data[x]._id + ", " + data[x].tipID + ", \"" + data[x].nombre + "\", " + data[x].nivel + "); productoListar(" + data[x]._id + "); listarIngrediente(\"" + data[x].nombre + "\")'><td style='width:40px'>" + data[x]._id + "</td><td style='width:181px'>" + data[x].nombre + "</td></tr>");
+                        $("#" + tabla).append("<tr class='trDet' onclick='tipoDesplegar(" + data[x]._id + ", " + data[x].tipID + ", \"" + data[x].nombre + "\", " + data[x].nivel + "); productoListar(" + data[x]._id + "); ingredienteListar(\"" + data[x].nombre + "\")'><td style='width:40px'>" + data[x]._id + "</td><td style='width:181px'>" + data[x].nombre + "</td></tr>");
                     }
                 });
             }
@@ -174,6 +122,8 @@
 
                 $("#tabProducto tr.trDet").remove();
                 $("#tabIngrediente tr.trDet").remove();
+
+                $("#txtIngredienteTipID").val("");
 
                 productoLimpiar();
                 ingredienteLimpiar();
@@ -288,11 +238,94 @@
                 
             }
 
+            function ingredienteListar(nombre) {
+                
+                var tabla = "tabIngrediente";
+                var url = "";
+                var buscar = false;
+                var id = "";
+
+                switch(nombre) {
+                    case "Almuerzo":
+                        id = "10";
+                        break;
+                    case "Bebida":
+                        id = "11";
+                        break;
+                    case "Cerveza":
+                        id = "12";
+                        break;
+                    case "Ensalada":
+                        id = "13";
+                        break;
+                    case "Jugo":
+                        id = "14";
+                        break;
+                    case "Pizza":
+                        id = "15";
+                        buscar = true;
+                        break;
+                    case "Sandwich":
+                        id = "16";
+                        buscar = true;
+                        break;
+                }
+
+                url = gURL + "/producto/tipo/" + id;
+                $("#txtIngredienteTipID").val(id);
+
+                $("#" + tabla + " tr").remove();
+                if(buscar) {
+                    $.get(url, function(data) {
+                        $("#" + tabla + " tr.trDet").remove();
+                        for(var x = 0; x < data.length; x++) {
+                            $("#" + tabla).append("<tr class='trDet' onclick='ingredienteDesplegar(\"" + data[x]._id + "\", \"" + data[x].nombre + "\")'><td style='width:40px'>" + data[x]._id + "</td><td style='width:181px'>" + data[x].nombre + "</td></tr>");
+                        }
+                    });
+                }
+
+            }
+
+            function ingredienteLimpiar() {
+                $("#txtIngredienteID").val("");
+                $("#txtIngredienteNombre").val("");
+                objIngSelID = null;
+            }
+            
+            function ingredienteDesplegar(id, nombre) {
+                if(objIngSelID != null) {
+                    objIngSelID.val(id);
+                    objIngSelNombre.val(nombre);
+                }
+                $("#txtIngredienteID").val(id);
+                $("#txtIngredienteNombre").val(nombre);
+            }
+
             function seleccionaTexto(id) {
                 objIngSelID = $("#txtIngredienteID" + id);
                 objIngSelNombre = $("#txtIngredienteNombre" + id);
             }
-
+            
+            function ingredienteRegistrar() {
+                var url = "";
+                var info = { 
+                    'proID': $("#txtIngredienteID").val(),
+                    'tipID': $("#txtIngredienteTipID").val(),
+                    'nombre': $("#txtIngredienteNombre").val(),
+                    'ingrediente': true,
+                    'ingredientes': null,
+                    'precios': null
+                };
+                $.post(gURL + "/producto" + ($("#txtIngredienteID").val() == "" ? "" : "/" + $("#txtIngredienteID").val()), info, function(data) {
+                    ingredienteListar($("#txtTipoNombre").val());
+                });
+            }
+            
+            function ingredienteAgregar() {
+                ingredienteLimpiar();
+                $("#txtIngredienteNombre").focus();
+            }
+            
         </script>
     </head>
     <body>
@@ -311,6 +344,7 @@
                     <div style='border:1px solid silver; border-top: 1px solid white; width: 248px; height: 255px; overflow: hidden; overflow-y: scroll'>
                         <table cellpadding='0' cellspacing='0' id="tabTipo"></table>
                     </div>
+                    <input type="button" value="Agregar" onclick="tipoAgregar()">
                 </td>
                 <td>
                     <div style='border:1px solid silver; width: 248px; overflow: hidden'>
@@ -325,6 +359,7 @@
                     <div style='border:1px solid silver; border-top: 1px solid white; width: 248px; height: 255px; overflow: hidden; overflow-y: scroll'>
                         <table cellpadding='0' cellspacing='0' id="tabProducto"></table>
                     </div>
+                    <input type="button" value="Agregar" onclick="productoAgregar()">
                 </td>
                 <td>
                     <div style='border:1px solid silver; width: 248px; overflow: hidden'>
@@ -339,6 +374,7 @@
                     <div style='border:1px solid silver; border-top: 1px solid white; width: 248px; height: 255px; overflow: hidden; overflow-y: scroll'>
                         <table cellpadding='0' cellspacing='0' id="tabIngrediente"></table>
                     </div>
+                    <input type="button" value="Agregar" onclick="ingredienteAgregar()">
                 </td>
             </tr>
             <tr>
@@ -404,7 +440,16 @@
                     <input type="button" value="Limpiar" onclick="productoLimpiar()">
                     <input type="button" value="Registrar" onclick="productoRegistrar()">
                 </td>
-                <td style="vertical-align:top"></td>
+                <td style="vertical-align:top">
+                    <div style='border:1px solid silver; width: 228px; padding: 10px;'>
+                        <div style="margin:auto">
+                            <div class="etiqueta">Nombre</div>
+                            <div class="valor"><input type="hidden" id="txtIngredienteTipID" /><input type="hidden" id="txtIngredienteID" /><input type="text" id="txtIngredienteNombre" /></div>
+                        </div>
+                    </div>
+                    <input type="button" value="Limpiar" onclick="ingredienteLimpiar()">
+                    <input type="button" value="Registrar" onclick="ingredienteRegistrar()">
+                </td>
             </tr>
         </table>
     </body>
