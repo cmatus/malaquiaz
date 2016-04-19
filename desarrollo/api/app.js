@@ -350,7 +350,7 @@ app.post('/api/producto/:_id', function (req, res) {
         if (!err) {
             producto.nombre = req.body.nombre;
             producto.ingredientes = req.body.ingredientes;
-            //producto.precios = req.body.precios;
+            producto.precios = req.body.precios;
             producto.save(function (err) {
                 if (!err) {
                     console.log("Producto modificado");

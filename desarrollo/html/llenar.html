@@ -190,20 +190,20 @@
 
 			alert(1);
 			
-            function registraGarzon() {
-            	for(var x = 0; x < infoGarzones.data.length; x++) {
+            function registraGarzon(x) {
+            	if(x < infoGarzones.data.length) {
 	                $.post(gURL + "/garzon", infoGarzones.data[x], function(data) {
-	                	alert(x);
 	                    document.write("Garzón: " + data._id + "<br>");
+	                    setTimeout("registraGarzon(" + (x + 1) + ")", 1000);
 	                });
             	}
             }
 
-            function registraMesa() {
-            	for(var x = 0; x < infoMesas.data.length; x++) {
+            function registraMesa(x) {
+            	if(x < infoMesas.data.length) {
 	                $.post(gURL + "/mesa", infoMesas.data[x], function(data) {
-	                	alert(x);
-	                    document.write("Mesa: " + data + "<br>");
+	                    document.write("Mesa: " + data.nombre + "<br>");
+	                    setTimeout("registraMesa(" + (x + 1) + ")", 1000);
 	                });                
 	            }
             }
@@ -211,7 +211,7 @@
             function registraTipo(x) {
             	if(x < infoTipos.data.length) {
 	                $.post(gURL + "/tipo", infoTipos.data[x], function(data) {
-	                	document.write("Tipo: " + data._id + " - " + data.nombre + "<br>");
+	                	document.write("Tipo: " + data.nombre + "<br>");
 	                    setTimeout("registraTipo(" + (x + 1) + ")", 1000);
 	                });
 	            }
@@ -220,21 +220,21 @@
             function registraProducto(x) {
             	if(x < infoProductos.data.length) {
 	                $.post(gURL + "/producto", infoProductos.data[x], function(data) {
-	                	document.write("Producto: " + data._id + " - " + data.nombre + "<br>");
+	                	document.write("Producto: " + data.nombre + "<br>");
 	                    setTimeout("registraProducto(" + (x + 1) + ")", 1000);
 	                });
 	            }
             }
             
             function comenzar() {
-            	//registraGarzon();
-            	//registraMesa();
-            	//registraTipo(0);
+            	registraGarzon(0);
+            	registraMesa(0);
+            	registraTipo(0);
             	registraProducto(0);
             }
             
             $( document ).ready(function() {
-
+            	
             });
 
 		</script>

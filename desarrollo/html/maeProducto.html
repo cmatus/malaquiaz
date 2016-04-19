@@ -181,6 +181,7 @@
             }
 
             function tipoDesplegar(id, tipID, nombre, nivel) {
+                tipoLimpiar();
                 $("#txtTipoID").val(id);
                 $("#txtTipoPadreID").val(tipID);
                 $("#txtTipoNombre").val(nombre);
@@ -211,19 +212,20 @@
 
             function productoDesplegar(id, nombre, ingrediente) {
                 
+                productoLimpiar();
                 $("#txtProductoID").val(id);
                 $("#txtProductoNombre").val(nombre);
 
                 $.get(gURL + "/producto/" + id, function(data) {
                     for(var x = 0; x < data.ingredientes.length; x++) {
-                        $("#txtIngredienteID" + (x + 1)).val(data.ingredientes[x]._id);
+                        $("#txtIngredienteID" + (x + 1)).val(data.ingredientes[x].proID);
                         $("#txtIngredienteNombre" + (x + 1)).val(data.ingredientes[x].nombre);
                     }
                     for(var x = 0; x < data.precios.length; x++) {
-                        $("#txtPrecioValor" + (x + 1)).val(data.ingredientes[x].valor);
-                        $("#txtPrecioNombre" + (x + 1)).val(data.ingredientes[x].tipo);
+                        $("#txtPrecioValor" + (x + 1)).val(data.precios[x].valor);
+                        $("#txtPrecioNombre" + (x + 1)).val(data.precios[x].tipo);
                     }
-                });   
+                });
 
             }
 
@@ -273,7 +275,7 @@
                 }
 
                 var info = { 
-                    'proID': $("#txtID").val(),
+                    'proID': $("#txtProductoID").val(),
                     'tipID': $("#txtTipoID").val(),
                     'nombre': $("#txtProductoNombre").val(),
                     'ingrediente': false,
