@@ -7,7 +7,10 @@ $.ajaxSetup({
 });
 
 function zeroFill(numero, zero){
-    var retorno = "0".repeat(zero);
+    var retorno = "";
+    for(var x = 0; x < zero; x++) {
+        retorno += "0"
+    }
     retorno = retorno + numero;
     retorno = retorno.substr(retorno.length - zero, zero);
     return retorno;

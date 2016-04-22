@@ -39,7 +39,7 @@ var Precio = new Schema({
 });
 
 var PedidoPrecio = new Schema({
-    tipo: Number,
+    tipo: String,
     valor: Number
 });
 
@@ -164,21 +164,27 @@ Producto.pre('save', function(next) {
 });
 
 Pedido.pre('save', function(next) {
-    console.log("Pre");
     var doc = this;
-    var newDoc = pedidoModelo.findOne().sort('-_id').exec(function(err, item) {
-        doc._id = (item == null ? 0 : item._id) + 1;
+    if(doc._id == null) {
+        var newDoc = pedidoModelo.findOne().sort('-_id').exec(function(err, item) {
+            doc._id = (item == null ? 0 : item._id) + 1;
+            next();
+        });
+    } else {
         next();
-    });
+    }
 });
 
 Cuenta.pre('save', function(next) {
-    console.log("Pre");
     var doc = this;
-    var newDoc = cuentaModelo.findOne().sort('-_id').exec(function(err, item) {
-        doc._id = (item == null ? 0 : item._id) + 1;
+    if(doc._id == null) {
+        var newDoc = cuentaModelo.findOne().sort('-_id').exec(function(err, item) {
+            doc._id = (item == null ? 0 : item._id) + 1;
+            next();
+        });
+    } else {
         next();
-    });
+    }
 });
 
 var tipoModelo = mongoose.model('Tipo', Tipo);
@@ -207,11 +213,11 @@ app.post('/api/garzon', function (req, res) {
     garzon.save(function (err) {
         if (!err) {
             console.log("Garzón creado: " + garzon._id);
+            res.json(garzon);
         } else {
             console.log(err);
         }
     });
-    res.json(garzon);
 });
 
 app.get('/api/mesa', function (req, res) {
@@ -231,11 +237,11 @@ app.post('/api/mesa', function (req, res) {
     mesa.save(function (err) {
         if (!err) {
             console.log("Mesa N°" + mesa._id + " creada");
+            res.json(mesa);
         } else {
             console.log(err);
         }
     });
-    res.json(mesa);
 });
 
 app.post('/api/mesa/:_id', function (req, res) {
@@ -245,11 +251,11 @@ app.post('/api/mesa/:_id', function (req, res) {
             mesa.save(function (err) {
                 if (!err) {
                     console.log("Estado de la mesa N°" + mesa._id + " modificado");
+                    res.json(mesa);
                 } else {
                     console.log(err);
                 }
             });
-            res.json(mesa);
         } else {
             console.log(err);
         }
@@ -275,11 +281,11 @@ app.post('/api/tipo', function (req, res) {
     tipo.save(function (err) {
         if (!err) {
             console.log("Tipo creado: " + tipo._id);
+            res.json(tipo);
         } else {
             console.log(err);
         }
     });
-    res.json(tipo);
 });
 
 app.get('/api/tipo/:tipID', function (req, res) {
@@ -299,11 +305,11 @@ app.post('/api/tipo/:_id', function (req, res) {
         tipo.save(function (err) {
             if (!err) {
                 console.log("Tipo modificado");
+                res.json(tipo);
             } else {
                 console.log(err);
             }
         });
-        res.json(tipo);
     });
 });
 
@@ -328,11 +334,11 @@ app.post('/api/producto', function (req, res) {
     producto.save(function (err) {
         if (!err) {
             console.log("Producto creado: " + producto._id);
+            res.json(producto);
         } else {
             console.log(err);
         }
     });
-    res.json(producto);
 });
 
 app.get('/api/producto/:_id', function (req, res) {
@@ -354,11 +360,11 @@ app.post('/api/producto/:_id', function (req, res) {
             producto.save(function (err) {
                 if (!err) {
                     console.log("Producto modificado");
+                    res.json(producto);
                 } else {
                     console.log(err);
                 }
             });
-            res.json(producto);
         } else {
             console.log(err);
         }
@@ -384,46 +390,10 @@ app.get('/api/producto/ingrediente/:ingrediente', function (req, res) {
         }
     });
 });
-/*
-app.post('/api/producto/ingrediente', function (req, res) {
-    productoModelo.findById(req.body.proID, function (err, producto) {
-        if (!err) {
-            producto.ingredientes = req.body.ingredientes;
-            producto.save(function (err) {
-                if (!err) {
-                    console.log(req.body.ingredientes.length + " ingredientes agregados");
-                } else {
-                    console.log(err);
-                }
-            });
-            console.log("Encontrado");
-            res.json(producto);
-        } else {
-            console.log(err);
-        }
-    });
-});
 
-app.post('/api/producto/precio', function (req, res) {
-    productoModelo.findById(req.body.proID, function (err, producto) {
-        if (!err) {
-            producto.precios = req.body.precios;
-            producto.save(function (err) {
-                if (!err) {
-                    console.log(req.body.precios.length + " precios agregados");
-                } else {
-                    console.log(err);
-                }
-            });
-            res.json(producto);
-        } else {
-            console.log(err);
-        }
-    });
-});
-*/
 app.post('/api/pedido', function (req, res) {
     pedido = new pedidoModelo({
+        cueID: req.body.cueID,
         fecha: req.body.fecha,
         garzon: req.body.garzon,
         mesa: req.body.mesa,
@@ -432,11 +402,11 @@ app.post('/api/pedido', function (req, res) {
     pedido.save(function (err) {
         if (!err) {
             console.log("Pedido creado: " + pedido._id);
+            res.json(pedido);
         } else {
             console.log(err);
         }
     });
-    res.json(pedido);
 });
 
 app.get('/api/pedido/:_id', function (req, res) {
@@ -450,18 +420,18 @@ app.get('/api/pedido/:_id', function (req, res) {
 });
 
 app.post('/api/pedido/:_id', function (req, res) {
-    pedidoModelo.findById(req.body._id, function (err, pedido) {
+    pedidoModelo.findById(req.params._id, function (err, pedido) {
         if (!err) {
             pedido.cueID = req.body.cueID;
             pedido.items = req.body.items;
             pedido.save(function (err) {
                 if (!err) {
                     console.log("Items impresos");
+                    res.json(pedido);
                 } else {
                     console.log(err);
                 }
             });
-            res.json(pedido);
         } else {
             console.log(err);
         }
@@ -469,7 +439,7 @@ app.post('/api/pedido/:_id', function (req, res) {
 });
 
 app.get('/api/pedido/mesa/:mesID', function (req, res) {
-    pedidoModelo.findOne({ 'mesa': req.params.mesID, 'cueID': '' }, function (err, pedido) {
+    pedidoModelo.findOne({ 'mesa': req.params.mesID, 'cueID': 0 }, function (err, pedido) {
         if (!err) {
             res.json(pedido);
         } else {
@@ -490,11 +460,11 @@ app.post('/api/cuenta', function (req, res) {
     cuenta.save(function (err) {
         if (!err) {
             console.log("Cuenta creada: " + cuenta._id);
+            res.json(cuenta);
         } else {
             console.log(err);
         }
     });
-    res.json(cuenta);
 });
 
 if ('development' == app.get('env')) {

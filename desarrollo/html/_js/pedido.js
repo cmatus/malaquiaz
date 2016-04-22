@@ -69,8 +69,12 @@ function mesaDesplegar(nombre) {
     var json = apiGetMesa();
     if(json != null) {
         verPantalla(2);
-        for(var x = 0; x <= json.length; x++) {
-            $("#divMesa").append("<button onclick='desplegarPedido(" + json[x]._id + ")' class='" + jsonEstado[json[x].estado].estilo + "'>Mesa N°" + json[x]._id + "</button>")
+        for(var x = 0; x < json.length; x++) {
+            if(json[x].estado == 2) {
+                $("#divMesa").append("<button class='" + jsonEstado[json[x].estado].estilo + "'>Mesa N°" + json[x]._id + "</button>");
+            } else {
+                $("#divMesa").append("<button onclick='desplegarPedido(" + json[x]._id + ")' class='" + jsonEstado[json[x].estado].estilo + "'>Mesa N°" + json[x]._id + "</button>");
+            }
         }
     }
 
@@ -91,8 +95,8 @@ function desplegarPedido(mesa) {
 
 function pedidoLimpiar() {
     jsonPedido = {
-        'pedID': '',
-        'cueID': '',
+        'pedID': 0,
+        'cueID': 0,
         'fecha': '',
         'garzon': '',
         'mesa': 0,
@@ -234,9 +238,13 @@ function pedidoImprimir() {
                     for(var x = 0; x < jsonPedido.items.length; x++) {
                         jsonPedido.items[x].impreso = true;
                     }
-                    var data = apiPostPedido(jsonPedido);
-                    if(data._id != null) {
-                        retorno = true;
+                    
+                    var dataPedido = apiPostPedido(jsonPedido);
+                    if(dataPedido._id != null) {
+                        var dataMesa = apiPostMesa(dataPedido.mesa, 1);
+                        if(dataMesa._id != null) {
+                            retorno = true;
+                        }
                     }
             /*
                 }
@@ -284,7 +292,10 @@ function pedidoCuenta() {
         jsonPedido.cueID = data._id;
         data = apiPostPedido(jsonPedido);
         if(data._id != null) {
-            verPantalla(1);
+            var dataMesa = apiPostMesa(data.mesa, 2);
+            if(dataMesa._id != null) {
+                verPantalla(1);
+            }
         }
     }
 
@@ -417,7 +428,7 @@ function desplegarProducto(id) {
     }
     if (jsonProducto.ingredientes != null) {
         for (var x = 0; x < jsonProducto.ingredientes.length; x++) {
-            $("#divIngredientes").append("<button id='buttonIngrediente_" + jsonProducto.ingredientes[x]._id + "'>" + jsonProducto.ingredientes[x].nombre + "</button>");
+            $("#divIngredientes").append("<button id='buttonIngrediente_" + jsonProducto.ingredientes[x].proID + "'>" + jsonProducto.ingredientes[x].nombre + "</button>");
         }
     }
     listarAgregados();
