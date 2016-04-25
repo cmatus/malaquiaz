@@ -1,4 +1,4 @@
-var gIP = "localhost"; //"186.64.121.14"
+var gIP = "186.64.121.14"
 var gPuerto = "3000";
 var gURL = "http://" + gIP + ":" + gPuerto + "/api";
 var gURLImpresion = "http://" + gIP + "/impresion/wsImprime.asmx";
