@@ -19,8 +19,8 @@ function verPantalla(num) {
     $("#butProductoVer").css("display", "none");
     $("#butPedidoLimpiar").css("display", "none");
     $("#butPedidoAgregar").css("display", "none");
-    $("#butPedidoEliminar").css("display", "none");
     $("#butPedidoEnviar").css("display", "none");
+    $("#butPedidoCuenta").css("display", "none");
 
     switch(num) {
         case 1: /* Garzón */
@@ -427,12 +427,14 @@ function desplegarProducto(id) {
         }
     }
     if (jsonProducto.ingredientes != null) {
+        $("#divIngredientes").html("");
         for (var x = 0; x < jsonProducto.ingredientes.length; x++) {
             $("#divIngredientes").append("<button id='buttonIngrediente_" + jsonProducto.ingredientes[x].proID + "'>" + jsonProducto.ingredientes[x].nombre + "</button>");
         }
     }
     listarAgregados();
     if (jsonProducto.precios != null) {
+        $("#divPrecios").html("");
         for (var x = 0; x < jsonProducto.precios.length; x++) {
             $("#divPrecios").append("<button id='buttonPrecio_" + jsonProducto.precios[x].tipo + "_" + jsonProducto.precios[x].valor + "'>" + jsonProducto.precios[x].tipo + " $" + jsonProducto.precios[x].valor + "</button>");
         }
