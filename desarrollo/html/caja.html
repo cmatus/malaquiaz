@@ -3,15 +3,52 @@
     <head>
         <title></title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <link href="./_css/estilo.css" rel="stylesheet" />
+        <link href="_css/estilo.css" rel="stylesheet" />
         <script src="_js/jquery.min.js"></script>
         <script src="_js/funciones.js"></script>
         <script src="_js/servicios.js"></script>
-        <script src="_js/pedido.js"></script>
+        <script src="_js/caja.js"></script>
     </head>
     <body>
-        <div id="formulario">
-            
+        <div id="formularioEscritorio">
+            <div id="divCajaMesas"></div>
+            <div id="divCajaPedido"></div>
+            <div id="divCajaCuenta">
+                <div id="divCajaCuentaDetalle"></div>
+                <div id="divCajaCuentaPago">
+                    <div style="margin:auto;width:200px">
+                        <div class="campoTexto">
+                            <div class="etiqueta">Total Cuenta $</div>
+                            <div class="valor"><input type="text" id="txtTotalCuenta" /></div>
+                        </div>
+                        <div class="campoTexto">
+                            <div class="etiqueta">Propina $</div>
+                            <div class="valor"><input type="text" id="txtPropina" /></div>
+                        </div>
+                        <div class="campoTexto">
+                            <div class="etiqueta">Total $</div>
+                            <div class="valor"><input type="text" id="txtTotal" /></div>
+                        </div>
+                        <div class="campoSelector">
+                            <div class="selector"><input type="hidden" value="EF" />Efectivo</div>
+                            <div class="selector"><input type="hidden" value="TD" />Tarjeta RedCompra</div>
+                            <div class="selector"><input type="hidden" value="TC" />Tarjeta Crédito</div>
+                        </div>
+                        <div class="campoTexto">
+                            <div class="etiqueta">Paga con $</div>
+                            <div class="valor"><input type="text" id="txtPaga" /></div>
+                        </div>
+                        <div class="campoTexto">
+                            <div class="etiqueta">Vuelto $</div>
+                            <div class="valor"><input type="text" id="txtVuelto" /></div>
+                        </div>
+                    </div>
+                    <div style="padding-top:20px;margin:auto;width:200px">
+                        <button style="width:95px;height:30px" id="butCajaCuentaImprimir">Imprimir</button>
+                        <button style="width:95px;height:30px" id="butCajaCuentaPagar">Pagar</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </body>
 </html>

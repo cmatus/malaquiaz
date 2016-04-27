@@ -24,6 +24,15 @@ function apiGetGarzon() {
     return apiGET(gURL + "/garzon");
 }
 
+function apiGetMesa() {
+    return apiGET(gURL + "/mesa");
+}
+
+function apiPostMesa(mesa, estado) {
+    var info = { 'estado': estado }
+    return apiPOST(gURL + "/mesa/" + mesa, info);
+}
+
 function apiGetTipo() {
     return apiGET(gURL + "/tipo");
 }
@@ -56,19 +65,20 @@ function apiPostPedido(json) {
 	}
 }
 
-function apiPostCuenta(json) {
-    return apiPOST(gURL + "/cuenta", json);
-}
-
 function apiGetPedidoMesa(mesa) {
     return apiGET(gURL + "/pedido/mesa/" + mesa);
 }
 
-function apiGetMesa() {
-    return apiGET(gURL + "/mesa");
+function apiPostCuenta(json) {
+    if(json.cueID != "") {
+        return apiPOST(gURL + "/cuenta/" + json.cueID, json);
+    } else {
+        return apiPOST(gURL + "/cuenta", json);
+    }
 }
 
-function apiPostMesa(mesa, estado) {
-    var info = { 'estado': estado }
-    return apiPOST(gURL + "/mesa/" + mesa, info);
+function apiGetCuenta(cueID) {
+    return apiGET(gURL + "/cuenta/" + cueID);
 }
+
+

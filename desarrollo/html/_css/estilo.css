@@ -14,6 +14,14 @@
     overflow: hidden;
 }
 
+#formularioEscritorio {
+    width: 1366px;
+    height: 768px;
+    border: 1px solid red;
+    margin: auto;
+    overflow: hidden;
+}
+
 .pantalla * {
     overflow: hidden;
 }
@@ -27,7 +35,7 @@
     height: 80px;
 }
 
-#divMenuPrincipal button.menu {
+#divMenuPrincipal button.menu, #butCuentaImprimir, #butCuentaPagar {
     width: 142px;
     height: 50px;
     background-color: red;
@@ -210,4 +218,108 @@
 .pedidoItem .ingrediente, .pedidoItemImpreso .ingrediente {
     padding-left: 50px;
     text-align: left;
+}
+
+#divCajaMesas, #divCajaPedido, #divCajaCuenta {
+    display: inline-block;
+    width: 452px;
+    height: 766px;
+    vertical-align: top;
+    padding: 10px;
+    background-color: black;
+    float: left;
+}
+
+#divCajaCuenta {
+    padding: 0px;
+}
+
+#divCajaCuenta * {
+    font-size: 8pt;
+}
+
+#divCajaCuentaDetalle, #divCajaCuentaPago {
+    width: 452px;
+    vertical-align: top;
+    padding: 10px;
+}
+
+#divCajaCuentaDetalle {
+    border-bottom: 1px solid red;
+    height: 512px;
+    overflow-y: scroll;
+}
+
+#divCajaCuentaPago {
+    height: 252px;
+    padding-top: 30px;
+}
+
+#divCajaMesas, #divCajaPedido {
+    border-right: 1px solid red;
+}
+
+#divCajaMesas button {
+    padding: 10px;
+    border: 4px solid white;
+    color: white;
+    font-size: 14pt;
+    font-weight: bold;
+    width: 430px;
+    margin-bottom: 2px;
+}
+
+#divCajaMesas button {
+    background-color: blue;
+}
+
+#divCajaPedido button {
+    background-color: white;
+    width: 430px;
+    padding: 10px;
+}
+
+#divCajaPedido button div {
+    font-size: 8pt;
+    width: 410px;
+    text-align: left;
+    overflow: hidden;
+}
+
+#divCajaMesas button.estadoDIS {
+    background-color: blue;
+    color: white;
+}
+
+#divCajaMesas button.estadoATE {
+    background-color: yellow;
+    color: red;
+}
+
+#divCajaMesas button.estadoCTA {
+    background-color: red;
+    color: white;
+}
+
+#divCajaMesas button.estadoEMI {
+    background-color: green;
+    color: white;
+}
+
+#divCajaCuenta table tr td {
+    color: white;
+}
+
+.campoTexto div {
+    display: inline-block;
+}
+
+.etiqueta {
+    color: white;
+    width: 100px;
+}
+
+.valor input { 
+    width: 80px;
+    margin: 1px;
 }

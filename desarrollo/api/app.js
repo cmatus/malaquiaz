@@ -112,7 +112,9 @@ var Cuenta = new Schema({
     total: Number,
     mesa: Number,
     garzon: String,
-    items: [CuentaItem]
+    items: [CuentaItem],
+    tipoPago: String,
+    propina: Number
 }, { collection: 'cuenta', versionKey: false, _id: false });
 
 Garzon.pre('save', function(next) {
@@ -439,9 +441,19 @@ app.post('/api/pedido/:_id', function (req, res) {
 });
 
 app.get('/api/pedido/mesa/:mesID', function (req, res) {
-    pedidoModelo.findOne({ 'mesa': req.params.mesID, 'cueID': 0 }, function (err, pedido) {
+    pedidoModelo.findOne({ 'mesa': req.params.mesID }, function (err, pedido) {
         if (!err) {
             res.json(pedido);
+        } else {
+            console.log(err);
+        }
+    });
+});
+
+app.get('/api/cuenta/:_id', function (req, res) {
+    cuentaModelo.findById(req.params._id).exec(function (err, cuenta) {
+        if (!err) {
+            res.send(cuenta);
         } else {
             console.log(err);
         }
@@ -455,12 +467,33 @@ app.post('/api/cuenta', function (req, res) {
         total: req.body.total,
         mesa: req.body.mesa,
         garzon: req.body.garzon,
-        items: req.body.items
+        items: req.body.items,
+        tipoPago: '',
+        propina: 0
     });
     cuenta.save(function (err) {
         if (!err) {
             console.log("Cuenta creada: " + cuenta._id);
             res.json(cuenta);
+        } else {
+            console.log(err);
+        }
+    });
+});
+
+app.post('/api/cuenta/:_id', function (req, res) {
+    cuentaModelo.findById(req.params._id).exec(function (err, cuenta) {
+        if (!err) {
+            cuenta.tipoPago = req.body.tipoPago;
+            cuenta.propina = req.body.propina;
+            cuenta.save(function (err) {
+                if (!err) {
+                    console.log("Cuenta Pagada");
+                    res.json(cuenta);
+                } else {
+                    console.log(err);
+                }
+            });
         } else {
             console.log(err);
         }
