@@ -8,12 +8,31 @@ $.ajaxSetup({
 
 function zeroFill(numero, zero){
     var retorno = "";
-    for(var x = 0; x < zero; x++) {
-        retorno += "0"
-    }
+    retorno = charFill("0", zero);
     retorno = retorno + numero;
     retorno = retorno.substr(retorno.length - zero, zero);
     return retorno;
+}
+
+function charFill(cc, num){
+    var retorno = "";
+    for(var x = 0; x < num; x++) {
+        retorno += cc;
+    }
+    return retorno;
+}
+
+function formateaNumero(numero, decimales, precio, tipPrec) {
+    var num = numero.toString().replace(/\./g, '');
+    var num = parseInt(num);
+    if (!isNaN(num)) {
+        num = num.toString().split('').reverse().join('').replace(/(?=\d*\.?)(\d{3})/g, '$1.');
+        num = num.split('').reverse().join('').replace(/^[\.]/, '');
+    }
+    if (precio) {
+        num = (tipPrec != null ? tipPrec : "$") + " " + num;
+    }
+    return num;
 }
 
 function apiGET(url) {

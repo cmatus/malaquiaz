@@ -222,7 +222,7 @@
 
 #divCajaMesas, #divCajaPedido, #divCajaCuenta {
     display: inline-block;
-    width: 452px;
+    width: 454px;
     height: 766px;
     vertical-align: top;
     padding: 10px;
@@ -232,6 +232,7 @@
 
 #divCajaCuenta {
     padding: 0px;
+    width: 454px;
 }
 
 #divCajaCuenta * {
@@ -242,6 +243,7 @@
     width: 452px;
     vertical-align: top;
     padding: 10px;
+    float: right;
 }
 
 #divCajaCuentaDetalle {
@@ -319,7 +321,13 @@
     width: 100px;
 }
 
-.valor input { 
+.valor input[type="text"] { 
     width: 80px;
     margin: 1px;
+    text-align: right;
+    padding: 2px;
+}
+
+.valor input[type="text"]:disabled { 
+    color: black;
 }

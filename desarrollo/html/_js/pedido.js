@@ -11,7 +11,7 @@ function verPantalla(num) {
     $("#divMesa").css("display", "none");
     $("#divPedido").css("display", "none");
     $("#divProducto").css("display", "none");
-
+    
     $("#butProductoLimpiar").css("display", "none");
     $("#butProductoAgregar1").css("display", "none");
     $("#butProductoAgregar2").css("display", "none");
