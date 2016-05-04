@@ -90,3 +90,6 @@ Corriendo por puerto: 3000
 [0mGET /api/tipo [32m200 [0m279.388 ms - 792[0m
 [0mGET /favicon.ico [33m404 [0m87.437 ms - 24[0m
 Corriendo por puerto: 3000
+[0mGET / [33m404 [0m857.237 ms - 13[0m
+[0mOPTIONS / [32m204 [0m28.581 ms - -[0m
+[0mGET /nice%20ports%2C/Tri%6Eity.txt%2ebak [33m404 [0m32.106 ms - 48[0m

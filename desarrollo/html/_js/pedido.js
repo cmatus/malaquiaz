@@ -266,6 +266,7 @@ function pedidoCuenta() {
     var total = 0;
 
     var jsonCuenta = {
+        cueID: 0,
         fecha: fecha,
         pedID: jsonPedido._id,
         total: 0,

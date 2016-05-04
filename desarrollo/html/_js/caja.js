@@ -3,12 +3,14 @@ $(document).ready(function () {
 });
 
 function cajaDesplegarMesas() {
+	$("#divCajaMesas").html("");
     var json = apiGetMesa();
     if(json != null) {
         for(var x = 0; x < json.length; x++) {
 			$("#divCajaMesas").append("<button onclick='cajaDesplegarPedido(" + (json[x].estado != 0 ? json[x]._id : 0) + ")' class='" + jsonEstado[json[x].estado].estilo + "'>Mesa N°" + json[x]._id + "</button>");
         }
     }
+    setTimeout(function() { cajaDesplegarMesas(); }, 1000);
 }
 
 function cajaIniciar() {
