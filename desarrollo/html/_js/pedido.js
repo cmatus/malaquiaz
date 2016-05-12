@@ -230,15 +230,13 @@ function pedidoImprimir() {
                 'apertura': false, 
                 'tipo': 'tcp'
             }
-            /*
+            
             var parametro = RetornaAJAX(gURLImpresion, "imprimir", JSON.stringify(info), null);
             $.when($.ajax(parametro)).done(function (a) {
                 if (a.d != null) {
-            */
                     for(var x = 0; x < jsonPedido.items.length; x++) {
                         jsonPedido.items[x].impreso = true;
                     }
-                    
                     var dataPedido = apiPostPedido(jsonPedido);
                     if(dataPedido._id != null) {
                         var dataMesa = apiPostMesa(dataPedido.mesa, 1);
@@ -246,10 +244,9 @@ function pedidoImprimir() {
                             retorno = true;
                         }
                     }
-            /*
                 }
             });
-            */
+            
         } else {
             retorno = true;
         }

@@ -10,12 +10,12 @@ function cajaDesplegarMesas() {
 			$("#divCajaMesas").append("<button onclick='cajaDesplegarPedido(" + (json[x].estado != 0 ? json[x]._id : 0) + ")' class='" + jsonEstado[json[x].estado].estilo + "'>Mesa N°" + json[x]._id + "</button>");
         }
     }
-    setTimeout(function() { cajaDesplegarMesas(); }, 1000);
 }
 
 function cajaIniciar() {
     cajaLimpiaPantalla();
 	cajaDesplegarMesas();
+	iniciaOptionSelect();
 }
 
 function cajaLimpiaPantalla() {
@@ -76,13 +76,18 @@ function cajaDesplegarPedido(mesa) {
 				    $("#divCajaCuentaDetalle").html(cHTML);
 				    $("#txtTotalCuenta").val(total);
 				    $("#txtPropina").val("0");
-				    cajaCalcularTotal(total);
 
-				    $("#txtPropina").blur(function() { cajaCalcularTotal(total) });
-				    $("#txtPaga").blur(function() { cajaCalcularVuelto(); });
+				    $("#txtPropina").blur(function() { evaluaSelector(); });
+				    $("#txtPaga").blur(function() { evaluaSelector(); });
 
 				    $("#butCajaCuentaImprimir").click(function(){ cajaCuentaImprimir(json); });
 				    $("#butCajaCuentaPagar").click(function(){ cajaCuentaPagar(json); });
+
+					var seleccionado = $(".campoSelector .selectorSel");
+					seleccionado.removeClass("selectorSel");
+					seleccionado.addClass("selector");
+				    $($(".campoSelector .selector")[0]).removeClass("selector").addClass("selectorSel");
+				    evaluaSelector();
 
 				}
 		    }
@@ -102,11 +107,29 @@ function cajaCalcularTotal(total) {
 }
 
 function cajaCalcularVuelto() {
-	var totalCuenta = parseInt(($("#txtTotalCuenta").val() != "" ? $("#txtTotalCuenta").val() : "0"));
-	var propina = parseInt(($("#txtPropina").val() != "" ? $("#txtPropina").val() : "0"));
-	var total = totalCuenta + propina;
-	var paga = parseInt(($("#txtPaga").val() != "" ? $("#txtPaga").val() : "0"));
+	
+	var tipoPago = $(".campoSelector .selectorSel").find("input")[0].value;
+	var totalCuenta = 0;
+	var propina = 0;
+	var total = 0;
+	var paga = 0;
+
 	$("#txtVuelto").val(paga - total);
+	switch(tipoPago) {
+		case "EF":
+			totalCuenta = parseInt(($("#txtTotalCuenta").val() != "" ? $("#txtTotalCuenta").val() : "0"));
+			propina = parseInt(($("#txtPropina").val() != "" ? $("#txtPropina").val() : "0"));
+			total = totalCuenta + propina;
+			paga = parseInt(($("#txtPaga").val() != "" ? $("#txtPaga").val() : "0"));
+			$("#txtVuelto").val(paga - total);
+			break;
+    	case "TC":
+    	case "TD":
+			$("#txtPaga").val($("#txtTotalCuenta").val());
+			$("#txtVuelto").val("0");
+			break;
+	}
+
 }
 
 function cajaCuentaItem(nombre, valor) {
@@ -126,12 +149,15 @@ function cajaCuentaImprimir(jsonCuenta) {
         jsonBoleta.push("Atendida por: " + jsonCuenta.garzon);
         jsonBoleta.push("Mesa N°" + jsonCuenta.mesa);
         jsonBoleta.push("Fecha/Hora: " + jsonCuenta.fecha);
+        jsonBoleta.push("N°: " + jsonCuenta._id);
         jsonBoleta.push("------------------------------------------");
         jsonBoleta.push(" ");
 
         for(var x = 0; x < jsonCuenta.items.length; x++) {
             jsonBoleta.push(cajaCuentaItem(jsonCuenta.items[x].nombre, jsonCuenta.items[x].valor));
         }
+        jsonBoleta.push(" ");
+        jsonBoleta.push("Total $ " + jsonCuenta.total);
         jsonBoleta.push("--------------- Fin Cuenta --------------");
 
         var info = { 
@@ -141,21 +167,52 @@ function cajaCuentaImprimir(jsonCuenta) {
             'tipo': 'usb'
         }
         alert(JSON.stringify(info));
-        //var parametro = RetornaAJAX(gURLImpresion, "imprimir", JSON.stringify(info), null);
-        //$.when($.ajax(parametro)).done(function (a) {
-        //    if (a.d != null) {
-        //    	retorno = true;
-        //    }
-        //});
+        var parametro = RetornaAJAX(gURLImpresion, "imprimir", JSON.stringify(info), null);
+        $.when($.ajax(parametro)).done(function (a) {
+            if (a.d != null) {
+            	retorno = true;
+            }
+        });
 
     }
     return retorno;
     
 }
 
+function iniciaOptionSelect() {
+    $(".campoSelector .selector").click(function() {
+        var seleccionado = $(".campoSelector .selectorSel");
+        seleccionado.removeClass("selectorSel");
+        seleccionado.addClass("selector");
+        $(this).removeClass("selector");
+        $(this).addClass("selectorSel");
+        evaluaSelector();
+    });
+}
+
+function evaluaSelector() {
+    
+	totalCuenta = parseInt(($("#txtTotalCuenta").val() != "" ? $("#txtTotalCuenta").val() : "0"));
+	propina = parseInt(($("#txtPropina").val() != "" ? $("#txtPropina").val() : "0"));
+	total = totalCuenta + propina;
+	$("#txtTotal").val(total + propina);
+
+
+    var tipoPago = $(".campoSelector .selectorSel").find("input")[0].value;
+    switch(tipoPago) {
+    	case "TC":
+    	case "TD":
+    		$("#txtPaga").val($("#txtTotal").val());
+    		$("#txtVuelto").val("0");
+    		break;
+    }
+	$("#txtVuelto").val(parseInt(($("#txtPaga").val() == "" ? "0" : $("#txtPaga").val())) - parseInt(($("#txtTotal").val() == "" ? "0" : $("#txtTotal").val())));
+
+}
+
 function cajaCuentaPagar(jsonCuenta) {
 	jsonCuenta.cueID = jsonCuenta._id;
-	jsonCuenta.tipoPago = "EF";
+	jsonCuenta.tipoPago = $(".campoSelector .selectorSel").find("input")[0].value;
 	jsonCuenta.propina = parseInt(($("#txtPropina").val() != "" ? $("#txtPropina").val() : "0"));
 	var data = apiPostCuenta(jsonCuenta);
 	if(data._id != null) {

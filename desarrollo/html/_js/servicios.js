@@ -1,7 +1,7 @@
 var gIP = "186.64.121.14"
 var gPuerto = "3000";
 var gURL = "http://" + gIP + ":" + gPuerto + "/api";
-var gURLImpresion = "http://" + gIP + "/impresion/wsImprime.asmx";
+var gURLImpresion = "http://192.168.0.10/impresion/wsImprime.asmx";
 
 var jsonGarzon = {};
 var jsonTipo = {};
