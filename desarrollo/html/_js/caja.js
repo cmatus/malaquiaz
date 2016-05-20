@@ -166,13 +166,13 @@ function cajaCuentaImprimir(jsonCuenta) {
             'apertura': true, 
             'tipo': 'usb'
         }
-        alert(JSON.stringify(info));
-        var parametro = RetornaAJAX(gURLImpresion, "imprimir", JSON.stringify(info), null);
-        $.when($.ajax(parametro)).done(function (a) {
-            if (a.d != null) {
+        //alert(JSON.stringify(info));
+        //var parametro = RetornaAJAX(gURLImpresion, "imprimir", JSON.stringify(info), null);
+        //$.when($.ajax(parametro)).done(function (a) {
+        //    if (a.d != null) {
             	retorno = true;
-            }
-        });
+        //    }
+        //});
 
     }
     return retorno;

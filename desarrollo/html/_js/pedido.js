@@ -231,9 +231,9 @@ function pedidoImprimir() {
                 'tipo': 'tcp'
             }
             
-            var parametro = RetornaAJAX(gURLImpresion, "imprimir", JSON.stringify(info), null);
-            $.when($.ajax(parametro)).done(function (a) {
-                if (a.d != null) {
+            //var parametro = RetornaAJAX(gURLImpresion, "imprimir", JSON.stringify(info), null);
+            //$.when($.ajax(parametro)).done(function (a) {
+            //    if (a.d != null) {
                     for(var x = 0; x < jsonPedido.items.length; x++) {
                         jsonPedido.items[x].impreso = true;
                     }
@@ -244,8 +244,8 @@ function pedidoImprimir() {
                             retorno = true;
                         }
                     }
-                }
-            });
+            //    }
+            //});
             
         } else {
             retorno = true;
